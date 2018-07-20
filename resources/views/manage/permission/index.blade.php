@@ -1,0 +1,89 @@
+@extends('layout.main')
+
+@section('title')
+    Manage Permission
+@endsection
+
+@section('content_title')
+    Manage Permission
+@endsection
+
+@section('content')
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__body">
+            <!--begin: Search Form -->
+            <div class="m-form m-form--label-align-right m--margin-bottom-30">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 order-2 order-xl-1">
+                        <div class="form-group m-form__group row align-items-center">
+                            <div class="col-md-12">
+                                <div class="m-input-icon m-input-icon--left">
+                                    <input type="text" class="form-control m-input m-input--solid"
+                                           placeholder="Search..." id="m_form_search">
+                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                    <span>
+                                        <i class="la la-search"></i>
+                                    </span>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                        <button type="button"
+                                class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
+                                id="btn-refresh" style="margin-right: 10px">
+                        <span>
+                            <i class="fa flaticon-refresh"></i>
+                        </span>
+                        </button>
+                        <a href="{{ route('permission.add') }}" id="add"
+                           class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                        <span>
+                            <i class="la la-plus" style="font-weight: bold"></i>
+                            <span>
+                                Add
+                            </span>
+                        </span>
+                        </a>
+                        <div class="m-separator m-separator--dashed d-xl-none"></div>
+                    </div>
+                </div>
+            </div>
+            <!--end: Search Form -->
+            <!--begin: Datatable -->
+            <div class="m_datatable m-datatable m-datatable--default table table-bordered table-hover m-datatable--subtable m-datatable--loaded m-datatable--scroll"
+                 id="local_data" style="">
+                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_permission'])  !!}
+            </div>
+            <!--end: Datatable -->
+        </div>
+    </div>
+
+    @push('scripts')
+        <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        {!! $dataTable->scripts() !!}
+
+        <script>
+            function delete_message(name) {
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        swal(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            }
+        </script>
+    @endpush
+@endsection
