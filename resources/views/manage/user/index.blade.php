@@ -54,7 +54,7 @@
             <!--begin: Datatable -->
             <div class="m_datatable m-datatable m-datatable--default table table-bordered table-hover m-datatable--subtable m-datatable--loaded m-datatable--scroll"
                  id="local_data" style="">
-{{--                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_permission'])  !!}--}}
+                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_user'])  !!}
             </div>
             <!--end: Datatable -->
         </div>
@@ -62,6 +62,6 @@
 
     @push('scripts')
         <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
-{{--        {!! $dataTable->scripts() !!}--}}
+        {!! $dataTable->scripts() !!}
     @endpush
 @endsection

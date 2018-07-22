@@ -59,7 +59,7 @@
             <div class="m-form m-form--label-align-right ">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
-                        <form class="" method="post" action="{{ route('permission.store') }}">
+                        <form class="" method="post" action="{{ route('user.store') }}">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
@@ -91,7 +91,7 @@
                                             :</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="email"
-                                                   value="{{ old('tel') }}">
+                                                   value="{{ old('email') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -123,8 +123,44 @@
                                         <label for="inputPassword" class="col-sm-4 col-form-label">Permission.
                                             :</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="permission"
-                                                   value="{{ old('permission') }}">
+                                            <select class="form-control m-input m-input--square" name="permission_id">
+                                                <option value="" {{ old('permission_id') == '' ? 'selected' : '' }}>
+                                                    ---- Please select ----
+                                                </option>
+                                                @forelse($permission as $val)
+                                                    <option value="{{ $val->id }}"
+                                                            {{ old('permission_id') == $val->id ? 'selected' : '' }}
+                                                    >
+                                                        {{ $val->name }}
+                                                    </option>
+                                                @empty
+                                                @endforelse
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" class="form-control" name="active" value="1">
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">Username
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="username"
+                                                   value="{{ old('username') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">Password.
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control" name="password"
+                                                   value="{{ old('password') }}">
                                         </div>
                                     </div>
                                 </div>

@@ -12,13 +12,18 @@ class User extends Model
     protected $fillable = [
         'id',
         'username',
+        'password',
         'description',
         'email',
         'first_name',
         'last_name',
-        'user_permission',
+        'permission_id',
         'active',
-        'default'
+        'default',
+        'created_by',
+        'updated_by',
+        'created_at',
+        'updated_at'
     ];
 
 }
