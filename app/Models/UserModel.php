@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 
-class User extends Model
+class UserModel extends Model
 {
     use NodeTrait;
+
+    protected $table = 'users';
 
     protected $fillable = [
         'id',

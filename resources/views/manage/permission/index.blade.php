@@ -1,11 +1,11 @@
 @extends('layout.main')
 
 @section('title')
-    Manage Permission
+    {{ trans('main.manage_permission') }}
 @endsection
 
 @section('content_title')
-    Manage Permission
+    {{ trans('main.manage_permission') }}
 @endsection
 
 @section('content')
@@ -42,7 +42,7 @@
                         <span>
                             <i class="la la-plus" style="font-weight: bold"></i>
                             <span>
-                                Add
+                                {{ trans('main.add') }}
                             </span>
                         </span>
                         </a>
@@ -59,31 +59,10 @@
             <!--end: Datatable -->
         </div>
     </div>
-
+    @include('partial.confirm_delete')
     @push('scripts')
         <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
-        {!! $dataTable->scripts() !!}
 
-        <script>
-            function delete_message(name) {
-                swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        swal(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
-                    }
-                })
-            }
-        </script>
+        {!! $dataTable->scripts() !!}
     @endpush
 @endsection

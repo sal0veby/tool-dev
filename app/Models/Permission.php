@@ -23,7 +23,9 @@ class Permission extends Model
         'update',
         'delete',
         'excel',
-        'parent_id'
+        'parent_id',
+        'created_at',
+        'updated_at'
     ];
 
 

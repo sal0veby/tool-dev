@@ -72,8 +72,6 @@
 </div>
 
 @stack('scripts')
-
-@yield('script')
 {{--@push('scripts')--}}
 <script>
     $(document).ready(function () {
@@ -123,6 +121,8 @@
 
 </script>
 {{--@endpush--}}
+
+@yield('script')
 
 </body>
 </html>

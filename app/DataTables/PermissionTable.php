@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Permission;
+use Carbon\Carbon;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
@@ -22,10 +23,18 @@ class PermissionTable extends DataTable
             ->setRowClass('text-center')
             ->editColumn('active', function ($model) {
                 if ($model->active == 1) {
-                    return '<span class="m-badge  m-badge--success m-badge--wide">Yes</span>';
+                    return '<span class="m-badge  m-badge--success m-badge--wide">' . trans('main.active_yes') . '</span>';
                 } else {
-                    return '<span class="m-badge  m-badge--danger m-badge--wide">No</span>';
+                    return '<span class="m-badge  m-badge--danger m-badge--wide">' . trans('main.active_no') . '</span>';
                 }
+            })
+            ->editColumn('created_at', function ($model) {
+                return Carbon::parse($model->created_at)
+                    ->format(config('date.default_date_format'));
+            })
+            ->editColumn('updated_at', function ($model) {
+                return Carbon::parse($model->updated_at)
+                    ->format(config('date.default_date_format'));
             })
             ->rawColumns(['active', 'action'])
             ->make(true);
@@ -70,10 +79,10 @@ class PermissionTable extends DataTable
 
         return link_to($link, "<i class='fa fa-eye'></i>", [
             'id' => "button-edit-{$model->id}",
-            'class' => 'btn btn-accent m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
+            'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
             'style' => 'margin-right:10px;',
             'data-toggle' => 'tooltip',
-            'data-original-title' => 'View',
+            'data-original-title' => trans('main.view'),
 //            'target' => '_blank',
         ], false, false);
     }
@@ -87,7 +96,7 @@ class PermissionTable extends DataTable
             'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
             'style' => 'margin-right:10px;',
             'data-toggle' => 'tooltip',
-            'data-original-title' => 'Edit',
+            'data-original-title' => trans('main.edit'),
         ], false, false);
     }
 
@@ -98,7 +107,7 @@ class PermissionTable extends DataTable
         $attributes = [
             'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete',
             'data-toggle' => 'tooltip',
-            'data-original-title' => 'Delete',
+            'data-original-title' => trans('main.delete'),
             'data-url' => route('permission.delete', [$model->id]),
         ];
 
@@ -129,15 +138,17 @@ class PermissionTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => 'No.', "className" => "align-middle"],
-            ['data' => 'name', 'name' => 'name', 'title' => 'Permission name', "className" => "align-middle"],
+            ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
+            ['data' => 'name', 'name' => 'name', 'title' => trans('main.permission_name'), "className" => "align-middle"],
             [
                 'data' => 'active',
                 'name' => 'active',
-                'title' => 'Active',
+                'title' => trans('main.active'),
                 "className" => "text-center align-middle",
                 'defaultContent' => ''
             ],
+            ['data' => 'created_at', 'name' => 'created_at', 'title' => trans('main.created_at'), "className" => "align-middle"],
+            ['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('main.updated_at'), "className" => "align-middle"],
         ];
     }
 

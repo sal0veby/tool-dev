@@ -1,11 +1,11 @@
 @extends('layout.main')
 
 @section('title')
-    Manage Permission
+    {{ trans('main.manage_user') }}
 @endsection
 
 @section('content_title')
-    View Permission
+    {{ trans('main.view_user') }}
 @endsection
 
 @section('content')
@@ -59,199 +59,121 @@
             <div class="m-form m-form--label-align-right ">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
-                        <form class="" method="post" action="">
+                        <form class="">
                             <div class="row">
-                                <div class="col-lg-5 col-md-5">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-5 col-form-label">Permission name
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.first_name') }}
                                             :</label>
-                                        <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="name" disabled
-                                                   placeholder="Name" value="{{ array_get($result , 'name') }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-5 col-form-label">Description
-                                            :</label>
-                                        <div class="col-sm-7">
-                                            <div class="form-check">
-                                                <textarea class="form-control m-input m-input--air" id="exampleTextarea"
-                                                          disabled
-                                                          rows="3">{{ array_get($result , 'description') }}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-5 col-form-label">Active
-                                            :</label>
-                                        <div class="col-sm-7">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="active" disabled
-                                                       style="margin-top: 0.75rem;" {{ array_get($result , 'active') == 1 ? 'checked' : '' }}>
-                                            </div>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="first_name" disabled
+                                                   value="{{ $result->first_name }}">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-7 col-md-7">
-                                    <table class="table table-striped m-table table-responsive">
-                                        <thead>
-                                        <tr>
-                                            <th rowspan="2">Menu</th>
-                                            <th rowspan="2">Sub menu</th>
-                                            <th rowspan="2">Use</th>
-                                            <th colspan="3">Permission</th>
-                                            <th colspan="2">Export</th>
-                                        </tr>
-                                        <tr>
-                                            <th>Add</th>
-                                            <th>Update</th>
-                                            <th>Delete</th>
-                                            <th>Excel</th>
-                                            <th>PDF</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @forelse($menu as $key => $val)
-                                            @if(!empty($val->children))
-                                                @php($key_header = array_search($val->id, array_column($result['children']['children'], 'menu_id')))
-                                                @if($val->id == 2)
-                                                    <tr>
-                                                        <td>{{ array_get($val ,'name') }}</td>
-                                                        <td></td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="use" disabled
-                                                                   name="permission[{{ array_get($val ,'id') }}][use]"
-                                                                    {{$result['children']['children'][$key_header]['use'] == 1 ? 'checked' : '' }}
-                                                            >
-                                                        </td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="add" disabled
-                                                                   name="permission[{{ array_get($val ,'id') }}][add]"
-                                                                    {{$result['children']['children'][$key_header]['add'] == 1 ? 'checked' : '' }}
-                                                            >
-                                                        </td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="update" disabled
-                                                                   name="permission[{{ array_get($val ,'id') }}][update]"
-                                                                    {{$result['children']['children'][$key_header]['update'] == 1 ? 'checked' : '' }}
-                                                            >
-                                                        </td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="delete" disabled
-                                                                   name="permission[{{ array_get($val ,'id') }}][delete]"
-                                                                    {{$result['children']['children'][$key_header]['delete'] == 1 ? 'checked' : '' }}
-                                                            >
-                                                        </td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="excel" disabled
-                                                                   name="permission[{{ array_get($val ,'id') }}][excel]"
-                                                                    {{$result['children']['children'][$key_header]['excel'] == 1 ? 'checked' : '' }}
-                                                            >
-                                                        </td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="pdf" disabled
-                                                                   name="permission[{{ array_get($val ,'id') }}][pdf]"
-                                                                    {{$result['children']['children'][$key_header]['pdf'] == 1 ? 'checked' : '' }}
-                                                            >
-                                                        </td>
-                                                    </tr>
-                                                @else
-                                                    <tr>
-                                                        <td>{{ array_get($val ,'name') }}</td>
-                                                        <td></td>
-                                                        @if($val->name == 'Home')
-                                                            <td class="checkbox">
-                                                                <input type="checkbox" class="use" disabled
-                                                                       name="permission[{{ array_get($val ,'id') }}][use]"
-                                                                        {{$result['children']['children'][$key_header]['use'] == 1 ? 'checked' : '' }}
-                                                                >
-                                                            </td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                @endif
-                                                @foreach($val->children as $index => $sub)
-                                                    @php($key_detail = array_search($sub->id, array_column($result['children']['children'] , 'menu_id')))
-                                                    <tr>
-                                                        <td></td>
-                                                        <td>{{ array_get($sub ,'name') }}</td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="use" disabled
-                                                                   name="permission[{{ array_get($sub ,'id') }}][use]"
-                                                                    {{$result['children']['children'][$key_detail]['use'] == 1 ? 'checked' : '' }}
-                                                            >
-                                                        </td>
-                                                        @if(in_array($sub->id , [4,5]))
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        @else
-                                                            <td class="checkbox">
-                                                                <input type="checkbox" class="add" disabled
-                                                                       name="permission[{{ array_get($sub ,'id') }}][add]"
-                                                                        {{$result['children']['children'][$key_detail]['add'] == 1 ? 'checked' : '' }}
-                                                                >
-                                                            </td>
-                                                            <td class="checkbox">
-                                                                <input type="checkbox" class="update" disabled
-                                                                       name="permission[{{ array_get($sub ,'id') }}][update]"
-                                                                        {{$result['children']['children'][$key_detail]['update'] == 1 ? 'checked' : '' }}
-                                                                >
-                                                            </td>
-                                                            <td class="checkbox">
-                                                                <input type="checkbox" class="delete" disabled
-                                                                       name="permission[{{ array_get($sub ,'id') }}][delete]"
-                                                                        {{$result['children']['children'][$key_detail]['delete'] == 1 ? 'checked' : '' }}
-                                                                >
-                                                            </td>
-                                                        @endif
-                                                        @if(in_array($sub->id , [7,8,9,10,11,12]))
-                                                            <td></td>
-                                                            <td></td>
-                                                        @else
-                                                            <td class="checkbox">
-                                                                <input type="checkbox" class="excel" disabled
-                                                                       name="permission[{{ array_get($sub ,'id') }}][excel]"
-                                                                        {{$result['children']['children'][$key_detail]['excel'] == 1 ? 'checked' : '' }}
-                                                                >
-                                                            </td>
-                                                            <td class="checkbox">
-                                                                <input type="checkbox" class="pdf" disabled
-                                                                       name="permission[{{ array_get($sub ,'id') }}][pdf]"
-                                                                        {{$result['children']['children'][$key_detail]['pdf'] == 1 ? 'checked' : '' }}
-                                                                >
-                                                            </td>
-                                                        @endif
-                                                    </tr>
-
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td>{{ array_get($val ,'name') }}</td>
-                                                    <td></td>
-                                                    <td>sdf</td>
-                                                    <td>sdf</td>
-                                                    <td>sdf</td>
-                                                    <td>sdf</td>
-                                                </tr>
-                                            @endif
-                                        @empty
-
-                                        @endforelse
-                                        </tbody>
-                                    </table>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.last_name') }}
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="last_name" disabled
+                                                   value="{{ $result->last_name }}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.email') }}
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="email" disabled
+                                                   value="{{ $result->email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.tel') }}
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="tel" disabled
+                                                   value="{{ $result->tel }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.company_name') }}
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="company_name" disabled
+                                                   value="{{ $result->company_name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.permission') }}
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control m-input m-input--square" name="permission_id"
+                                                    disabled>
+                                                @foreach($permission as $val)
+                                                    <option value="{{ $val->id }}"
+                                                            {{ $result->permission_id == $val->id ? 'selected' : '' }}
+                                                    >
+                                                        {{ $val->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" class="form-control" name="active" value="1">
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.username') }}
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="username" disabled
+                                                   value="{{ $result->username }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.password') }}
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control" name="password" disabled
+                                                   value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-12 m--margin-top-30 text-center">
-                                    <a href="{{ route('permission.index') }}" class="btn btn-danger">
-                                        Cancel
+                                    <a href="{{ route('user.index') }}" class="btn btn-danger">
+                                        {{ trans('main.back') }}
                                     </a>
                                 </div>
                             </div>
@@ -262,5 +184,4 @@
             <!--end: Search Form -->
         </div>
     </div>
-
 @endsection

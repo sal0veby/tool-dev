@@ -62,7 +62,7 @@
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                             <i class="fa fa-sign-out" style="margin-right: 3px"></i>
-                            Logout
+                                    {{ trans('main.logout') }}
                             </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                       style="display: none;">
@@ -72,7 +72,7 @@
                                 <a href="{{ route('login') }}"
                                    class="btn m-btn--pill btn-primary m-btn--custom">
                                     <i class="fa fa-sign-in" style="margin-right: 3px"></i>
-                                    Login
+                                   {{ trans('main.login') }}
                                 </a>
                             @endif
 

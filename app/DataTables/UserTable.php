@@ -2,11 +2,18 @@
 
 namespace App\DataTables;
 
+use App\Models\UserModel;
 use App\User;
+use Carbon\Carbon;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
 class UserTable extends DataTable
 {
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function ajax()
     {
         return $this->dataTable($this->query())
@@ -15,11 +22,22 @@ class UserTable extends DataTable
                 return $this->getActionButtons($model);
             })
             ->setRowClass('text-center')
+            ->editColumn('first_name', function ($model) {
+                return $model->first_name . " " . $model->last_name;
+            })
+            ->editColumn('created_at', function ($model) {
+                return Carbon::parse($model->created_at)
+                    ->format(config('date.default_date_format'));
+            })
+            ->editColumn('updated_at', function ($model) {
+                return Carbon::parse($model->updated_at)
+                    ->format(config('date.default_date_format'));
+            })
             ->editColumn('active', function ($model) {
                 if ($model->active == 1) {
-                    return '<span class="m-badge  m-badge--success m-badge--wide">Yes</span>';
+                    return '<span class="m-badge  m-badge--success m-badge--wide">' . trans('main.active_yes') . '</span>';
                 } else {
-                    return '<span class="m-badge  m-badge--danger m-badge--wide">No</span>';
+                    return '<span class="m-badge  m-badge--danger m-badge--wide">' . trans('main.active_no') . '</span>';
                 }
             })
             ->rawColumns(['active', 'action'])
@@ -39,7 +57,7 @@ class UserTable extends DataTable
      */
     public function query()
     {
-        $query = User::orderBy('id', 'ASC');
+        $query = User::query()->select('*')->orderBy('id', 'ASC');
         return $this->applyScopes($query);
     }
 
@@ -73,15 +91,15 @@ class UserTable extends DataTable
 
         return link_to($link, "<i class='fa fa-eye'></i>", [
             'id' => "button-edit-{$model->id}",
-            'class' => 'btn btn-accent m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
+            'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
             'style' => 'margin-right:10px;',
             'data-toggle' => 'tooltip',
-            'data-original-title' => 'View',
+            'data-original-title' => trans('main.view'),
 //            'target' => '_blank',
         ], false, false);
     }
 
-    private function editButton(\App\Model\User $model)
+    private function editButton($model): string
     {
         $route = route('user.edit', [$model->id]);
 
@@ -90,18 +108,18 @@ class UserTable extends DataTable
             'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
             'style' => 'margin-right:10px;',
             'data-toggle' => 'tooltip',
-            'data-original-title' => 'Edit',
+            'data-original-title' => trans('main.edit'),
         ], false, false);
     }
 
-    private function deleteButton(\App\Model\User $model)
+    private function deleteButton($model): string
     {
-        $route = route('user.delete', [$model->id]);
+//        $route = route('user.delete', [$model->id]);
 
         $attributes = [
             'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete',
             'data-toggle' => 'tooltip',
-            'data-original-title' => 'Delete',
+            'data-original-title' => trans('main.delete'),
             'data-url' => route('user.delete', [$model->id]),
         ];
 
@@ -112,34 +130,46 @@ class UserTable extends DataTable
 //            ];
 //        }
         if ($model->default == true) {
-            return '';
-        } else {
-            return link_to($route, "<i class='fa fa-trash'></i>", $attributes, false, false);
+            $attributes = [
+                'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
+                'disabled' => 'disabled',
+            ];
         }
+
+        return link_to('#', "<i class='fa fa-trash'></i>", $attributes, false, false);
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
-    protected function getColumns()
+    protected function getBuilderParameters()
     {
         return [
-            'id',
-            'add your columns',
-            'created_at',
-            'updated_at'
+            'order' => [[0, 'desc']],
+            'dom' => 'Bfrtip',
+            'buttons' => ['reload'],
+            'processing' => true,
+            'pageLength' => 20,
+            'bAutoWidth' => false,
+            'info' => false,
+            'searching' => false,
+            "responsive" => true
         ];
     }
 
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename()
+    protected function getColumns()
     {
-        return 'DataTables/UserTable_' . date('YmdHis');
+        return [
+            ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
+            ['data' => 'username', 'name' => 'username', 'title' => trans('main.username'), "className" => "align-middle"],
+            ['data' => 'first_name', 'name' => 'name', 'title' => trans('main.name'), "className" => "align-middle"],
+            [
+                'data' => 'active',
+                'name' => 'active',
+                'title' => trans('main.active'),
+                "className" => "text-center align-middle",
+                'defaultContent' => ''
+            ],
+            ['data' => 'created_at', 'name' => 'created_at', 'title' => trans('main.created_at'), "className" => "align-middle"],
+            ['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('main.updated_at'), "className" => "align-middle"],
+        ];
     }
+
 }

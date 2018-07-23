@@ -1,11 +1,11 @@
 @extends('layout.main')
 
 @section('title')
-    Manage User
+    {{ trans('main.manage_user') }}
 @endsection
 
 @section('content_title')
-    Manage User
+    {{ trans('main.manage_user') }}
 @endsection
 
 @section('content')
@@ -42,7 +42,7 @@
                         <span>
                             <i class="la la-plus" style="font-weight: bold"></i>
                             <span>
-                                Add
+                                {{ trans('main.add') }}
                             </span>
                         </span>
                         </a>
@@ -59,9 +59,11 @@
             <!--end: Datatable -->
         </div>
     </div>
-
+    @include('partial.confirm_delete')
     @push('scripts')
         <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
         {!! $dataTable->scripts() !!}
     @endpush
+
 @endsection

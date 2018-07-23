@@ -1,11 +1,11 @@
 @extends('layout.main')
 
 @section('title')
-    Manage Permission
+    {{ trans('main.manage_permission') }}
 @endsection
 
 @section('content_title')
-    View Permission
+    {{ trans('main.edit_permission') }}
 @endsection
 
 @section('content')
@@ -65,7 +65,7 @@
                             <div class="row">
                                 <div class="col-lg-5 col-md-5">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-5 col-form-label">Permission name
+                                        <label for="inputPassword" class="col-sm-5 col-form-label">{{ trans('main.permission_name') }}
                                             :</label>
                                         <div class="col-sm-7">
                                             <input type="text" class="form-control" name="name"
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-5 col-form-label">Description
+                                        <label for="inputPassword" class="col-sm-5 col-form-label">{{ trans('main.description') }}
                                             :</label>
                                         <div class="col-sm-7">
                                             <div class="form-check">
@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-5 col-form-label">Active
+                                        <label for="inputPassword" class="col-sm-5 col-form-label">{{ trans('main.active') }}
                                             :</label>
                                         <div class="col-sm-7">
                                             <div class="form-check">
@@ -97,16 +97,16 @@
                                     <table class="table table-striped m-table table-responsive">
                                         <thead>
                                         <tr>
-                                            <th rowspan="2">Menu</th>
-                                            <th rowspan="2">Sub menu</th>
-                                            <th rowspan="2">Use</th>
-                                            <th colspan="3">Permission</th>
-                                            <th colspan="2">Export</th>
+                                            <th rowspan="2">{{ trans('main.menu') }}</th>
+                                            <th rowspan="2">{{ trans('main.sub_menu') }}</th>
+                                            <th rowspan="2">{{ trans('main.use') }}</th>
+                                            <th colspan="3">{{ trans('main.permission') }}</th>
+                                            <th colspan="2">{{ trans('main.export') }}</th>
                                         </tr>
                                         <tr>
-                                            <th>Add</th>
-                                            <th>Update</th>
-                                            <th>Delete</th>
+                                            <th>{{ trans('main.add') }}</th>
+                                            <th>{{ trans('main.update') }}</th>
+                                            <th>{{ trans('main.delete') }}</th>
                                             <th>Excel</th>
                                             <th>PDF</th>
                                         </tr>
@@ -252,10 +252,10 @@
                             <div class="row">
                                 <div class="col-md-12 m--margin-top-30 text-center">
                                     <button type="submit" class="btn btn-primary m--margin-right-20">
-                                        Submit
+                                        {{ trans('main.save') }}
                                     </button>
                                     <a href="{{ route('permission.index') }}" class="btn btn-danger">
-                                        Cancel
+                                        {{ trans('main.back') }}
                                     </a>
                                 </div>
                             </div>

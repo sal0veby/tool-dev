@@ -2,6 +2,7 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\Models\UserPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -119,6 +120,19 @@ trait AuthenticatesUsers
     protected function authenticated(Request $request, $user)
     {
         if ($user->active == true) {
+            $user_permission = UserPermission::where(['user_id' => $user->id , 'active' => true])->get();
+
+            $menu_permission = [];
+            foreach ($user_permission as  $val){
+                $menu_permission[$val->menu_id] = [
+                    'use' => $val->use,
+                    'update' => $val->update,
+                    'delete' => $val->delete,
+                    'excel' => $val->use,
+                    'pdf' => $val->use
+                ];
+            }
+
             session([
                 'id' => base64_encode($user->id),
                 'username' => $user->username,
@@ -126,7 +140,7 @@ trait AuthenticatesUsers
                 'last_name' => $user->last_name,
                 'full_name' => $user->first_name . ' ' . $user->last_name,
                 'email' => $user->email,
-                'active' => $user->active
+                'permission' => $menu_permission,
             ]);
         }
     }

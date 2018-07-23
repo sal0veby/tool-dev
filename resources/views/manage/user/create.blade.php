@@ -1,11 +1,11 @@
 @extends('layout.main')
 
 @section('title')
-    Manage Permission
+    {{ trans('main.manage_user') }}
 @endsection
 
 @section('content_title')
-    Add Permission
+    {{ trans('main.add_user') }}
 @endsection
 
 @section('content')
@@ -64,7 +64,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-4 col-form-label">First name
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">{{ trans('main.first_name') }}
                                             :</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="first_name"
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-4 col-form-label">Last name
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">{{ trans('main.last_name') }}
                                             :</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="last_name"
@@ -87,7 +87,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-4 col-form-label">Email
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">{{ trans('main.email') }}
                                             :</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="email"
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-4 col-form-label">Tel No.
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">{{ trans('main.tel') }}
                                             :</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="tel"
@@ -110,7 +110,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-4 col-form-label">Company name
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">{{ trans('main.company_name') }}
                                             :</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="company_name"
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-4 col-form-label">Permission.
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">{{ trans('main.permission') }}
                                             :</label>
                                         <div class="col-sm-8">
                                             <select class="form-control m-input m-input--square" name="permission_id">
@@ -146,7 +146,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-4 col-form-label">Username
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">{{ trans('main.username') }}
                                             :</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="username"
@@ -156,7 +156,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
-                                        <label for="inputPassword" class="col-sm-4 col-form-label">Password.
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">{{ trans('main.password') }}
                                             :</label>
                                         <div class="col-sm-8">
                                             <input type="password" class="form-control" name="password"
@@ -169,10 +169,10 @@
                             <div class="row">
                                 <div class="col-md-12 m--margin-top-30 text-center">
                                     <button type="submit" class="btn btn-primary m--margin-right-20">
-                                        Submit
+                                        {{ trans('main.save') }}
                                     </button>
                                     <a href="{{ route('user.index') }}" class="btn btn-danger">
-                                        Cancel
+                                        {{ trans('main.back') }}
                                     </a>
                                 </div>
                             </div>
