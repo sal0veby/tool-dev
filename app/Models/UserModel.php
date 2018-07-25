@@ -28,4 +28,9 @@ class UserModel extends Model
         'updated_at'
     ];
 
+    public function user_permission()
+    {
+        return $this->hasMany(UserPermission::class,'user_id');
+    }
+
 }

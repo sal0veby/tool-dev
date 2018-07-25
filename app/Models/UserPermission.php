@@ -21,4 +21,10 @@ class UserPermission extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
+
 }

@@ -74,16 +74,18 @@ class UserController extends Controller
     {
         $input = $request->all();
 
-        $data = [
-            'description' => !empty($input['description']) ? $input['description'] : "",
-            'active' => $input['active'] = 'on' ? 1 : 0,
-            'password' => !empty($input['password']) ? bcrypt($input['password']) : $input['old_password'],
-            'updated_by' => base64_decode(session('id'))];
+        $input['active'] = $input['active'] = 'on' ? 1 : 0;
+        $input['password'] = !empty($input['password']) ? bcrypt($input['password']) : $input['old_password'];
+        $input['updated_by'] = base64_decode(session('id'));
 
-        unset($input['old_password']);
+        unset($input['old_password'], $input['_token'], $input['action']);
 
         try {
-            UserModel::where('id', $id)->update($data);
+            UserModel::where('id', $id)->update($input);
+//            if ($input['permission_id'] != $result->permission_id) {
+//            $result = UserModel::where('id', $id)->first();
+//                $this->mapPermission($id, $input['permission_id']);
+//            }
         } catch (\Exception $exception) {
             return redirect()->back()->withErrors('error', trans('error_message.save_false'));
         }
@@ -100,4 +102,38 @@ class UserController extends Controller
         }
         return redirect('permission')->with('success', trans('error_message.save_success'));
     }
+
+    /**
+     * @param $id
+     * @param $permission_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+//    public function mapPermission($id, $permission_id)
+//    {
+//        try { // $menu
+//            $result = Permission::with('children')->where('id', $permission_id)->first()->relationsToArray();
+//
+//            $input = UserModel::with('user_permission')->where('id', $id)->first()->relationsToArray();
+//
+//            foreach ($result['children'] as $index => $val) {
+//                $key = array_search($val->menu_id, array_column($input['user_permission'], 'menu_id'));
+//
+//                $list_data = [
+//                    'use' => $result['children'][$key]['use'],
+//                    'add' => $result['children'][$key]['add'],
+//                    'update' => $result['children'][$key]['update'],
+//                    'delete' => $result['children'][$key]['delete'],
+//                    'excel' => $result['children'][$key]['excel'],
+//                    'pdf' => $result['children'][$key]['pdf'],
+//                    'active' => $result['children'][$key]['active'],
+//                    'updated_by' => base64_decode(session('id'))
+//                ];
+//
+//                UserPermission::where(['user_id' => $id, 'menu_id' => $val->menu_id, 'id' => $val->id])->update($list_data);
+//            }
+//        } catch (\Exception $e) {
+////                dd($e->getMessage());
+//            return redirect()->back()->withErrors('error', trans('error_message.save_false'));
+//        }
+//    }
 }

@@ -59,8 +59,9 @@
             <div class="m-form m-form--label-align-right ">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
-                        <form class="" method="post" action="{{ route('permission.update' , ['id' => array_get($result , 'id')])}}">
+                        <form class="" method="post" action="{{ route('user.update' , ['id' => array_get($result , 'id')])}}">
                             @csrf
+                            <input type="hidden" value="edit" name="action">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
@@ -129,7 +130,7 @@
                                                 </option>
                                                 @forelse($permission as $val)
                                                     <option value="{{ $val->id }}"
-                                                            {{ array_get($result , 'company_name') == $val->id ? 'selected' : '' }}
+                                                            {{ array_get($result , 'permission_id') == $val->id ? 'selected' : '' }}
                                                     >
                                                         {{ $val->name }}
                                                     </option>

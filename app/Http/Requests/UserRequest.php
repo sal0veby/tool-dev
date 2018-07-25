@@ -23,18 +23,16 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $rule['first_name'] = 'required|string';
+        $rule['last_name'] = 'required|string';
+        $rule['email'] = 'required|string';
+        $rule['permission_id'] = 'required|string';
+        $rule['username'] = 'required|string';
         if (request('action') == 'edit') {
-
+            return $rule;
         } else {
-            return [
-                'first_name' => 'required|string',
-                'last_name' => 'required|string',
-                'email' => 'required|email|unique:users,email',
-                'permission_id' => 'required',
-                'username' => 'required|unique:users,username',
-                'password' => 'required| 
-                               min:6',
-            ];
+            $rule['password'] = 'required|min:6';
+            return $rule;
         }
     }
 

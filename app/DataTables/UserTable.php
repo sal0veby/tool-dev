@@ -85,37 +85,55 @@ class UserTable extends DataTable
 
     private function viewToFrontend($model): string
     {
-        $link = url(route('user.view', [
-            'id' => $model->id
-        ]));
+        $route = route('user.view', [$model->id]);
 
-        return link_to($link, "<i class='fa fa-eye'></i>", [
+        $attributes = [
             'id' => "button-edit-{$model->id}",
             'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
             'style' => 'margin-right:10px;',
             'data-toggle' => 'tooltip',
             'data-original-title' => trans('main.view'),
-//            'target' => '_blank',
-        ], false, false);
+        ];
+
+        if (session()->get('permission.11.use') == false) {
+            $attributes = [
+                'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
+                'disabled' => 'disabled',
+            ];
+
+            $route = '#';
+        }
+
+        return link_to($route, "<i class='fa fa-eye'></i>", $attributes, false, false);
+
     }
 
     private function editButton($model): string
     {
         $route = route('user.edit', [$model->id]);
 
-        return link_to($route, "<i class='fa fa-edit'></i>", [
+        $attributes = [
             'id' => "button-edit-{$model->id}",
             'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
             'style' => 'margin-right:10px;',
             'data-toggle' => 'tooltip',
             'data-original-title' => trans('main.edit'),
-        ], false, false);
+        ];
+
+        if (session()->get('permission.11.update') == false) {
+            $attributes = [
+                'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
+                'disabled' => 'disabled',
+            ];
+
+            $route = '#';
+        }
+
+        return link_to($route, "<i class='fa fa-edit'></i>", $attributes, false, false);
     }
 
     private function deleteButton($model): string
     {
-//        $route = route('user.delete', [$model->id]);
-
         $attributes = [
             'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete',
             'data-toggle' => 'tooltip',
@@ -123,12 +141,13 @@ class UserTable extends DataTable
             'data-url' => route('user.delete', [$model->id]),
         ];
 
-//        if ($model->isUsed()) {
-//            $attributes = [
-//                'class' => 'btn btn-xs btn-danger',
-//                'disabled' => 'disabled',
-//            ];
-//        }
+        if (session()->get('permission.11.delete') == false) {
+            $attributes = [
+                'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete disabled',
+                'disabled' => 'disabled',
+            ];
+        }
+
         if ($model->default == true) {
             $attributes = [
                 'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
@@ -150,7 +169,14 @@ class UserTable extends DataTable
             'bAutoWidth' => false,
             'info' => false,
             'searching' => false,
-            "responsive" => true
+            "responsive" => true,
+            'pagination' => true,
+            'layout' => [
+                'theme' => '',
+                'class' => '',
+                'scroll' => false,
+                'footer' => false
+            ]
         ];
     }
 

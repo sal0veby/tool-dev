@@ -2,12 +2,13 @@
 
 namespace App\DataTables;
 
-use App\Models\Permission;
+use App\Models\UserPermission;
+use App\User;
 use Carbon\Carbon;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
-class PermissionTable extends DataTable
+class UserPermissionTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
@@ -21,12 +22,8 @@ class PermissionTable extends DataTable
                 return $this->getActionButtons($model);
             })
             ->setRowClass('text-center')
-            ->editColumn('active', function ($model) {
-                if ($model->active == 1) {
-                    return '<span class="m-badge  m-badge--success m-badge--wide">' . trans('main.active_yes') . '</span>';
-                } else {
-                    return '<span class="m-badge  m-badge--danger m-badge--wide">' . trans('main.active_no') . '</span>';
-                }
+            ->editColumn('first_name', function ($model) {
+                return $model->first_name . " " . $model->last_name;
             })
             ->editColumn('created_at', function ($model) {
                 return Carbon::parse($model->created_at)
@@ -36,7 +33,7 @@ class PermissionTable extends DataTable
                 return Carbon::parse($model->updated_at)
                     ->format(config('date.default_date_format'));
             })
-            ->rawColumns(['active', 'action'])
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -46,14 +43,22 @@ class PermissionTable extends DataTable
     }
 
     /**
-     * @return \Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\QueryDataTable
+     * Get query source of dataTable.
+     *
+     * @param \App\User $model
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query()
     {
-        $query = Permission::query()->select(['id', 'name', 'active'])->whereNull('parent_id')->orderBy('name', 'ASC');
+        $query = User::query()->select('*')->orderBy('id', 'ASC');
         return $this->applyScopes($query);
     }
 
+    /**
+     * Optional method if you want to use html builder.
+     *
+     * @return \Yajra\DataTables\Html\Builder
+     */
     public function html()
     {
         return $this->builder()
@@ -66,14 +71,14 @@ class PermissionTable extends DataTable
     {
         return implode('&nbsp;', [
             $this->viewToFrontend($model),
-            $this->editButton($model),
-            $this->deleteButton($model)
+            $this->editButton($model)
+//            $this->deleteButton($model)
         ]);
     }
 
     private function viewToFrontend($model): string
     {
-        $route = route('permission.view', [$model->id]);
+        $route = route('user_permission.view', [$model->id]);
 
         $attributes = [
             'id' => "button-edit-{$model->id}",
@@ -83,22 +88,20 @@ class PermissionTable extends DataTable
             'data-original-title' => trans('main.view'),
         ];
 
-        if (session()->get('permission.10.use') == false) {
+        if (session()->get('permission.12.use') == false) {
             $attributes = [
                 'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',
             ];
-
-            $route = '#';
         }
 
         return link_to($route, "<i class='fa fa-eye'></i>", $attributes, false, false);
 
     }
 
-    private function editButton(Permission $model)
+    private function editButton($model): string
     {
-        $route = route('permission.edit', [$model->id]);
+        $route = route('user_permission.edit', [$model->id]);
 
         $attributes = [
             'id' => "button-edit-{$model->id}",
@@ -108,26 +111,23 @@ class PermissionTable extends DataTable
             'data-original-title' => trans('main.edit'),
         ];
 
-        if (session()->get('permission.10.update') == false) {
+        if (session()->get('permission.12.update') == false) {
             $attributes = [
                 'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',
             ];
-
-            $route = '#';
         }
 
         return link_to($route, "<i class='fa fa-edit'></i>", $attributes, false, false);
-
     }
 
-    private function deleteButton(Permission $model)
+    private function deleteButton($model): string
     {
         $attributes = [
             'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete',
             'data-toggle' => 'tooltip',
             'data-original-title' => trans('main.delete'),
-            'data-url' => route('permission.delete', [$model->id]),
+            'data-url' => route('user_permission.delete', [$model->id]),
         ];
 
         if (session()->get('permission.12.delete') == false) {
@@ -159,18 +159,10 @@ class PermissionTable extends DataTable
     {
         return [
             ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
-            ['data' => 'name', 'name' => 'name', 'title' => trans('main.permission_name'), "className" => "align-middle"],
-            [
-                'data' => 'active',
-                'name' => 'active',
-                'title' => trans('main.active'),
-                "className" => "text-center align-middle",
-                'defaultContent' => ''
-            ],
+            ['data' => 'username', 'name' => 'username', 'title' => trans('main.username'), "className" => "align-middle"],
+            ['data' => 'first_name', 'name' => 'name', 'title' => trans('main.name'), "className" => "align-middle"],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => trans('main.created_at'), "className" => "align-middle"],
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('main.updated_at'), "className" => "align-middle"],
         ];
     }
-
-
 }

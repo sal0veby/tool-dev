@@ -121,7 +121,7 @@
                                     <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
                                         <a href="#" class="m-menu__link ">
 												<span class="m-menu__link-text">
-													Report
+													Manage
 												</span>
                                         </a>
                                     </li>
@@ -192,7 +192,7 @@
 
                                     @if(session()->get('permission.12.use') == true)
                                         <li class="m-menu__item " aria-haspopup="true">
-                                            <a href="#" class="m-menu__link ">
+                                            <a href="{{ route('user_permission.index') }}" class="m-menu__link ">
                                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                                     <span></span>
                                                 </i>

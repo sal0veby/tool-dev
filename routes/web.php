@@ -50,6 +50,18 @@ Route::group([
     Route::get('/delete/{id}', 'Manage\UserController@destroy')->name('delete');
 });
 
+Route::group([
+    'prefix' => 'user-permission',
+    'as' => 'user_permission.',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'Manage\UserPermissionController@index')->name('index');
+    Route::get('/view/{id}', 'Manage\UserPermissionController@show')->name('view');
+    Route::get('/edit/{id}', 'Manage\UserPermissionController@edit')->name('edit');
+    Route::post('/update/{id}', 'Manage\UserPermissionController@update')->name('update');
+    Route::get('/delete/{id}', 'Manage\UserPermissionController@destroy')->name('delete');
+});
+
 
 
 //Route::get('wizard/user/{step?}', 'UserWizardController@wizard')->name('wizard.user');
