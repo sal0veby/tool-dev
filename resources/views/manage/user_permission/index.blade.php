@@ -21,7 +21,8 @@
                             <div class="col-md-12">
                                 <div class="m-input-icon m-input-icon--left">
                                     <input type="text" class="form-control m-input m-input--solid"
-                                           placeholder="Search..." id="m_form_search">
+                                           placeholder="Search..." id="custom_search"
+                                           onkeyup='window.LaravelDataTables["dataTableBuilder_user_permission"].draw()'>
                                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                     <span>
                                         <i class="la la-search"></i>
@@ -34,7 +35,8 @@
                     <div class="col-xl-4 order-1 order-xl-2 m--align-right">
                         <button type="button"
                                 class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
-                                id="btn-refresh" style="margin-right: 10px">
+                                id="btn-refresh" style="margin-right: 10px"
+                                onclick='window.LaravelDataTables["dataTableBuilder_user_permission"].ajax.reload()'>
                         <span>
                             <i class="fa flaticon-refresh"></i>
                         </span>
@@ -47,15 +49,13 @@
             <!--begin: Datatable -->
             <div class="m_datatable m-datatable m-datatable--default table table-bordered table-hover m-datatable--subtable m-datatable--loaded m-datatable--scroll"
                  id="local_data" style="">
-                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_user-permission'])  !!}
+                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_user_permission'])  !!}
             </div>
             <!--end: Datatable -->
         </div>
     </div>
     @include('partial.confirm_delete')
     @push('scripts')
-        <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
-
         {!! $dataTable->scripts() !!}
     @endpush
 @endsection

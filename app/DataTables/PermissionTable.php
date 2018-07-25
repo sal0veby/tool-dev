@@ -51,6 +51,11 @@ class PermissionTable extends DataTable
     public function query()
     {
         $query = Permission::query()->select(['id', 'name', 'active'])->whereNull('parent_id')->orderBy('name', 'ASC');
+
+        if (request()->has('custom_search')) {
+            $query->where('name', 'LIKE', "%" . request()->input('custom_search') . "%")->whereNull('parent_id');
+        }
+
         return $this->applyScopes($query);
     }
 
@@ -58,6 +63,9 @@ class PermissionTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
+            ->minifiedAjax('', '
+                data.custom_search = $("#custom_search").val();
+            ')
             ->addAction(['width' => '110px'])
             ->parameters($this->getBuilderParameters());
     }

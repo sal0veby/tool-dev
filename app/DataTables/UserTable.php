@@ -22,7 +22,7 @@ class UserTable extends DataTable
                 return $this->getActionButtons($model);
             })
             ->setRowClass('text-center')
-            ->editColumn('first_name', function ($model) {
+            ->editColumn('name', function ($model) {
                 return $model->first_name . " " . $model->last_name;
             })
             ->editColumn('created_at', function ($model) {
@@ -57,7 +57,12 @@ class UserTable extends DataTable
      */
     public function query()
     {
-        $query = User::query()->select('*')->orderBy('id', 'ASC');
+        $query = UserModel::query()->select('*')->orderBy('id', 'ASC');
+        if (request()->has('custom_search')) {
+            $query->where('first_name', 'LIKE', "%" . request()->input('custom_search') . "%");
+            $query->orWhere('last_name', 'LIKE', "%" . request()->input('custom_search') . "%");
+            $query->orWhere('username', 'LIKE', "%" . request()->input('custom_search') . "%");
+        }
         return $this->applyScopes($query);
     }
 
@@ -70,6 +75,9 @@ class UserTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
+            ->minifiedAjax('', '
+                data.custom_search = $("#custom_search").val();
+            ')
             ->addAction(['width' => '110px'])
             ->parameters($this->getBuilderParameters());
     }
@@ -170,13 +178,7 @@ class UserTable extends DataTable
             'info' => false,
             'searching' => false,
             "responsive" => true,
-            'pagination' => true,
-            'layout' => [
-                'theme' => '',
-                'class' => '',
-                'scroll' => false,
-                'footer' => false
-            ]
+            'ordering' => false
         ];
     }
 
@@ -185,7 +187,7 @@ class UserTable extends DataTable
         return [
             ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
             ['data' => 'username', 'name' => 'username', 'title' => trans('main.username'), "className" => "align-middle"],
-            ['data' => 'first_name', 'name' => 'name', 'title' => trans('main.name'), "className" => "align-middle"],
+            ['data' => 'name', 'name' => 'name', 'title' => trans('main.name'), "className" => "align-middle"],
             [
                 'data' => 'active',
                 'name' => 'active',

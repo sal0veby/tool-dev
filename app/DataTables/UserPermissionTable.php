@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\UserModel;
 use App\Models\UserPermission;
 use App\User;
 use Carbon\Carbon;
@@ -50,7 +51,12 @@ class UserPermissionTable extends DataTable
      */
     public function query()
     {
-        $query = User::query()->select('*')->orderBy('id', 'ASC');
+        $query = UserModel::query()->select('*')->orderBy('id', 'ASC');
+        if (request()->has('custom_search')) {
+            $query->where('first_name', 'LIKE', "%" . request()->input('custom_search') . "%");
+            $query->orWhere('last_name', 'LIKE', "%" . request()->input('custom_search') . "%");
+            $query->orWhere('username', 'LIKE', "%" . request()->input('custom_search') . "%");
+        }
         return $this->applyScopes($query);
     }
 
@@ -63,6 +69,9 @@ class UserPermissionTable extends DataTable
     {
         return $this->builder()
             ->columns($this->getColumns())
+            ->minifiedAjax('', '
+                data.custom_search = $("#custom_search").val();
+            ')
             ->addAction(['width' => '110px'])
             ->parameters($this->getBuilderParameters());
     }

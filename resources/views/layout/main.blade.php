@@ -24,12 +24,6 @@
         });
     </script>
 
-    <script src="{!! asset("js/template/vendors.bundle.js") !!}" type="text/javascript"></script>
-    <script src="{!! asset("js/template/scripts.bundle.js") !!}" type="text/javascript"></script>
-    <script src="{!! asset("js/template/util.js") !!}" type="text/javascript"></script>
-    <script src="{!! asset("js/template/app.js") !!}" type="text/javascript"></script>
-    <script src="{!! asset("js/template/layout.js") !!}" type="text/javascript"></script>
-    <script src="{!! asset("js/sweetalert2.all.min.js") !!}" type="text/javascript"></script>
     <style>
         p {
             margin-bottom: 0px;
@@ -70,6 +64,16 @@
         </div>
     </div>
 </div>
+
+<script src="{!! asset("js/template/vendors.bundle.js") !!}" type="text/javascript"></script>
+<script src="{!! asset("js/template/scripts.bundle.js") !!}" type="text/javascript"></script>
+<script src="{!! asset("js/template/util.js") !!}" type="text/javascript"></script>
+<script src="{!! asset("js/template/app.js") !!}" type="text/javascript"></script>
+<script src="{!! asset("js/template/layout.js") !!}" type="text/javascript"></script>
+<script src="{!! asset("js/sweetalert2.all.min.js") !!}" type="text/javascript"></script>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
 
 @stack('scripts')
 {{--@push('scripts')--}}
