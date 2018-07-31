@@ -2,12 +2,12 @@
 
 namespace App\DataTables;
 
-use App\Models\Permission;
+use App\Models\ClassModel;
 use Carbon\Carbon;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
-class PermissionTable extends DataTable
+class ClassDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
@@ -50,10 +50,10 @@ class PermissionTable extends DataTable
      */
     public function query()
     {
-        $query = Permission::query()->select(['id', 'name', 'active'])->whereNull('parent_id')->orderBy('name', 'ASC');
+        $query = ClassModel::query()->select('*')->orderBy('name', 'ASC');
 
         if (request()->has('custom_search')) {
-            $query->where('name', 'LIKE', "%" . request()->input('custom_search') . "%")->whereNull('parent_id');
+            $query->where('name', 'LIKE', "%" . request()->input('custom_search') . "%");
         }
 
         return $this->applyScopes($query);
@@ -81,7 +81,7 @@ class PermissionTable extends DataTable
 
     private function viewToFrontend($model): string
     {
-        $route = route('permission.view', [$model->id]);
+        $route = route('class.view', [$model->id]);
 
         $attributes = [
             'id' => "button-edit-{$model->id}",
@@ -91,7 +91,7 @@ class PermissionTable extends DataTable
             'data-original-title' => trans('main.view'),
         ];
 
-        if (session()->get('permission.10.use') == false) {
+        if (session()->get('permission.7.use') == false) {
             $attributes = [
                 'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',
@@ -104,9 +104,9 @@ class PermissionTable extends DataTable
 
     }
 
-    private function editButton(Permission $model)
+    private function editButton($model) : string
     {
-        $route = route('permission.edit', [$model->id]);
+        $route = route('class.edit', [$model->id]);
 
         $attributes = [
             'id' => "button-edit-{$model->id}",
@@ -116,7 +116,7 @@ class PermissionTable extends DataTable
             'data-original-title' => trans('main.edit'),
         ];
 
-        if (session()->get('permission.10.update') == false) {
+        if (session()->get('permission.7.update') == false) {
             $attributes = [
                 'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',
@@ -129,16 +129,16 @@ class PermissionTable extends DataTable
 
     }
 
-    private function deleteButton(Permission $model)
+    private function deleteButton($model): string
     {
         $attributes = [
             'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete',
             'data-toggle' => 'tooltip',
             'data-original-title' => trans('main.delete'),
-            'data-url' => route('permission.delete', [$model->id]),
+            'data-url' => route('class.delete', [$model->id]),
         ];
 
-        if (session()->get('permission.12.delete') == false) {
+        if (session()->get('permission.7.delete') == false) {
             $attributes = [
                 'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete disabled',
                 'disabled' => 'disabled',
@@ -167,7 +167,7 @@ class PermissionTable extends DataTable
     {
         return [
             ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
-            ['data' => 'name', 'name' => 'name', 'title' => trans('main.permission_name'), "className" => "align-middle"],
+            ['data' => 'name', 'name' => 'name', 'title' => trans('main.class_name'), "className" => "align-middle"],
             [
                 'data' => 'active',
                 'name' => 'active',
@@ -179,6 +179,4 @@ class PermissionTable extends DataTable
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('main.updated_at'), "className" => "align-middle"],
         ];
     }
-
-
 }

@@ -23,6 +23,34 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'class',
+    'as' => 'class.',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'Manage\ClassController@index')->name('index');
+    Route::get('/view/{id}', 'Manage\ClassController@show')->name('view');
+    Route::get('/add', 'Manage\ClassController@create')->name('add');
+    Route::post('/add', 'Manage\ClassController@store')->name('store');
+    Route::get('/edit/{id}', 'Manage\ClassController@edit')->name('edit');
+    Route::post('/update/{id}', 'Manage\ClassController@update')->name('update');
+    Route::get('/delete/{id}', 'Manage\ClassController@destroy')->name('delete');
+});
+
+Route::group([
+    'prefix' => 'location',
+    'as' => 'location.',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'Manage\LocationController@index')->name('index');
+    Route::get('/view/{id}', 'Manage\LocationController@show')->name('view');
+    Route::get('/add', 'Manage\LocationController@create')->name('add');
+    Route::post('/add', 'Manage\LocationController@store')->name('store');
+    Route::get('/edit/{id}', 'Manage\LocationController@edit')->name('edit');
+    Route::post('/update/{id}', 'Manage\LocationController@update')->name('update');
+    Route::get('/delete/{id}', 'Manage\LocationController@destroy')->name('delete');
+});
+
+Route::group([
     'prefix' => 'permission',
     'as' => 'permission.',
     'middleware' => ['auth']

@@ -2,13 +2,12 @@
 
 namespace App\DataTables;
 
-use App\Models\UserModel;
-use App\User;
+use App\Models\Permission;
 use Carbon\Carbon;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
-class UserTable extends DataTable
+class PermissionDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
@@ -22,8 +21,12 @@ class UserTable extends DataTable
                 return $this->getActionButtons($model);
             })
             ->setRowClass('text-center')
-            ->editColumn('name', function ($model) {
-                return $model->first_name . " " . $model->last_name;
+            ->editColumn('active', function ($model) {
+                if ($model->active == 1) {
+                    return '<span class="m-badge  m-badge--success m-badge--wide">' . trans('main.active_yes') . '</span>';
+                } else {
+                    return '<span class="m-badge  m-badge--danger m-badge--wide">' . trans('main.active_no') . '</span>';
+                }
             })
             ->editColumn('created_at', function ($model) {
                 return Carbon::parse($model->created_at)
@@ -32,13 +35,6 @@ class UserTable extends DataTable
             ->editColumn('updated_at', function ($model) {
                 return Carbon::parse($model->updated_at)
                     ->format(config('date.default_date_format'));
-            })
-            ->editColumn('active', function ($model) {
-                if ($model->active == 1) {
-                    return '<span class="m-badge  m-badge--success m-badge--wide">' . trans('main.active_yes') . '</span>';
-                } else {
-                    return '<span class="m-badge  m-badge--danger m-badge--wide">' . trans('main.active_no') . '</span>';
-                }
             })
             ->rawColumns(['active', 'action'])
             ->make(true);
@@ -50,27 +46,19 @@ class UserTable extends DataTable
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \App\User $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\QueryDataTable
      */
     public function query()
     {
-        $query = UserModel::query()->select('*')->orderBy('id', 'ASC');
+        $query = Permission::query()->select(['id', 'name', 'active'])->whereNull('parent_id')->orderBy('name', 'ASC');
+
         if (request()->has('custom_search')) {
-            $query->where('first_name', 'LIKE', "%" . request()->input('custom_search') . "%");
-            $query->orWhere('last_name', 'LIKE', "%" . request()->input('custom_search') . "%");
-            $query->orWhere('username', 'LIKE', "%" . request()->input('custom_search') . "%");
+            $query->where('name', 'LIKE', "%" . request()->input('custom_search') . "%")->whereNull('parent_id');
         }
+
         return $this->applyScopes($query);
     }
 
-    /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
-     */
     public function html()
     {
         return $this->builder()
@@ -93,7 +81,7 @@ class UserTable extends DataTable
 
     private function viewToFrontend($model): string
     {
-        $route = route('user.view', [$model->id]);
+        $route = route('permission.view', [$model->id]);
 
         $attributes = [
             'id' => "button-edit-{$model->id}",
@@ -103,7 +91,7 @@ class UserTable extends DataTable
             'data-original-title' => trans('main.view'),
         ];
 
-        if (session()->get('permission.11.use') == false) {
+        if (session()->get('permission.10.use') == false) {
             $attributes = [
                 'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',
@@ -116,9 +104,9 @@ class UserTable extends DataTable
 
     }
 
-    private function editButton($model): string
+    private function editButton(Permission $model)
     {
-        $route = route('user.edit', [$model->id]);
+        $route = route('permission.edit', [$model->id]);
 
         $attributes = [
             'id' => "button-edit-{$model->id}",
@@ -128,7 +116,7 @@ class UserTable extends DataTable
             'data-original-title' => trans('main.edit'),
         ];
 
-        if (session()->get('permission.11.update') == false) {
+        if (session()->get('permission.10.update') == false) {
             $attributes = [
                 'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',
@@ -138,27 +126,21 @@ class UserTable extends DataTable
         }
 
         return link_to($route, "<i class='fa fa-edit'></i>", $attributes, false, false);
+
     }
 
-    private function deleteButton($model): string
+    private function deleteButton(Permission $model)
     {
         $attributes = [
             'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete',
             'data-toggle' => 'tooltip',
             'data-original-title' => trans('main.delete'),
-            'data-url' => route('user.delete', [$model->id]),
+            'data-url' => route('permission.delete', [$model->id]),
         ];
 
-        if (session()->get('permission.11.delete') == false) {
+        if (session()->get('permission.10.delete') == false) {
             $attributes = [
                 'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete disabled',
-                'disabled' => 'disabled',
-            ];
-        }
-
-        if ($model->default == true) {
-            $attributes = [
-                'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',
             ];
         }
@@ -177,8 +159,7 @@ class UserTable extends DataTable
             'bAutoWidth' => false,
             'info' => false,
             'searching' => false,
-            "responsive" => true,
-            'ordering' => false
+            "responsive" => true
         ];
     }
 
@@ -186,8 +167,7 @@ class UserTable extends DataTable
     {
         return [
             ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
-            ['data' => 'username', 'name' => 'username', 'title' => trans('main.username'), "className" => "align-middle"],
-            ['data' => 'name', 'name' => 'name', 'title' => trans('main.name'), "className" => "align-middle"],
+            ['data' => 'name', 'name' => 'name', 'title' => trans('main.permission_name'), "className" => "align-middle"],
             [
                 'data' => 'active',
                 'name' => 'active',
@@ -199,5 +179,6 @@ class UserTable extends DataTable
             ['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('main.updated_at'), "className" => "align-middle"],
         ];
     }
+
 
 }

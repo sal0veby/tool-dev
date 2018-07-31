@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserPermissionRequest extends FormRequest
+class ClassRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,21 +24,14 @@ class UserPermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'permission' => 'required'
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'permission.required' => 'กรุณาเลือก :attribute'
+            'name' => 'required|string'
         ];
     }
 
     public function attributes()
     {
         return [
-            'permission' => trans('main.permission')
+            'name' => trans('main.class_name')
         ];
     }
 }

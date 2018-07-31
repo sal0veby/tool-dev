@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Manage;
 
-use App\DataTables\UserTable;
+use App\DataTables\UserDataTable;
 use App\Http\Requests\UserRequest;
 use App\Models\Permission;
 use App\Models\UserModel;
@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function index(UserTable $table)
+    public function index(UserDataTable $table)
     {
         return $table->render('manage.user.index');
     }

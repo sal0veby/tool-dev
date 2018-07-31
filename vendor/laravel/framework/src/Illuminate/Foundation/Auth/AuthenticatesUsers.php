@@ -140,6 +140,7 @@ trait AuthenticatesUsers
                 'last_name' => $user->last_name,
                 'full_name' => $user->first_name . ' ' . $user->last_name,
                 'email' => $user->email,
+                'permission_id' => $user->permission_id,
                 'permission' => $menu_permission,
             ]);
         }

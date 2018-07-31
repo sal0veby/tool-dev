@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Manage;
 
-use App\DataTables\UserPermissionTable;
+use App\DataTables\UserPermissionDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPermissionRequest;
 use App\Models\Menu;
@@ -16,7 +16,7 @@ class UserPermissionController extends Controller
 
     }
 
-    public function index(UserPermissionTable $table)
+    public function index(UserPermissionDataTable $table)
     {
         return $table->render('manage.user_permission.index');
     }

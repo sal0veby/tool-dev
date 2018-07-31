@@ -46,8 +46,8 @@ class PermissionRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Permission name',
-            'permission' => 'Permission'
+            'name' => trans('main.permission_name'),
+            'permission' => trans('main.permission')
         ];
     }
 }

@@ -20,7 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('first_name');
             $table->string('last_name');
-            $table->integer('user_permission')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('tel')->nullable();
+            $table->integer('permission_id')->nullable();
             $table->boolean('active');
             $table->dateTime('login_at')->nullable();
             $table->boolean('default');

@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
-class UserPermissionTable extends DataTable
+class UserPermissionDataTable extends DataTable
 {
     /**
      * @return \Illuminate\Http\JsonResponse
