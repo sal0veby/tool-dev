@@ -140,7 +140,7 @@
 
                                     @if(session()->get('permission.9.use') == true)
                                         <li class="m-menu__item " aria-haspopup="true">
-                                            <a href="{{ route('class.location') }}" class="m-menu__link ">
+                                            <a href="{{ route('location.index') }}" class="m-menu__link ">
                                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                                     <span></span>
                                                 </i>
@@ -153,7 +153,7 @@
 
                                     @if(session()->get('permission.8.use') == true)
                                         <li class="m-menu__item " aria-haspopup="true">
-                                            <a href="#" class="m-menu__link ">
+                                            <a href="{{ route('work_type.index') }}" class="m-menu__link ">
                                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                                     <span></span>
                                                 </i>

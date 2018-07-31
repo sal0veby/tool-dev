@@ -51,6 +51,20 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'work_type',
+    'as' => 'work_type.',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'Manage\WorkTypeController@index')->name('index');
+    Route::get('/view/{id}', 'Manage\WorkTypeController@show')->name('view');
+    Route::get('/add', 'Manage\WorkTypeController@create')->name('add');
+    Route::post('/add', 'Manage\WorkTypeController@store')->name('store');
+    Route::get('/edit/{id}', 'Manage\WorkTypeController@edit')->name('edit');
+    Route::post('/update/{id}', 'Manage\WorkTypeController@update')->name('update');
+    Route::get('/delete/{id}', 'Manage\WorkTypeController@destroy')->name('delete');
+});
+
+Route::group([
     'prefix' => 'permission',
     'as' => 'permission.',
     'middleware' => ['auth']
