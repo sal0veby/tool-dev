@@ -2,70 +2,189 @@
 
 namespace App\DataTables;
 
+use App\Models\ClassModel;
+use App\Models\Location;
 use App\User;
+use Carbon\Carbon;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
 class LocationDataTable extends DataTable
 {
     /**
-     * Build DataTable class.
-     *
-     * @param mixed $query Results from query() method.
-     * @return \Yajra\DataTables\DataTableAbstract
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
+    public function ajax()
+    {
+        return $this->dataTable($this->query())
+            ->addIndexColumn()
+            ->addColumn('action', function ($model) {
+                return $this->getActionButtons($model);
+            })
+            ->setRowClass('text-center')
+            ->editColumn('active', function ($model) {
+                if ($model->active == 1) {
+                    return '<span class="m-badge  m-badge--success m-badge--wide">' . trans('main.active_yes') . '</span>';
+                } else {
+                    return '<span class="m-badge  m-badge--danger m-badge--wide">' . trans('main.active_no') . '</span>';
+                }
+            })
+            ->editColumn('created_at', function ($model) {
+                return Carbon::parse($model->created_at)
+                    ->format(config('date.default_date_format'));
+            })
+            ->editColumn('updated_at', function ($model) {
+                return Carbon::parse($model->updated_at)
+                    ->format(config('date.default_date_format'));
+            })
+            ->rawColumns(['active', 'action'])
+            ->make(true);
+    }
+
     public function dataTable($query)
     {
-        return datatables($query)
-            ->addColumn('action', 'location.action');
+        return new EloquentDataTable($query);
     }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \App\User $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Yajra\DataTables\DataTableAbstract|\Yajra\DataTables\QueryDataTable
      */
-    public function query(User $model)
+    public function query()
     {
-        return $model->newQuery()->select('id', 'add-your-columns-here', 'created_at', 'updated_at');
+        $query = Location::with('class_name')->orderBy('name', 'ASC');
+
+        if (request()->has('custom_search')) {
+            $request = request()->input('custom_search');
+            $query->whereHas('class_name' , function ($q) use ($request) {
+                $q->where('name', 'LIKE', "%" . $request . "%");
+            });
+            $query->orWhere('name', 'LIKE', "%" . $request . "%");
+        }
+
+        return $this->applyScopes($query);
     }
 
-    /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
-     */
     public function html()
     {
         return $this->builder()
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->addAction(['width' => '80px'])
-                    ->parameters($this->getBuilderParameters());
+            ->columns($this->getColumns())
+            ->minifiedAjax('', '
+                data.custom_search = $("#custom_search").val();
+            ')
+            ->addAction(['width' => '110px'])
+            ->parameters($this->getBuilderParameters());
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
-    protected function getColumns()
+    protected function getActionButtons($model)
+    {
+        return implode('&nbsp;', [
+            $this->viewToFrontend($model),
+            $this->editButton($model),
+            $this->deleteButton($model)
+        ]);
+    }
+
+    private function viewToFrontend($model): string
+    {
+        $route = route('location.view', [$model->id]);
+
+        $attributes = [
+            'id' => "button-edit-{$model->id}",
+            'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
+            'style' => 'margin-right:10px;',
+            'data-toggle' => 'tooltip',
+            'data-original-title' => trans('main.view'),
+        ];
+
+        if (session()->get('permission.7.use') == false) {
+            $attributes = [
+                'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
+                'disabled' => 'disabled',
+            ];
+
+            $route = '#';
+        }
+
+        return link_to($route, "<i class='fa fa-eye'></i>", $attributes, false, false);
+
+    }
+
+    private function editButton($model): string
+    {
+        $route = route('location.edit', [$model->id]);
+
+        $attributes = [
+            'id' => "button-edit-{$model->id}",
+            'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill',
+            'style' => 'margin-right:10px;',
+            'data-toggle' => 'tooltip',
+            'data-original-title' => trans('main.edit'),
+        ];
+
+        if (session()->get('permission.7.update') == false) {
+            $attributes = [
+                'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
+                'disabled' => 'disabled',
+            ];
+
+            $route = '#';
+        }
+
+        return link_to($route, "<i class='fa fa-edit'></i>", $attributes, false, false);
+
+    }
+
+    private function deleteButton($model): string
+    {
+        $attributes = [
+            'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete',
+            'data-toggle' => 'tooltip',
+            'data-original-title' => trans('main.delete'),
+            'data-url' => route('location.delete', ['id' => $model->id]),
+        ];
+
+        if (session()->get('permission.7.delete') == false) {
+            $attributes = [
+                'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete disabled',
+                'disabled' => 'disabled',
+            ];
+        }
+
+        return link_to('#', "<i class='fa fa-trash'></i>", $attributes, false, false);
+    }
+
+    protected function getBuilderParameters()
     {
         return [
-            'id',
-            'add your columns',
-            'created_at',
-            'updated_at'
+            'order' => [[0, 'desc']],
+            'dom' => 'Bfrtip',
+            'buttons' => ['reload'],
+            'processing' => true,
+            'pageLength' => 20,
+            'bAutoWidth' => false,
+            'info' => false,
+            'searching' => false,
+            "responsive" => true,
+            'ordering' => false
         ];
     }
 
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename()
+    protected function getColumns()
     {
-        return 'Location_' . date('YmdHis');
+        return [
+            ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
+            ['data' => 'class_name.name', 'name' => 'class_name.name', 'title' => trans('main.class_name'), "className" => "align-middle"],
+            ['data' => 'name', 'name' => 'name', 'title' => trans('main.location_name'), "className" => "align-middle"],
+            [
+                'data' => 'active',
+                'name' => 'active',
+                'title' => trans('main.active'),
+                "className" => "text-center align-middle",
+                'defaultContent' => ''
+            ],
+            ['data' => 'created_at', 'name' => 'created_at', 'title' => trans('main.created_at'), "className" => "align-middle"],
+            ['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('main.updated_at'), "className" => "align-middle"],
+        ];
     }
 }

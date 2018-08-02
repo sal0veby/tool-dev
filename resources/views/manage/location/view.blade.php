@@ -30,20 +30,34 @@
                                                class="col-sm-4 col-form-label">{{ trans('main.class_name') }}
                                             :</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="name" disabled
-                                                   value="{{  array_get($result , 'name') }}">
+                                            <select class="form-control" disabled>
+                                                <option>
+                                                    {{ $result->class_name }}
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
                                         <label for="inputPassword"
-                                               class="col-sm-3 col-form-label">{{ trans('main.active') }}
+                                               class="col-sm-4 col-form-label">{{ trans('main.location_name') }}
                                             :</label>
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" disabled
+                                                   value="{{ $result->name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.active') }}
+                                            :</label>
+                                        <div class="col-sm-8">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="active" disabled
-                                                       style="margin-top: 0.75rem;" {{ array_get($result , 'active') == 1 ? 'checked' : '' }}>
+                                                       style="margin-top: 0.75rem;" {{ $result->active == true ? 'checked' : '' }}>
                                             </div>
                                         </div>
                                     </div>
@@ -52,7 +66,7 @@
 
                             <div class="row">
                                 <div class="col-md-12 m--margin-top-30 text-center">
-                                    <a href="{{ route('class.index') }}" class="btn btn-danger">
+                                    <a href="{{ route('location.index') }}" class="btn btn-danger">
                                         {{ trans('main.back') }}
                                     </a>
                                 </div>

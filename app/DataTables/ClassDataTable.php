@@ -159,7 +159,8 @@ class ClassDataTable extends DataTable
             'bAutoWidth' => false,
             'info' => false,
             'searching' => false,
-            "responsive" => true
+            "responsive" => true,
+            'ordering' => false
         ];
     }
 

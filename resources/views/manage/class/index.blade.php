@@ -35,7 +35,7 @@
                     <div class="col-xl-4 order-1 order-xl-2 m--align-right">
                         <button type="button"
                                 class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
-                                id="btn-refresh" style="margin-right: 10px" onclick='window.LaravelDataTables["dataTableBuilder_user"].ajax.reload()'>
+                                id="btn-refresh" style="margin-right: 10px" onclick='window.LaravelDataTables["dataTableBuilder_class"].ajax.reload()'>
                         <span>
                             <i class="fa flaticon-refresh"></i>
                         </span>

@@ -21,7 +21,7 @@
                                     <div class="m-input-icon m-input-icon--left">
                                         <input type="text" class="form-control m-input m-input--solid"
                                                placeholder="Search..." id="custom_search"
-                                               onkeyup='window.LaravelDataTables["dataTableBuilder_class"].draw()'>
+                                               onkeyup='window.LaravelDataTables["dataTableBuilder_location"].draw()'>
                                         <span class="m-input-icon__icon m-input-icon__icon--left">
                                             <span>
                                               <i class="la la-search"></i>
@@ -35,12 +35,12 @@
                     <div class="col-xl-4 order-1 order-xl-2 m--align-right">
                         <button type="button"
                                 class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
-                                id="btn-refresh" style="margin-right: 10px" onclick='window.LaravelDataTables["dataTableBuilder_user"].ajax.reload()'>
+                                id="btn-refresh" style="margin-right: 10px" onclick='window.LaravelDataTables["dataTableBuilder_location"].ajax.reload()'>
                         <span>
                             <i class="fa flaticon-refresh"></i>
                         </span>
                         </button>
-                        <a href="{{ route('class.add') }}" id="add"
+                        <a href="{{ route('location.add') }}" id="add"
                            class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
                         <span>
                             <i class="la la-plus" style="font-weight: bold"></i>
@@ -57,7 +57,7 @@
             <!--begin: Datatable -->
             <div class="m_datatable m-datatable m-datatable--default table table-bordered table-hover m-datatable--subtable m-datatable--loaded m-datatable--scroll"
                  id="local_data" style="">
-                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_class'])  !!}
+                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_location'])  !!}
             </div>
             <!--end: Datatable -->
         </div>

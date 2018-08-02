@@ -16,4 +16,10 @@ class Location extends Model
         'created_at',
         'updated_at'
     ];
+
+
+    public function class_name()
+    {
+        return $this->hasOne(ClassModel::class, 'id' , 'class_id');
+    }
 }

@@ -22,7 +22,8 @@
             <div class="m-form m-form--label-align-right ">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
-                        <form class="" method="post" action="{{ route('class.update' , ['id' => array_get($result , 'id')])}}">
+                        <form class="" method="post"
+                              action="{{ route('location.update' , ['id' => array_get($result , 'id')])}}">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
@@ -31,20 +32,41 @@
                                                class="col-sm-4 col-form-label">{{ trans('main.class_name') }}
                                             :</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="name"
-                                                   value="{{ array_get($result , 'name') }}">
+                                            <select class="form-control" name="class_id">
+                                                <option value="">
+                                                    ----- Please select -----
+                                                </option>
+                                                @forelse($class_list as $val)
+                                                    <option value="{{ $val->id }}"
+                                                        {{ $result->class_id == $val->id ? 'selected' : '' }}>
+                                                        {{ $val->name }}
+                                                    </option>
+                                                @empty
+                                                @endforelse
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
                                         <label for="inputPassword"
-                                               class="col-sm-3 col-form-label">{{ trans('main.active') }}
+                                               class="col-sm-4 col-form-label">{{ trans('main.location_name') }}
                                             :</label>
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="name"
+                                                   value="{{ $result->name }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.active') }}
+                                            :</label>
+                                        <div class="col-sm-8">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="active"
-                                                       style="margin-top: 0.75rem;" {{ array_get($result , 'active') == 1 ? 'checked' : '' }}>
+                                                       style="margin-top: 0.75rem;" {{ $result->active == true ? 'checked' : '' }}>
                                             </div>
                                         </div>
                                     </div>
@@ -56,7 +78,7 @@
                                     <button type="submit" class="btn btn-primary m--margin-right-20">
                                         {{ trans('main.save') }}
                                     </button>
-                                    <a href="{{ route('class.index') }}" class="btn btn-danger">
+                                    <a href="{{ route('location.index') }}" class="btn btn-danger">
                                         {{ trans('main.back') }}
                                     </a>
                                 </div>

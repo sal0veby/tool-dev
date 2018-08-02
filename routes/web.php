@@ -28,12 +28,12 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'Manage\ClassController@index')->name('index');
-    Route::get('/view/{id}', 'Manage\ClassController@show')->name('view');
+    Route::get('/{id}/view', 'Manage\ClassController@show')->name('view');
     Route::get('/add', 'Manage\ClassController@create')->name('add');
     Route::post('/add', 'Manage\ClassController@store')->name('store');
-    Route::get('/edit/{id}', 'Manage\ClassController@edit')->name('edit');
-    Route::post('/update/{id}', 'Manage\ClassController@update')->name('update');
-    Route::get('/delete/{id}', 'Manage\ClassController@destroy')->name('delete');
+    Route::get('/{id}/edit', 'Manage\ClassController@edit')->name('edit');
+    Route::post('/{id}/update', 'Manage\ClassController@update')->name('update');
+    Route::get('/{id}/delete', 'Manage\ClassController@destroy')->name('delete');
 });
 
 Route::group([
@@ -42,12 +42,12 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'Manage\LocationController@index')->name('index');
-    Route::get('/view/{id}', 'Manage\LocationController@show')->name('view');
+    Route::get('/{id}/view', 'Manage\LocationController@show')->name('view');
     Route::get('/add', 'Manage\LocationController@create')->name('add');
     Route::post('/add', 'Manage\LocationController@store')->name('store');
-    Route::get('/edit/{id}', 'Manage\LocationController@edit')->name('edit');
-    Route::post('/update/{id}', 'Manage\LocationController@update')->name('update');
-    Route::get('/delete/{id}', 'Manage\LocationController@destroy')->name('delete');
+    Route::get('/{id}/edit', 'Manage\LocationController@edit')->name('edit');
+    Route::post('/{id}/update', 'Manage\LocationController@update')->name('update');
+    Route::get('/{id}/delete', 'Manage\LocationController@destroy')->name('delete');
 });
 
 Route::group([
@@ -56,12 +56,12 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'Manage\WorkTypeController@index')->name('index');
-    Route::get('/view/{id}', 'Manage\WorkTypeController@show')->name('view');
+    Route::get('/{id}/view', 'Manage\WorkTypeController@show')->name('view');
     Route::get('/add', 'Manage\WorkTypeController@create')->name('add');
     Route::post('/add', 'Manage\WorkTypeController@store')->name('store');
-    Route::get('/edit/{id}', 'Manage\WorkTypeController@edit')->name('edit');
-    Route::post('/update/{id}', 'Manage\WorkTypeController@update')->name('update');
-    Route::get('/delete/{id}', 'Manage\WorkTypeController@destroy')->name('delete');
+    Route::get('/{id}/edit', 'Manage\WorkTypeController@edit')->name('edit');
+    Route::post('/{id}/update', 'Manage\WorkTypeController@update')->name('update');
+    Route::get('/{id}/delete', 'Manage\WorkTypeController@destroy')->name('delete');
 });
 
 Route::group([
@@ -70,12 +70,12 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'Manage\PermissionController@index')->name('index');
-    Route::get('/view/{id}', 'Manage\PermissionController@show')->name('view');
+    Route::get('/{id}/view', 'Manage\PermissionController@show')->name('view');
     Route::get('/add', 'Manage\PermissionController@create')->name('add');
     Route::post('/add', 'Manage\PermissionController@store')->name('store');
-    Route::get('/edit/{id}', 'Manage\PermissionController@edit')->name('edit');
-    Route::post('/update/{id}', 'Manage\PermissionController@update')->name('update');
-    Route::get('/delete/{id}', 'Manage\PermissionController@destroy')->name('delete');
+    Route::get('/{id}/edit', 'Manage\PermissionController@edit')->name('edit');
+    Route::post('/{id}/update', 'Manage\PermissionController@update')->name('update');
+    Route::get('/{id}/delete', 'Manage\PermissionController@destroy')->name('delete');
 });
 
 Route::group([
@@ -84,12 +84,12 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'Manage\UserController@index')->name('index');
-    Route::get('/view/{id}', 'Manage\UserController@show')->name('view');
+    Route::get('/{id}/view', 'Manage\UserController@show')->name('view');
     Route::get('/add', 'Manage\UserController@create')->name('add');
     Route::post('/add', 'Manage\UserController@store')->name('store');
-    Route::get('/edit/{id}', 'Manage\UserController@edit')->name('edit');
-    Route::post('/update/{id}', 'Manage\UserController@update')->name('update');
-    Route::get('/delete/{id}', 'Manage\UserController@destroy')->name('delete');
+    Route::get('/{id}/edit', 'Manage\UserController@edit')->name('edit');
+    Route::post('/{id}/update', 'Manage\UserController@update')->name('update');
+    Route::get('/{id}/delete', 'Manage\UserController@destroy')->name('delete');
 });
 
 Route::group([
@@ -98,10 +98,10 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'Manage\UserPermissionController@index')->name('index');
-    Route::get('/view/{id}', 'Manage\UserPermissionController@show')->name('view');
-    Route::get('/edit/{id}', 'Manage\UserPermissionController@edit')->name('edit');
-    Route::post('/update/{id}', 'Manage\UserPermissionController@update')->name('update');
-    Route::get('/delete/{id}', 'Manage\UserPermissionController@destroy')->name('delete');
+    Route::get('/{id}/view', 'Manage\UserPermissionController@show')->name('view');
+    Route::get('/{id}/edit', 'Manage\UserPermissionController@edit')->name('edit');
+    Route::post('/{id}/update', 'Manage\UserPermissionController@update')->name('update');
+    Route::get('/{id}/delete', 'Manage\UserPermissionController@destroy')->name('delete');
 });
 
 
