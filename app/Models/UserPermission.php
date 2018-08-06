@@ -17,9 +17,7 @@ class UserPermission extends Model
         'pdf',
         'active',
         'created_by',
-        'updated_by',
-        'created_at',
-        'updated_at'
+        'updated_by'
     ];
 
     public function __construct(array $attributes = [])

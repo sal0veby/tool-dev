@@ -33,7 +33,7 @@ Route::group([
     Route::post('/add', 'Manage\ClassController@store')->name('store');
     Route::get('/{id}/edit', 'Manage\ClassController@edit')->name('edit');
     Route::post('/{id}/update', 'Manage\ClassController@update')->name('update');
-    Route::get('/{id}/delete', 'Manage\ClassController@destroy')->name('delete');
+    Route::delete('/{id}/delete', 'Manage\ClassController@destroy')->name('delete');
 });
 
 Route::group([
@@ -47,7 +47,9 @@ Route::group([
     Route::post('/add', 'Manage\LocationController@store')->name('store');
     Route::get('/{id}/edit', 'Manage\LocationController@edit')->name('edit');
     Route::post('/{id}/update', 'Manage\LocationController@update')->name('update');
-    Route::get('/{id}/delete', 'Manage\LocationController@destroy')->name('delete');
+    Route::delete('/{id}/delete', 'Manage\LocationController@destroy')->name('delete');
+
+    Route::get('/getLocationList', 'Manage\LocationController@getLocationList')->name('getLocationList');
 });
 
 Route::group([
@@ -61,7 +63,7 @@ Route::group([
     Route::post('/add', 'Manage\WorkTypeController@store')->name('store');
     Route::get('/{id}/edit', 'Manage\WorkTypeController@edit')->name('edit');
     Route::post('/{id}/update', 'Manage\WorkTypeController@update')->name('update');
-    Route::get('/{id}/delete', 'Manage\WorkTypeController@destroy')->name('delete');
+    Route::delete('/{id}/delete', 'Manage\WorkTypeController@destroy')->name('delete');
 });
 
 Route::group([
@@ -75,7 +77,7 @@ Route::group([
     Route::post('/add', 'Manage\PermissionController@store')->name('store');
     Route::get('/{id}/edit', 'Manage\PermissionController@edit')->name('edit');
     Route::post('/{id}/update', 'Manage\PermissionController@update')->name('update');
-    Route::get('/{id}/delete', 'Manage\PermissionController@destroy')->name('delete');
+    Route::delete('/{id}/delete', 'Manage\PermissionController@destroy')->name('delete');
 });
 
 Route::group([
@@ -89,7 +91,7 @@ Route::group([
     Route::post('/add', 'Manage\UserController@store')->name('store');
     Route::get('/{id}/edit', 'Manage\UserController@edit')->name('edit');
     Route::post('/{id}/update', 'Manage\UserController@update')->name('update');
-    Route::get('/{id}/delete', 'Manage\UserController@destroy')->name('delete');
+    Route::delete('/{id}/delete', 'Manage\UserController@destroy')->name('delete');
 });
 
 Route::group([
@@ -101,9 +103,8 @@ Route::group([
     Route::get('/{id}/view', 'Manage\UserPermissionController@show')->name('view');
     Route::get('/{id}/edit', 'Manage\UserPermissionController@edit')->name('edit');
     Route::post('/{id}/update', 'Manage\UserPermissionController@update')->name('update');
-    Route::get('/{id}/delete', 'Manage\UserPermissionController@destroy')->name('delete');
+    Route::delete('/{id}/delete', 'Manage\UserPermissionController@destroy')->name('delete');
 });
-
 
 
 //Route::get('wizard/user/{step?}', 'UserWizardController@wizard')->name('wizard.user');

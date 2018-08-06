@@ -9,14 +9,21 @@ class WorkType extends Model
     protected $table = 'work_types';
 
     protected $fillable = [
-        'id',
         'class_id',
         'location_id',
         'name',
         'active',
         'created_by',
-        'updated_by',
-        'created_at',
-        'updated_at'
+        'updated_by'
     ];
+
+    public function class_name()
+    {
+        return $this->hasOne(ClassModel::class, 'id' , 'class_id');
+    }
+
+    public function location()
+    {
+        return $this->hasOne(Location::class, 'id' , 'location_id');
+    }
 }

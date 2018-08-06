@@ -59,7 +59,7 @@ return [
     'manage_step_job_list' => 'จัดการขั้นตอนการขออนุญาต',
     'manage_user' => 'จัดการผู้ใช้งาน',
     'manage_user_permission' => 'จัดการสิทธิผู้ใช้งาน',
-    'manage_location' => 'จัดการประเภทของงาน',
+    'manage_work_type' => 'จัดการประเภทของงาน',
     'menu' => 'เมนู',
 
     // ******* ์ N*********

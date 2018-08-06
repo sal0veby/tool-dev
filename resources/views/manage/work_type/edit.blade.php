@@ -1,11 +1,11 @@
 @extends('layout.main')
 
 @section('title')
-    {{ trans('main.manage_class') }}
+    {{ trans('main.manage_work_type') }}
 @endsection
 
 @section('content_title')
-    {{ trans('main.edit_class') }}
+    {{ trans('main.add_work_type') }}
 @endsection
 
 @section('content')
@@ -22,7 +22,8 @@
             <div class="m-form m-form--label-align-right ">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
-                        <form class="" method="post" action="{{ route('class.update' , ['id' => array_get($result , 'id')])}}">
+                        <form class="" method="post"
+                              action="{{ route('work_type.update' , ['id' => array_get($result , 'id')]) }}">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
@@ -31,20 +32,62 @@
                                                class="col-sm-4 col-form-label">{{ trans('main.class_name') }}
                                             :</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="name"
-                                                   value="{{ array_get($result , 'name') }}">
+                                            <select class="form-control" name="class_id" id="class_id">
+                                                <option value="" {{ old('class_id') == '' ? 'selected' : '' }}>
+                                                    ----- Please select -----
+                                                </option>
+                                                @forelse($class_list as $val)
+                                                    <option value="{{ $val->id }}"
+                                                        {{ $result['class_id'] == $val->id ? 'selected' : '' }}>
+                                                        {{ $val->name }}
+                                                    </option>
+                                                @empty
+                                                @endforelse
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group row">
                                         <label for="inputPassword"
-                                               class="col-sm-3 col-form-label">{{ trans('main.active') }}
+                                               class="col-sm-4 col-form-label">{{ trans('main.location_name') }}
                                             :</label>
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="location_id" id="location_id">
+                                                <option value="" {{ old('location_id') == '' ? 'selected' : '' }}>
+                                                    ----- Please select -----
+                                                </option>
+                                                @forelse($location_list as $val)
+                                                    <option value="{{ $val->id }}"
+                                                        {{ $result['location_id'] == $val->id ? 'selected' : '' }}>
+                                                        {{ $val->name }}
+                                                    </option>
+                                                @empty
+                                                @endforelse
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.work_type_name') }}
+                                            :</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="name"
+                                                   value="{{ $result['name'] }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputPassword"
+                                               class="col-sm-4 col-form-label">{{ trans('main.active') }}
+                                            :</label>
+                                        <div class="col-sm-8">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="active"
-                                                       style="margin-top: 0.75rem;" {{ array_get($result , 'active') == 1 ? 'checked' : '' }}>
+                                                       style="margin-top: 0.75rem;" {{ $result['active'] == true ? 'checked' : '' }}>
                                             </div>
                                         </div>
                                     </div>
@@ -68,4 +111,28 @@
             <!--end: Search Form -->
         </div>
     </div>
+
+
+    @push('scripts')
+        <script>
+            $('document').ready(function () {
+
+                $('#class_id').change(function () {
+                    $.get('{{ route('location.getLocationList') }}', {'class_id': $(this).val()}, function ($response) {
+                        $('#location_id').html('');
+                        if ($response) {
+                            var str = '<option value="">----- Please select -----</option>';
+                            $.each($response, function ($k, $val) {
+                                str += '<option value="' + $val.id + '">' + $val.name + '</option>';
+                            })
+                            $('#location_id').append(str);
+                        } else {
+                            $('#location_id').append('<option value="">----- Please select -----</option>');
+                        }
+                    })
+                })
+            })
+        </script>
+    @endpush
+
 @endsection

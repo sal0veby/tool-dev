@@ -12,7 +12,6 @@ class Permission extends Model
     protected $table = 'permissions';
 
     protected $fillable = [
-        'id',
         'name',
         'description',
         'active',
@@ -24,8 +23,6 @@ class Permission extends Model
         'delete',
         'excel',
         'parent_id',
-        'created_at',
-        'updated_at'
     ];
 
 

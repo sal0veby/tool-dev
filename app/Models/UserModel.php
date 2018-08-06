@@ -12,7 +12,6 @@ class UserModel extends Model
     protected $table = 'users';
 
     protected $fillable = [
-        'id',
         'username',
         'password',
         'description',
@@ -23,9 +22,7 @@ class UserModel extends Model
         'active',
         'default',
         'created_by',
-        'updated_by',
-        'created_at',
-        'updated_at'
+        'updated_by'
     ];
 
     public function user_permission()

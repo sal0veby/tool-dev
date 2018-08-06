@@ -35,7 +35,8 @@
                     <div class="col-xl-4 order-1 order-xl-2 m--align-right">
                         <button type="button"
                                 class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
-                                id="btn-refresh" style="margin-right: 10px" onclick='window.LaravelDataTables["dataTableBuilder_location"].ajax.reload()'>
+                                id="btn-refresh" style="margin-right: 10px"
+                                onclick='window.LaravelDataTables["dataTableBuilder_location"].ajax.reload()'>
                         <span>
                             <i class="fa flaticon-refresh"></i>
                         </span>
@@ -55,8 +56,9 @@
             </div>
             <!--end: Search Form -->
             <!--begin: Datatable -->
-            <div class="m_datatable m-datatable m-datatable--default table table-bordered table-hover m-datatable--subtable m-datatable--loaded m-datatable--scroll"
-                 id="local_data" style="">
+            <div
+                class="m_datatable m-datatable m-datatable--default table table-bordered table-hover m-datatable--subtable m-datatable--loaded m-datatable--scroll"
+                id="local_data" style="">
                 {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_location'])  !!}
             </div>
             <!--end: Datatable -->
