@@ -43,7 +43,7 @@ class WorkTypeController extends Controller
             return redirect()->back()->withErrors('error', trans('error_message.save_false'));
         }
 
-        return redirect('work_type')->with('success', trans('error_message.save_success'));
+        return redirect('work-type')->with('success', trans('error_message.save_success'));
     }
 
     public function show($id)
@@ -81,7 +81,7 @@ class WorkTypeController extends Controller
             return redirect()->back()->withErrors('error', trans('error_message.save_false'));
         }
 
-        return redirect('work_type')->with('success', trans('error_message.save_success'));
+        return redirect('work-type')->with('success', trans('error_message.save_success'));
     }
 
     public function destroy($id)

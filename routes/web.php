@@ -53,7 +53,7 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'work_type',
+    'prefix' => 'work-type',
     'as' => 'work_type.',
     'middleware' => ['auth']
 ], function () {
@@ -104,6 +104,18 @@ Route::group([
     Route::get('/{id}/edit', 'Manage\UserPermissionController@edit')->name('edit');
     Route::post('/{id}/update', 'Manage\UserPermissionController@update')->name('update');
     Route::delete('/{id}/delete', 'Manage\UserPermissionController@destroy')->name('delete');
+});
+
+Route::group([
+    'prefix' => 'manage-step',
+    'as' => 'manage_step.',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'ManageStepController@index')->name('index');
+    Route::post('/add', 'ManageStepController@store')->name('store');
+    Route::get('/{id}/edit', 'ManageStepController@edit')->name('edit');
+    Route::post('/{id}/update', 'ManageStepController@update')->name('update');
+    Route::delete('/{id}/delete', 'ManageStepController@destroy')->name('delete');
 });
 
 

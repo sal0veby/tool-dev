@@ -5,7 +5,7 @@
 @endsection
 
 @section('content_title')
-    {{ trans('main.add_work_type') }}
+    {{ trans('main.edit_work_type') }}
 @endsection
 
 @section('content')
