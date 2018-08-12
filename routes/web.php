@@ -112,12 +112,19 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'ManageStepController@index')->name('index');
-    Route::post('/add', 'ManageStepController@store')->name('store');
-    Route::get('/{id}/edit', 'ManageStepController@edit')->name('edit');
-    Route::post('/{id}/update', 'ManageStepController@update')->name('update');
-    Route::delete('/{id}/delete', 'ManageStepController@destroy')->name('delete');
+    Route::post('/update', 'ManageStepController@update')->name('update');
 });
 
+Route::group([
+    'prefix' => 'job-list',
+    'as' => 'job_list.',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'JobListController@index')->name('index');
+    Route::post('/update', 'JobListController@update')->name('update');
+});
+
+Route::get('/user/{step?}', 'UserWizardController@wizard')->name('wizard.user');
 
 //Route::get('wizard/user/{step?}', 'UserWizardController@wizard')->name('wizard.user');
 //Route::post('wizard/user/{step}', 'UserWizardController@wizardPost')->name('wizard.user.post');
