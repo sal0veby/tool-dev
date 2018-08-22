@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ManageStepRequest;
+use App\Models\ManageStep;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,32 +21,45 @@ class ManageStepController extends Controller
 
         $hot_work = json_decode(file_get_contents(base_path('resources/views') . "/step_hot_work.json"), true);
 
-        return view('manage.step_workflow.index', compact('permission', 'hot_work'));
+        $result = ManageStep::get();
+
+        return view('manage.step_workflow.index', [
+            'permission' => $permission,
+            'hot_work' => $hot_work,
+            'result' => $result
+        ]);
     }
 
-    public function create()
+    public function update(ManageStepRequest $request)
     {
-        //
-    }
+        $input = $request->all();
 
-    public function store()
-    {
-        //
-    }
+        $result_step = ManageStep::get();
 
-    public function show($id)
-    {
-        //
-    }
+        foreach ($input['permission_id'] as $key => $val) {
+            $list['permission_id'] = $val;
+            $list['process_hot_work_id'] = array_get($input['hot_work_id'], $key);
+            $list['updated_by'] = base64_decode(session('id'));
 
-    public function edit($id)
-    {
-        //
-    }
 
-    public function update($id)
-    {
-        //
+            if ($result_step->count() > 0) {
+                try {
+                    ManageStep::where('id', $key)->update($list);
+                } catch (\Exception $exception) {
+                    return redirect()->back()->withErrors('error', trans('error_message.save_false'));
+                }
+            } else {
+                try {
+                    ManageStep::create($list);
+                } catch (\Exception $exception) {
+                    return redirect()->back()->withErrors('error', trans('error_message.save_false'));
+                }
+            }
+
+        }
+
+
+        return redirect('manage-step')->with('success', trans('error_message.save_success'));
     }
 
     public function destroy($id)

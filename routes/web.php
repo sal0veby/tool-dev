@@ -124,7 +124,7 @@ Route::group([
     Route::post('/update', 'JobListController@update')->name('update');
 });
 
-Route::get('/user/{step?}', 'UserWizardController@wizard')->name('wizard.user');
+//Route::get('/user/{step?}', 'UserWizardController@wizard')->name('wizard.user');
 
 //Route::get('wizard/user/{step?}', 'UserWizardController@wizard')->name('wizard.user');
 //Route::post('wizard/user/{step}', 'UserWizardController@wizardPost')->name('wizard.user.post');

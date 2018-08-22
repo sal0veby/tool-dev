@@ -52,45 +52,105 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @for($i = 1; $i <= 6; $i++)
-                                            <tr>
-                                                <td>{{ trans('main.step') . ' ' . $i }}</td>
-                                                <td>
-                                                    <select class="form-control m-input m-input--square"
-                                                            name="permission_id">
-                                                        <option
-                                                            value="" {{ old('permission_id') == '' ? 'selected' : '' }}>
-                                                            ---- Please select ----
-                                                        </option>
-                                                        @forelse($permission as $val)
-                                                            <option value="{{ $val->id }}"
-                                                                {{ old('permission_id') == $val->id ? 'selected' : '' }}
-                                                            >
-                                                                {{ $val->name }}
+
+                                        @if($result->count() > 0)
+                                            @for($i = 1; $i <= config('custom.number_of_steps'); $i++)
+                                                <tr>
+                                                    <td>{{ trans('main.step') . ' ' . $i }}</td>
+                                                    <td>
+                                                        <select class="form-control m-input m-input--square"
+                                                                name="permission_id[{{ array_get($result[$i-1] , 'id') }}]">
+                                                            <option
+                                                                value="" {{ array_get($result[$i-1] , 'permission_id') == '' ? 'selected' : '' }}>
+                                                                ---- Please select ----
                                                             </option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select class="form-control m-input m-input--square hot_work"
-                                                            name="hot_work_id" onclick="select_hotwork(this)">
-                                                        <option
-                                                            value="" {{ old('hot_work_id') == '' ? 'selected' : '' }}>
-                                                            ---- Please select ----
-                                                        </option>
-                                                        @forelse($hot_work as $key => $val)
-                                                            <option value="{{ $key }}"
-                                                                {{ old('hot_work_id') == $key ? 'selected' : '' }}
-                                                            >
-                                                                {{ $val}}
+                                                            <option
+                                                                value="99" {{ array_get($result[$i-1] , 'permission_id') == '99' ? 'selected' : '' }}>
+                                                                {{ trans('main.general_user') }}
                                                             </option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        @endfor
+                                                            @forelse($permission as $val)
+                                                                <option value="{{ $val->id }}"
+                                                                    {{ array_get($result[$i-1] , 'permission_id') == $val->id ? 'selected' : '' }}
+                                                                >
+                                                                    {{ $val->name }}
+                                                                </option>
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control m-input m-input--square hot_work"
+                                                                name="hot_work_id[{{ array_get($result[$i-1] , 'id') }}]"
+                                                                onclick="select_hotwork(this)">
+                                                            <option
+                                                                value="" {{ array_get($result[$i-1] , 'process_hot_work_id') == '' ? 'selected' : '' }}>
+                                                                ---- Please select ----
+                                                            </option>
+                                                            <option
+                                                                value="step99" {{ array_get($result[$i-1] , 'process_hot_work_id') == 'step99' ? 'selected' : '' }}>
+                                                                {{ trans('main.general_user') }}
+                                                            </option>
+                                                            @forelse($hot_work as $key => $val)
+                                                                <option value="{{ $key }}"
+                                                                    {{ array_get($result[$i-1] , 'process_hot_work_id') == $key ? 'selected' : '' }}
+                                                                >
+                                                                    {{ $val}}
+                                                                </option>
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            @endfor
+                                        @else
+                                            @for($i = 1; $i <= config('custom.number_of_steps'); $i++)
+                                                <tr>
+                                                    <td>{{ trans('main.step') . ' ' . $i }}</td>
+                                                    <td>
+                                                        <select class="form-control m-input m-input--square"
+                                                                name="permission_id[]">
+                                                            <option
+                                                                value="" {{ old('permission_id') == '' ? 'selected' : '' }}>
+                                                                ---- Please select ----
+                                                            </option>
+                                                            <option
+                                                                value="99" {{ old('permission_id') == '99' ? 'selected' : '' }}>
+                                                                {{ trans('main.general_user') }}
+                                                            </option>
+                                                            @forelse($permission as $val)
+                                                                <option value="{{ $val->id }}"
+                                                                    {{ old('permission_id') == $val->id ? 'selected' : '' }}
+                                                                >
+                                                                    {{ $val->name }}
+                                                                </option>
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control m-input m-input--square hot_work"
+                                                                name="hot_work_id[]" onclick="select_hotwork(this)">
+                                                            <option
+                                                                value="" {{ old('hot_work_id') == '' ? 'selected' : '' }}>
+                                                                ---- Please select ----
+                                                            </option>
+                                                            <option
+                                                                value="step99" {{ old('permission_id') == '99' ? 'selected' : '' }}>
+                                                                {{ trans('main.general_user') }}
+                                                            </option>
+                                                            @forelse($hot_work as $key => $val)
+                                                                <option value="{{ $key }}"
+                                                                    {{ old('hot_work_id') == $key ? 'selected' : '' }}
+                                                                >
+                                                                    {{ $val}}
+                                                                </option>
+                                                            @empty
+                                                            @endforelse
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            @endfor
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -112,67 +172,67 @@
 
     @push('scripts')
         <script>
-            function select_hotwork(__this) {
-                var _this = $(__this);
-                var data = [];
-                var myItems = JSON.parse('<?php echo json_encode($hot_work); ?>');
-                var aaa = '';
-                $(".hot_work > option:selected").each(function (index) {
-                    if ($(this).val() != '') {
-                        $.each(myItems, function ($k, $val) {
-                            if ($.inArray($k, data) !== -1) {
-                                aaa += '<option value="' + $k + '">' + $val + '</option>';
-                                _this.append('<option value="' + $k + '">' + $val + '</option>');
-                            }
-                        });
-                    }
-                });
+            {{--function select_hotwork(__this) {--}}
+            {{--var _this = $(__this);--}}
+            {{--var data = [];--}}
+            {{--var myItems = JSON.parse('<?php echo json_encode($hot_work); ?>');--}}
+            {{--var aaa = '';--}}
+            {{--$(".hot_work > option:selected").each(function (index) {--}}
+            {{--if ($(this).val() != '') {--}}
+            {{--$.each(myItems, function ($k, $val) {--}}
+            {{--if ($.inArray($k, data) !== -1) {--}}
+            {{--aaa += '<option value="' + $k + '">' + $val + '</option>';--}}
+            {{--_this.append('<option value="' + $k + '">' + $val + '</option>');--}}
+            {{--}--}}
+            {{--});--}}
+            {{--}--}}
+            {{--});--}}
 
-                // _this.html('');
-                // _this.html('<option value="">---- Please select ----</option>');
-                // var aaa = '';
-                // $.each(myItems, function ($k, $val) {
-                //     if ($.inArray($k, data) !== -1) {
-                //         aaa += '<option value="' + $k + '">' + $val + '</option>';
-                //         _this.append('<option value="' + $k + '">' + $val + '</option>');
-                //     }
-                // });
-                console.log(aaa);
+            {{--// _this.html('');--}}
+            {{--// _this.html('<option value="">---- Please select ----</option>');--}}
+            {{--// var aaa = '';--}}
+            {{--// $.each(myItems, function ($k, $val) {--}}
+            {{--//     if ($.inArray($k, data) !== -1) {--}}
+            {{--//         aaa += '<option value="' + $k + '">' + $val + '</option>';--}}
+            {{--//         _this.append('<option value="' + $k + '">' + $val + '</option>');--}}
+            {{--//     }--}}
+            {{--// });--}}
+            {{--console.log(aaa);--}}
 
-            }
-
-
-            $(document).ready(function () {
-                $('.hot_work').on('blur', function () {
-                    var _this = $(this);
-                    var data = [];
-                    var myItems = JSON.parse('<?php echo json_encode($hot_work); ?>');
+            {{--}--}}
 
 
-                    $(".hot_work > option:selected").each(function (index) {
-                        if ($(this).val() != '') {
-                            data.push($(this).val());
-                        }
-                    });
-
-                    _this.html('');
-                    _this.html('<option value="">---- Please select ----</option>');
-                    var aaa = '';
-                    $.each(myItems, function ($k, $val) {
-                        if ($.inArray($k, data) === -1) {
-                            aaa += '<option value="' + $k + '">' + $val + '</option>';
-                            _this.append('<option value="' + $k + '">' + $val + '</option>');
-                        }
-                    });
-                    console.log(aaa);
-                });
+            {{--$(document).ready(function () {--}}
+            {{--$('.hot_work').on('blur', function () {--}}
+            {{--var _this = $(this);--}}
+            {{--var data = [];--}}
+            {{--var myItems = JSON.parse('<?php echo json_encode($hot_work); ?>');--}}
 
 
-                // $('.hot_work').change(function () {
-                //
-                //
-                // })
-            })
+            {{--$(".hot_work > option:selected").each(function (index) {--}}
+            {{--if ($(this).val() != '') {--}}
+            {{--data.push($(this).val());--}}
+            {{--}--}}
+            {{--});--}}
+
+            {{--_this.html('');--}}
+            {{--_this.html('<option value="">---- Please select ----</option>');--}}
+            {{--var aaa = '';--}}
+            {{--$.each(myItems, function ($k, $val) {--}}
+            {{--if ($.inArray($k, data) === -1) {--}}
+            {{--aaa += '<option value="' + $k + '">' + $val + '</option>';--}}
+            {{--_this.append('<option value="' + $k + '">' + $val + '</option>');--}}
+            {{--}--}}
+            {{--});--}}
+            {{--console.log(aaa);--}}
+            {{--});--}}
+
+
+            {{--// $('.hot_work').change(function () {--}}
+            {{--//--}}
+            {{--//--}}
+            {{--// })--}}
+            {{--})--}}
         </script>
     @endpush
 

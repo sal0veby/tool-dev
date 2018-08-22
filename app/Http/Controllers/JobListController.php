@@ -19,7 +19,7 @@ class JobListController extends Controller
 
         $hot_work = json_decode(file_get_contents(base_path('resources/views') . "/step_hot_work.json"), true);
 
-        return view('job_list.step_workflow.index', compact('permission', 'hot_work'));
+        return view('job_order.index', compact('permission', 'hot_work'));
     }
 
     public function create()

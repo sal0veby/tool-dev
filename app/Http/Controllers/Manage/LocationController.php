@@ -80,7 +80,8 @@ class LocationController extends Controller
     {
         try {
             Location::where('id', $id)->update(['active' => false]);
-        } catch (\Exception $exception) {dd($exception);
+        } catch (\Exception $exception) {
+            dd($exception);
             return redirect()->back()->withErrors('error', trans('error_message.save_false'));
         }
         return redirect('location')->with('success', trans('error_message.save_success'));
@@ -90,6 +91,6 @@ class LocationController extends Controller
     {
         $input = $request->get('class_id');
 
-        return Location::where('class_id' , $input)->get();
+        return Location::where('class_id', $input)->get();
     }
 }
