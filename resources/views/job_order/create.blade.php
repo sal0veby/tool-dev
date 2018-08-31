@@ -39,7 +39,7 @@
                                             {{ trans('main.document_no') }} :
                                         </label>
                                         <input type="text" class="form-control m-input" readonly name="document_no"
-                                               value="{{ old('name') }}">
+                                               value="{{ $document_no }}">
 
                                     </div>
                                 </div>
@@ -59,7 +59,8 @@
                                             {{ trans('main.created_at') . trans('main.document') }} :
                                         </label>
 
-                                        <input type="text" class="form-control m-input" readonly value="">
+                                        <input type="text" class="form-control m-input" readonly
+                                               value="{{ $created_at }}">
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +72,7 @@
                                             {{ trans('main.coming_work_date') }} :
                                         </label>
                                         <input type='text' class="form-control m-input" name="coming_date"
-                                               value="{{ old('coming_date') }}"/>
+                                               id="coming_date" value="{{ old('coming_date') }}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
@@ -114,7 +115,7 @@
 
                                         <div class='input-group'>
                                             <input type='text' class="form-control m-input" name="end_work_time"
-                                                   id="FromTime" value="{{ old('end_work_time') }}"/>
+                                                   id="ToTime" value="{{ old('end_work_time') }}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -190,6 +191,84 @@
                                         <input type='text' class="form-control m-input" name="description_work_type"
                                                id="description_work_type"
                                                value="{{ old('description_work_type') }}" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="description_work_type" class="col-form-label">
+                                            {{ trans('main.owner') }} ({{ trans('main.employer') }}) :
+                                        </label>
+
+                                        <textarea class="form-control" rows="5" id="owner"
+                                                  cols="0" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="description_work_type" class="col-form-label">
+                                            {{ trans('main.supervisor') }} :
+                                        </label>
+
+                                        <textarea class="form-control" rows="5" id="supervisor"
+                                                  cols="0" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="description_work_type" class="col-form-label">
+                                            {{ trans('main.contractor') }} ({{ trans('main.employee') }}) :
+                                        </label>
+
+                                        <textarea class="form-control" rows="5" id="contractor"
+                                                  cols="0" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="description_work_type" class="col-form-label">
+                                            {{ trans('main.taskmaster') }} :
+                                        </label>
+
+                                        <textarea class="form-control" rows="5" id="taskmaster"
+                                                  cols="0" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="description_work_type" class="col-form-label">
+                                            {{ trans('main.participants') }} :
+                                        </label>
+
+                                        <textarea class="form-control" rows="5" id="participants"
+                                                  cols="0" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="description_work_type" class="col-form-label">
+                                            {{ trans('main.car_registration') }} :
+                                        </label>
+
+                                        <textarea class="form-control" rows="5" id="car_registration"
+                                                  cols="0" disabled></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -281,6 +360,32 @@
                         $("#description_work_type").attr("disabled", true);
                         $("#description_work_type").val("");
                     }
+                });
+
+
+                // input group layout
+                $('#coming_date').datepicker({
+                    todayHighlight: true,
+                    autoclose: true,
+                    startDate: new Date(),
+                    orientation: "bottom left",
+                    format: 'dd/mm/yyyy',
+                    templates: {
+                        leftArrow: '<i class="la la-angle-left"></i>',
+                        rightArrow: '<i class="la la-angle-right"></i>'
+                    }
+                }).datepicker("setDate", "0");
+
+                $('#FromTime').timepicker({
+                    showMeridian: false,
+                    defaultTime: '00:00',
+                    timeFormat: 'HH:mm',
+                });
+
+                $("#ToTime").timepicker({
+                    timeFormat: 'HH:mm',
+                    showMeridian: false,
+                    defaultTime: '00:00',
                 });
 
             })
