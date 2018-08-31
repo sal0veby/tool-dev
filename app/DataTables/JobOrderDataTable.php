@@ -3,7 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\JobOrder;
-use App\User;
+use Carbon\Carbon;
+use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
 class JobOrderDataTable extends DataTable
@@ -20,13 +21,6 @@ class JobOrderDataTable extends DataTable
                 return $this->getActionButtons($model);
             })
             ->setRowClass('text-center')
-            ->editColumn('active', function ($model) {
-                if ($model->active == 1) {
-                    return '<span class="m-badge  m-badge--success m-badge--wide">' . trans('main.active_yes') . '</span>';
-                } else {
-                    return '<span class="m-badge  m-badge--danger m-badge--wide">' . trans('main.active_no') . '</span>';
-                }
-            })
             ->editColumn('created_at', function ($model) {
                 return Carbon::parse($model->created_at)
                     ->format(config('date.default_date_format'));
@@ -35,7 +29,7 @@ class JobOrderDataTable extends DataTable
                 return Carbon::parse($model->updated_at)
                     ->format(config('date.default_date_format'));
             })
-            ->rawColumns(['active', 'action'])
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -49,7 +43,7 @@ class JobOrderDataTable extends DataTable
      */
     public function query()
     {
-        $query = JobOrder::select('*')->orderBy('name', 'ASC');
+        $query = JobOrder::select('*')->orderBy('created_at', 'DESC');
 
 //        if (request()->has('custom_search')) {
 //            $query->where('name', 'LIKE', "%" . request()->input('custom_search') . "%");
@@ -147,6 +141,25 @@ class JobOrderDataTable extends DataTable
         return link_to('#', "<i class='fa fa-trash'></i>", $attributes, false, false);
     }
 
+    protected function getColumns()
+    {
+        return [
+            ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
+            ['data' => 'document_no', 'name' => 'name', 'title' => trans('main.document_no'), "className" => "align-middle"],
+            ['data' => 'reference_no', 'name' => 'name', 'title' => trans('main.reference_no'), "className" => "align-middle"],
+            ['data' => 'coming_work_date', 'name' => 'name', 'title' => trans('main.coming_work_date'), "className" => "align-middle"],
+//            [
+//                'data' => 'active',
+//                'name' => 'active',
+//                'title' => trans('main.active'),
+//                "className" => "text-center align-middle",
+//                'defaultContent' => ''
+//            ],
+            ['data' => 'created_at', 'name' => 'created_at', 'title' => trans('main.created_at'), "className" => "align-middle"],
+            ['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('main.updated_at'), "className" => "align-middle"],
+        ];
+    }
+
     protected function getBuilderParameters()
     {
         return [
@@ -160,26 +173,6 @@ class JobOrderDataTable extends DataTable
             'searching' => false,
             "responsive" => true,
             'ordering' => false
-        ];
-    }
-
-    protected function getColumns()
-    {
-        return [
-            ['data' => 'DT_Row_Index', 'name' => 'id', 'title' => trans('main.number_no'), "className" => "align-middle"],
-            ['data' => 'document_no', 'name' => 'name', 'title' => trans('main.class_name'), "className" => "align-middle"],
-            ['data' => 'reference_no', 'name' => 'name', 'title' => trans('main.class_name'), "className" => "align-middle"],
-            ['data' => 'coming_work_date', 'name' => 'name', 'title' => trans('main.class_name'), "className" => "align-middle"],
-
-            [
-                'data' => 'active',
-                'name' => 'active',
-                'title' => trans('main.active'),
-                "className" => "text-center align-middle",
-                'defaultContent' => ''
-            ],
-            ['data' => 'created_at', 'name' => 'created_at', 'title' => trans('main.created_at'), "className" => "align-middle"],
-            ['data' => 'updated_at', 'name' => 'updated_at', 'title' => trans('main.updated_at'), "className" => "align-middle"],
         ];
     }
 }

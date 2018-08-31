@@ -93,4 +93,12 @@ class WorkTypeController extends Controller
         }
         return redirect('work_type')->with('success', trans('error_message.save_success'));
     }
+
+    public function getWorkTypeList(Request $request)
+    {
+        $class_id = $request->get('class_id');
+        $location_id = $request->get('location_id');
+
+        return WorkType::where(['location_id'=> $location_id , 'class_id' => $class_id])->get();
+    }
 }

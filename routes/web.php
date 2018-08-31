@@ -64,6 +64,8 @@ Route::group([
     Route::get('/{id}/edit', 'Manage\WorkTypeController@edit')->name('edit');
     Route::post('/{id}/update', 'Manage\WorkTypeController@update')->name('update');
     Route::delete('/{id}/delete', 'Manage\WorkTypeController@destroy')->name('delete');
+
+    Route::get('/getWorkTypeList', 'Manage\WorkTypeController@getWorkTypeList')->name('getWorkTypeList');
 });
 
 Route::group([
@@ -118,9 +120,10 @@ Route::group([
 Route::group([
     'prefix' => 'job-list',
     'as' => 'job_list.',
-    'middleware' => ['auth']
+//    'middleware' => ['auth']
 ], function () {
     Route::get('/', 'JobListController@index')->name('index');
+    Route::get('/create', 'JobListController@create')->name('add');
     Route::post('/update', 'JobListController@update')->name('update');
 });
 

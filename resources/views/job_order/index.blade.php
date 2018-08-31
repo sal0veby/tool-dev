@@ -21,7 +21,7 @@
                                     <div class="m-input-icon m-input-icon--left">
                                         <input type="text" class="form-control m-input m-input--solid"
                                                placeholder="Search..." id="custom_search"
-                                               onkeyup='window.LaravelDataTables["dataTableBuilder_class"].draw()'>
+                                               onkeyup='window.LaravelDataTables["dataTableBuilder_job_order"].draw()'>
                                         <span class="m-input-icon__icon m-input-icon__icon--left">
                                             <span>
                                               <i class="la la-search"></i>
@@ -35,17 +35,18 @@
                     <div class="col-xl-4 order-1 order-xl-2 m--align-right">
                         <button type="button"
                                 class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill"
-                                id="btn-refresh" style="margin-right: 10px" onclick='window.LaravelDataTables["dataTableBuilder_class"].ajax.reload()'>
+                                id="btn-refresh" style="margin-right: 10px"
+                                onclick='window.LaravelDataTables["dataTableBuilder_job_order"].ajax.reload()'>
                         <span>
                             <i class="fa flaticon-refresh"></i>
                         </span>
                         </button>
-                        <a href="{{ route('class.add') }}" id="add"
+                        <a href="{{ route('job_list.add') }}" id="add"
                            class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
                         <span>
                             <i class="la la-plus" style="font-weight: bold"></i>
                             <span>
-                                {{ trans('main.add') }}
+                                {{ trans('main.add') . trans('main.application_form') }}
                             </span>
                         </span>
                         </a>
@@ -55,9 +56,10 @@
             </div>
             <!--end: Search Form -->
             <!--begin: Datatable -->
-            <div class="m_datatable m-datatable m-datatable--default table table-bordered table-hover m-datatable--subtable m-datatable--loaded m-datatable--scroll"
-                 id="local_data" style="">
-                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_class'])  !!}
+            <div
+                class="m_datatable m-datatable m-datatable--default table table-bordered table-hover m-datatable--subtable m-datatable--loaded m-datatable--scroll"
+                id="local_data" style="">
+                {!! $dataTable->table(['class' => 'table table-bordered table-responsive', 'id' => 'dataTableBuilder_job_order'])  !!}
             </div>
             <!--end: Datatable -->
         </div>
