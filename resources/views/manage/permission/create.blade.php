@@ -76,8 +76,8 @@
                                             :</label>
                                         <div class="col-sm-7">
                                             <div class="form-check">
-                                                <textarea class="form-control m-input m-input--air" id="exampleTextarea"
-                                                          rows="3"></textarea>
+                                                <textarea class="form-control m-input m-input--air" name="description"
+                                                          rows="3">{{ old('description') }}</textarea>
                                             </div>
                                         </div>
                                     </div>

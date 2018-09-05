@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateManageStepFlow extends Migration
+class CreateTransactionJobList extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateManageStepFlow extends Migration
      */
     public function up()
     {
-        Schema::create('manage_steps', function (Blueprint $table) {
+        Schema::create('transaction_job_orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('permission_id');
-            $table->string('process_hot_work_id' , 20);
+            $table->integer('order_id');
+            $table->integer('process_id');
+            $table->integer('state_id');
+            $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0)->nullable();
             $table->timestamps();
         });
@@ -29,6 +31,6 @@ class CreateManageStepFlow extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('manage_steps');
+        Schema::dropIfExists('transaction_job_orders');
     }
 }

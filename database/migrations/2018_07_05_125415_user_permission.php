@@ -16,10 +16,16 @@ class UserPermission extends Migration
         Schema::create('user_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('permissions_id');
-            $table->string('permissions_parent');
-            $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('menu_id')->nullable();
+            $table->boolean('use')->nullable();
+            $table->boolean('add')->nullable();
+            $table->boolean('update')->nullable();
+            $table->boolean('delete')->nullable();
+            $table->boolean('excel')->nullable();
+            $table->boolean('pdf')->nullable();
+            $table->boolean('active')->default(0);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0)->nullable();
             $table->timestamps();
         });
     }

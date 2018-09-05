@@ -91,7 +91,7 @@ class PermissionDataTable extends DataTable
             'data-original-title' => trans('main.view'),
         ];
 
-        if (session()->get('permission.10.use') == false) {
+        if (session()->get('permission.10.use') == false && session()->get('permission_id') != 1) {
             $attributes = [
                 'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',
@@ -116,7 +116,7 @@ class PermissionDataTable extends DataTable
             'data-original-title' => trans('main.edit'),
         ];
 
-        if (session()->get('permission.10.update') == false) {
+        if (session()->get('permission.10.update') == false && session()->get('permission_id') != 1) {
             $attributes = [
                 'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
                 'disabled' => 'disabled',

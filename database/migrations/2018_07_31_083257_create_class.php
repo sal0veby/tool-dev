@@ -16,9 +16,9 @@ class CreateClass extends Migration
         Schema::create('class', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->boolean('active');
-            $table->integer('created_by');
-            $table->integer('updated_by')->nullable();
+            $table->boolean('active')->default(0);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0)->nullable();
             $table->timestamps();
         });
     }

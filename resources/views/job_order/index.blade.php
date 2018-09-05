@@ -1,11 +1,11 @@
 @extends('layout.main')
 
 @section('title')
-    {{ trans('main.manage_class') }}
+    {{ trans('main.job_list') }}
 @endsection
 
 @section('content_title')
-    {{ trans('main.manage_class') }}
+    {{ trans('main.job_list') }}
 @endsection
 
 @section('content')

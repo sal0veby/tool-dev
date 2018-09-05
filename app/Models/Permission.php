@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 use Kalnoy\Nestedset\NodeTrait;
 
 class Permission extends Model
@@ -23,16 +24,20 @@ class Permission extends Model
         'delete',
         'excel',
         'parent_id',
+        'created_by'
     ];
-
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
 
     public function children()
     {
         return $this->hasMany(Permission::class, 'parent_id');
+    }
+
+    public function setCreatedByAttribute($value)
+    {
+        if (Session::has('id')) {
+            $this->attributes['created_by'] = base64_decode(Session::get('id'));
+        } else {
+            $this->attributes['created_by'] = 1;
+        }
     }
 }

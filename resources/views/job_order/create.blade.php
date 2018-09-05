@@ -30,8 +30,13 @@
             <div class="m-form m-form--label-align-right ">
                 <div class="row align-items-center">
                     <div class="col-lg-12">
-                        <form class="" method="post" action="{{ route('class.store') }}">
+                        <form class="" method="post" action="{{ route('job_list.store') }}" autocomplete="off">
                             @csrf
+
+                            <input type="hidden" name="process_id" value="1">
+                            <input type="hidden" name="state_id" value="1">
+                            <input type="hidden" name="created_by" value="">
+
                             <div class="row">
                                 <div class="col-lg-4 col-md-4">
                                     <div class="form-group">
@@ -71,8 +76,8 @@
                                         <label for="coming_date" class="col-form-label">
                                             {{ trans('main.coming_work_date') }} :
                                         </label>
-                                        <input type='text' class="form-control m-input" name="coming_date"
-                                               id="coming_date" value="{{ old('coming_date') }}"/>
+                                        <input type='text' class="form-control m-input" name="coming_work_date"
+                                               id="coming_date" value="{{ old('coming_work_date') }}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4">
@@ -159,7 +164,8 @@
                                         </label>
                                         <input type='text' class="form-control m-input" name="description_location"
                                                id="description_location"
-                                               value="{{ old('description_location') }}" disabled/>
+                                               {{  old('location_id') == '99' ? '' : 'disabled' }}
+                                               value="{{ old('description_location') }}"/>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +196,8 @@
 
                                         <input type='text' class="form-control m-input" name="description_work_type"
                                                id="description_work_type"
-                                               value="{{ old('description_work_type') }}" disabled/>
+                                               {{  old('work_type_id') == '99' ? '' : 'disabled' }}
+                                               value="{{ old('description_work_type') }}"/>
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +208,10 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.owner') }} ({{ trans('main.employer') }}) :
                                         </label>
-
+                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                            <i class="la la-plus" style="font-weight: bold"></i>
+                                            {{ trans('main.add') . trans('main.owner') }} ({{ trans('main.employer') }})
+                                        </button>
                                         <textarea class="form-control" rows="5" id="owner"
                                                   cols="0" disabled></textarea>
                                     </div>
@@ -214,7 +224,10 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.supervisor') }} :
                                         </label>
-
+                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                            <i class="la la-plus" style="font-weight: bold"></i>
+                                            {{ trans('main.add') . trans('main.supervisor') }}
+                                        </button>
                                         <textarea class="form-control" rows="5" id="supervisor"
                                                   cols="0" disabled></textarea>
                                     </div>
@@ -227,7 +240,10 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.contractor') }} ({{ trans('main.employee') }}) :
                                         </label>
-
+                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                            <i class="la la-plus" style="font-weight: bold"></i>
+                                            {{ trans('main.add') . trans('main.contractor') }}
+                                        </button>
                                         <textarea class="form-control" rows="5" id="contractor"
                                                   cols="0" disabled></textarea>
                                     </div>
@@ -240,7 +256,10 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.taskmaster') }} :
                                         </label>
-
+                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                            <i class="la la-plus" style="font-weight: bold"></i>
+                                            {{ trans('main.add') . trans('main.taskmaster') }}
+                                        </button>
                                         <textarea class="form-control" rows="5" id="taskmaster"
                                                   cols="0" disabled></textarea>
                                     </div>
@@ -253,7 +272,10 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.participants') }} :
                                         </label>
-
+                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                            <i class="la la-plus" style="font-weight: bold"></i>
+                                            {{ trans('main.add') . trans('main.participants') }}
+                                        </button>
                                         <textarea class="form-control" rows="5" id="participants"
                                                   cols="0" disabled></textarea>
                                     </div>
@@ -266,7 +288,10 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.car_registration') }} :
                                         </label>
-
+                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                            <i class="la la-plus" style="font-weight: bold"></i>
+                                            {{ trans('main.add') . trans('main.car_registration') }}
+                                        </button>
                                         <textarea class="form-control" rows="5" id="car_registration"
                                                   cols="0" disabled></textarea>
                                     </div>
@@ -300,7 +325,7 @@
             $('document').ready(function () {
 
                 $('#class_id').change(function () {
-                    $.get('{{ route('location.getLocationList') }}', {'class_id': $(this).val()}, function ($response) {
+                    $.get('{{ route('job_list.getLocationList') }}', {'class_id': $(this).val()}, function ($response) {
                         $('#location_id').html('');
                         if ($response) {
                             var str = '<option value="">----- Please select -----</option>';
@@ -331,7 +356,7 @@
                         $("#description_location").attr("disabled", false);
                     } else {
                         if ($(this).val() != "") {
-                            $.get('{{ route('work_type.getWorkTypeList') }}',
+                            $.get('{{ route('job_list.getWorkTypeList') }}',
                                 {'class_id': $('#class_id').val(), 'location_id': $(this).val()}, function ($response) {
                                     $('#work_type_id').html('');
                                     if ($response) {

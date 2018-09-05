@@ -21,6 +21,10 @@ class JobOrderDataTable extends DataTable
                 return $this->getActionButtons($model);
             })
             ->setRowClass('text-center')
+            ->editColumn('coming_work_date', function ($model) {
+                return Carbon::parse($model->coming_work_date)
+                    ->format(config('date.default_date_format'));
+            })
             ->editColumn('created_at', function ($model) {
                 return Carbon::parse($model->created_at)
                     ->format(config('date.default_date_format'));
@@ -84,13 +88,16 @@ class JobOrderDataTable extends DataTable
             'data-original-title' => trans('main.view'),
         ];
 
-        if (session()->get('permission.7.use') == false) {
-            $attributes = [
-                'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
-                'disabled' => 'disabled',
-            ];
+        if ($model->process_id != 1 && !in_array($model->state_id, [1, 2])) {
+            if (session()->get('permission.7.use') == false) {
+                $attributes = [
+                    'class' => 'btn btn-info m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
+                    'disabled' => 'disabled',
+                    'style' => 'margin-right:10px;',
+                ];
 
-            $route = '#';
+                $route = '#';
+            }
         }
 
         return link_to($route, "<i class='fa fa-eye'></i>", $attributes, false, false);
@@ -109,13 +116,15 @@ class JobOrderDataTable extends DataTable
             'data-original-title' => trans('main.edit'),
         ];
 
-        if (session()->get('permission.7.update') == false) {
-            $attributes = [
-                'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
-                'disabled' => 'disabled',
-            ];
+        if ($model->process_id != 1 && !in_array($model->state_id, [1, 2])) {
+            if (session()->get('permission.7.update') == false) {
+                $attributes = [
+                    'class' => 'btn btn-primary m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill disabled',
+                    'disabled' => 'disabled',
+                ];
 
-            $route = '#';
+                $route = '#';
+            }
         }
 
         return link_to($route, "<i class='fa fa-edit'></i>", $attributes, false, false);
@@ -131,11 +140,13 @@ class JobOrderDataTable extends DataTable
             'data-url' => route('class.delete', [$model->id]),
         ];
 
-        if (session()->get('permission.7.delete') == false) {
-            $attributes = [
-                'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete disabled',
-                'disabled' => 'disabled',
-            ];
+        if ($model->process_id != 1 && !in_array($model->state_id, [1, 2])) {
+            if (session()->get('permission.7.delete') == false) {
+                $attributes = [
+                    'class' => 'btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill btn-delete disabled',
+                    'disabled' => 'disabled',
+                ];
+            }
         }
 
         return link_to('#', "<i class='fa fa-trash'></i>", $attributes, false, false);

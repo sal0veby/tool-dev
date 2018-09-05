@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWorkFlow extends Migration
+class JobOrderSeeder extends Migration
 {
     /**
      * Run the migrations.
@@ -15,21 +15,21 @@ class CreateWorkFlow extends Migration
     {
         Schema::create('job_orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('document_no', 50);
-            $table->string('reference_no', 150)->nullable();
+            $table->string('document_no');
+            $table->string('reference_no')->nullable();
             $table->dateTime('coming_work_date');
             $table->integer('class_id');
             $table->time('start_work_time');
             $table->time('end_work_time');
             $table->text('requirement');
-            $table->integer('work_type_id');
-            $table->text('description_work_type')->nullable();
             $table->integer('location_id');
             $table->text('description_location')->nullable();
+            $table->integer('work_type_id');
+            $table->text('description_work_type')->nullable();
             $table->integer('process_id');
             $table->integer('state_id');
-            $table->integer('created_by');
-            $table->integer('updated_by')->nullable();
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

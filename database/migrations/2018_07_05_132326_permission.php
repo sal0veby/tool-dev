@@ -16,18 +16,18 @@ class Permission extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('parent');
-            $table->text('description');
+            $table->string('name')->nullable();
+            $table->integer('menu_id')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('use')->nullable();
             $table->boolean('add')->nullable();
             $table->boolean('update')->nullable();
             $table->boolean('delete')->nullable();
             $table->boolean('excel')->nullable();
             $table->boolean('pdf')->nullable();
-            $table->boolean('active');
-            $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->boolean('active')->default(0);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0)->nullable();
             NestedSet::columns($table);
             $table->timestamps();
         });

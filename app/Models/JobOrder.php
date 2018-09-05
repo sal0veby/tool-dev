@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 
 class JobOrder extends Model
 {
@@ -23,6 +25,33 @@ class JobOrder extends Model
         'location_id',
         'description_location',
         'process_id',
-        'state_id'
+        'state_id',
+        'created_by',
+        'updated_by'
     ];
+
+    public function setComingWorkDateAttribute($value)
+    {
+        $this->attributes['coming_work_date'] = date('Y-m-d H:i:s' , strtotime($value));
+    }
+
+    public function setStart_work_timeAttribute($value)
+    {
+        $this->attributes['start_work_time'] = date("H:i:s", strtotime($value));
+    }
+
+    public function setEnd_work_timeAttribute($value)
+    {
+        $this->attributes['end_work_time'] = date("H:i:s", strtotime($value));
+    }
+
+    public function setCreatedByAttribute()
+    {
+        if (Session::has('id')) {
+            $this->attributes['created_by'] = base64_decode(Session::get('id'));
+        } else {
+            $this->attributes['created_by'] = 0;
+        }
+    }
+
 }

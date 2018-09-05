@@ -60,6 +60,7 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $result = Permission::with(['children'])->where('id', $id)->first();
+
         if (!empty($result['children'])) {
             $result['children'] = $result->relationsToArray();
         }
@@ -72,16 +73,20 @@ class PermissionController extends Controller
     {
         $input = $permissionRequest->all();
 
-        $data = [
-            'name' => $input['name'],
-            'description' => !empty($input['description']) ? $input['description'] : "",
-            'active' => $input['active'] = 'on' ? 1 : 0,
-            'updated_by' => base64_decode(session('id'))];
-        Permission::where('id', $id)->update($data);
+        try {
+            $data = [
+                'name' => $input['name'],
+                'description' => !empty($input['description']) ? $input['description'] : "",
+                'active' => $input['active'] = 'on' ? 1 : 0,
+                'updated_by' => base64_decode(session('id'))];
+            Permission::where('id', $id)->update($data);
 
-        $permission_id = $id;
+            $permission_id = $id;
 
-        $this->map_permission($input, $permission_id, 'update');
+            $this->map_permission($input, $permission_id, 'update');
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors('error', trans('error_message.save_false'));
+        }
 
         return redirect('permission')->with('success', trans('error_message.save_success'));
     }
@@ -113,7 +118,7 @@ class PermissionController extends Controller
                         'excel' => isset($input['permission'][$val->id]['excel']) && $input['permission'][$val->id]['excel'] = 'on' ? 1 : 0,
                         'pdf' => isset($input['permission'][$val->id]['pdf']) && $input['permission'][$val->id]['pdf'] = 'on' ? 1 : 0,
                         'active' => 1,
-                        'created_by' => base64_decode(session('id'))
+                        'created_by' => !empty(base64_decode(session('id'))) ?: 1
                     ];
 
                     if ($action == 'update') {
@@ -130,7 +135,8 @@ class PermissionController extends Controller
                         'excel' => false,
                         'pdf' => false,
                         'active' => false,
-                        'created_by' => base64_decode(session('id'))];
+                        'created_by' => !empty(base64_decode(session('id'))) ?: 1
+                    ];
 
                     if ($action == 'update') {
                         Permission::where(['parent_id' => $permission_id, 'menu_id' => $val->id])->update($list_data[$val->id]);
@@ -142,7 +148,7 @@ class PermissionController extends Controller
                 Permission::insert($list_data);
             }
         } catch (\Exception $e) {
-//                dd($e->getMessage());
+            dd($e->getMessage());
             return redirect()->back()->withErrors('error', trans('error_message.save_false'));
         }
     }

@@ -21,13 +21,13 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('company_name')->nullable();
-            $table->string('tel')->nullable();
+            $table->string('tel',12)->nullable();
             $table->integer('permission_id')->nullable();
-            $table->boolean('active');
+            $table->boolean('active')->default(0);
             $table->dateTime('login_at')->nullable();
-            $table->boolean('default');
-            $table->integer('created_by');
-            $table->integer('updated_by')->nullable();
+            $table->boolean('default')->default(0);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -18,8 +18,8 @@ class CreateLocation extends Migration
             $table->integer('class_id');
             $table->string('name');
             $table->boolean('active');
-            $table->integer('created_by');
-            $table->integer('updated_by')->nullable();
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0)->nullable();
             $table->timestamps();
         });
     }

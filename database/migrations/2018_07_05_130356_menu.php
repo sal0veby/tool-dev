@@ -19,10 +19,10 @@ class Menu extends Migration
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->integer('sequence');
-            $table->boolean('active');
-            $table->boolean('default');
-            $table->integer('created_by');
-            $table->integer('updated_by')->nullable();
+            $table->boolean('active')->default(0);
+            $table->boolean('default')->default(0);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0)->nullable();
             NestedSet::columns($table);
             $table->timestamps();
         });

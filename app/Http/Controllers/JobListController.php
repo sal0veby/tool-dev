@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\JobOrderDataTable;
+use App\Http\Requests\JobOrderRequest;
 use App\Models\ClassModel;
 use App\Models\JobOrder;
 use App\Models\Location;
+use App\Models\TransactionJobOrder;
 use App\Models\WorkType;
 
 class JobListController extends Controller
@@ -22,27 +24,33 @@ class JobListController extends Controller
 
     public function create()
     {
-        $document_no = $this->getLastDocumentNo();
-
-//        $hot_work = json_decode(file_get_contents(base_path('resources/views') . "/step_hot_work.json"), true);
-        $class_list = ClassModel::where('active', true)->get();
-        $location_list = Location::where('active', true)->get();
-        $work_type_list = WorkType::where('active', true)->get();
-
         $compact_array = [
-            'class' => $class_list,
-            'location' => $location_list,
-            'work_type' => $work_type_list,
-            'document_no' => $document_no,
+            'class' => ClassModel::where('active', true)->get(),
+            'location' => Location::where('active', true)->get(),
+            'work_type' => WorkType::where('active', true)->get(),
+            'document_no' => $this->getLastDocumentNo(),
             'created_at' => date('d/m/Y')
         ];
 
         return view('job_order.create', $compact_array);
     }
 
-    public function store()
+    public function store(JobOrderRequest $request)
     {
-        //
+        $input = $request->all();dd($input);
+        try {
+            $order_id = JobOrder::create($input)->id;
+
+            if($order_id > 0){
+                $transaction = new TransactionJobOrder();
+                $transaction->createTransactionJobOrder();
+            }
+
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors('error', trans('error_message.save_false'));
+        }
+
+        return redirect('job-list')->with('success', trans('error_message.save_success'));
     }
 
     public function show($id)

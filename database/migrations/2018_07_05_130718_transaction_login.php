@@ -13,7 +13,7 @@ class TransactionLogin extends Migration
      */
     public function up()
     {
-        Schema::create('transaction_logins', function (Blueprint $table) {
+        Schema::create('transaction_login', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->ipAddress('visitor');
@@ -28,6 +28,6 @@ class TransactionLogin extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_logins');
+        Schema::dropIfExists('transaction_login');
     }
 }
