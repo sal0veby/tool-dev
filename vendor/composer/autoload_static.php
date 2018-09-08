@@ -434,6 +434,7 @@ class ComposerStaticInit23230ffb58617b23b05386b4eb115ea5
         'App\\Models\\Menu' => __DIR__ . '/../..' . '/app/Models/Menu.php',
         'App\\Models\\Permission' => __DIR__ . '/../..' . '/app/Models/Permission.php',
         'App\\Models\\StepFlow' => __DIR__ . '/../..' . '/app/Models/StepFlow.php',
+        'App\\Models\\TransactionJobOrder' => __DIR__ . '/../..' . '/app/Models/TransactionJobOrder.php',
         'App\\Models\\UserModel' => __DIR__ . '/../..' . '/app/Models/UserModel.php',
         'App\\Models\\UserPermission' => __DIR__ . '/../..' . '/app/Models/UserPermission.php',
         'App\\Models\\WorkType' => __DIR__ . '/../..' . '/app/Models/WorkType.php',

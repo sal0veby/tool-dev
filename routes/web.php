@@ -127,6 +127,9 @@ Route::group([
     Route::post('/create', 'JobListController@store')->name('store');
     Route::post('/update', 'JobListController@update')->name('update');
 
+
+    Route::get('/getWorkTypeList', 'JobListController@getWorkTypeList')->name('getWorkTypeList');
+    Route::get('/getLocationList', 'JobListController@getLocationList')->name('getLocationList');
 });
 
 //Route::get('/user/{step?}', 'UserWizardController@wizard')->name('wizard.user');

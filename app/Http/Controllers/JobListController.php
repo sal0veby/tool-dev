@@ -7,8 +7,11 @@ use App\Http\Requests\JobOrderRequest;
 use App\Models\ClassModel;
 use App\Models\JobOrder;
 use App\Models\Location;
+use App\Models\StepFlow;
 use App\Models\TransactionJobOrder;
 use App\Models\WorkType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class JobListController extends Controller
 {
@@ -37,17 +40,21 @@ class JobListController extends Controller
 
     public function store(JobOrderRequest $request)
     {
-        $input = $request->all();dd($input);
+        $input = $request->all();
+        DB::beginTransaction();
+
         try {
             $order_id = JobOrder::create($input)->id;
 
-            if($order_id > 0){
+            if ($order_id > 0) {
                 $transaction = new TransactionJobOrder();
-                $transaction->createTransactionJobOrder();
+                $transaction->createTransactionJobOrder($order_id, 1, 1);
             }
 
+            DB::commit();
         } catch (\Exception $exception) {
-            return redirect()->back()->withErrors('error', trans('error_message.save_false'));
+            DB::rollback();
+            return redirect()->back()->with('error', trans('error_message.save_false'));
         }
 
         return redirect('job-list')->with('success', trans('error_message.save_success'));
@@ -83,5 +90,20 @@ class JobListController extends Controller
         } else {
             return '0000001';
         }
+    }
+
+    public function getWorkTypeList(Request $request)
+    {
+        $class_id = $request->get('class_id');
+        $location_id = $request->get('location_id');
+
+        return WorkType::where(['location_id' => $location_id, 'class_id' => $class_id])->get();
+    }
+
+    public function getLocationList(Request $request)
+    {
+        $input = $request->get('class_id');
+
+        return Location::where('class_id', $input)->get();
     }
 }
