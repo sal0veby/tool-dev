@@ -86,4 +86,11 @@ class LocationController extends Controller
         }
         return redirect('location')->with('success', trans('error_message.save_success'));
     }
+
+    public function getLocationList(Request $request)
+    {
+        $input = $request->get('class_id');
+
+        return Location::where('class_id', $input)->get();
+    }
 }

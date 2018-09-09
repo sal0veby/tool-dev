@@ -54,6 +54,7 @@ return array(
     'App\\Models\\LoginModel' => $baseDir . '/app/Models/LoginModel.php',
     'App\\Models\\ManageStep' => $baseDir . '/app/Models/ManageStep.php',
     'App\\Models\\Menu' => $baseDir . '/app/Models/Menu.php',
+    'App\\Models\\Owner' => $baseDir . '/app/Models/Owner.php',
     'App\\Models\\Permission' => $baseDir . '/app/Models/Permission.php',
     'App\\Models\\StepFlow' => $baseDir . '/app/Models/StepFlow.php',
     'App\\Models\\TransactionJobOrder' => $baseDir . '/app/Models/TransactionJobOrder.php',

@@ -13,7 +13,7 @@ class CreateOwner extends Migration
      */
     public function up()
     {
-        Schema::create('owner', function (Blueprint $table) {
+        Schema::create('owners', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
             $table->string('name', 255);
@@ -31,6 +31,6 @@ class CreateOwner extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('owner');
+        Schema::dropIfExists('owners');
     }
 }

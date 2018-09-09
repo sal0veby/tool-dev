@@ -68,7 +68,7 @@ class WorkTypeController extends Controller
         return view('manage.work_type.edit', compact('class_list', 'location_list', 'result'));
     }
 
-    public function update($id , WorkTypeRequest $request)
+    public function update($id, WorkTypeRequest $request)
     {
         $input = $request->all();
         $input['active'] = isset($input['active']) && $input['active'] == 'on' ? true : false;
@@ -88,10 +88,19 @@ class WorkTypeController extends Controller
     {
         try {
             WorkType::where('id', $id)->update(['active' => false]);
-        } catch (\Exception $exception) {dd($exception);
+        } catch (\Exception $exception) {
+            dd($exception);
             return redirect()->back()->withErrors('error', trans('error_message.save_false'));
         }
         return redirect('work_type')->with('success', trans('error_message.save_success'));
+    }
+
+    public function getWorkTypeList(Request $request)
+    {
+        $class_id = $request->get('class_id');
+        $location_id = $request->get('location_id');
+
+        return WorkType::where(['location_id' => $location_id, 'class_id' => $class_id])->get();
     }
 
 }

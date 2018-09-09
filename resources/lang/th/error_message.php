@@ -8,6 +8,8 @@ return [
 
     'please_checkbox' => 'กรูณาเลือก Permission',
 
+    'not_fill' => 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
     'status' => [
         '404' => 'ไม่พบหน้านี้'
     ]

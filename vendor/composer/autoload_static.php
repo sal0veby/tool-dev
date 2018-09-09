@@ -20,6 +20,7 @@ class ComposerStaticInit23230ffb58617b23b05386b4eb115ea5
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
+        'b4e3f29b106af37a2bb239f73cdf68c7' => __DIR__ . '/../..' . '/app/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -432,6 +433,7 @@ class ComposerStaticInit23230ffb58617b23b05386b4eb115ea5
         'App\\Models\\LoginModel' => __DIR__ . '/../..' . '/app/Models/LoginModel.php',
         'App\\Models\\ManageStep' => __DIR__ . '/../..' . '/app/Models/ManageStep.php',
         'App\\Models\\Menu' => __DIR__ . '/../..' . '/app/Models/Menu.php',
+        'App\\Models\\Owner' => __DIR__ . '/../..' . '/app/Models/Owner.php',
         'App\\Models\\Permission' => __DIR__ . '/../..' . '/app/Models/Permission.php',
         'App\\Models\\StepFlow' => __DIR__ . '/../..' . '/app/Models/StepFlow.php',
         'App\\Models\\TransactionJobOrder' => __DIR__ . '/../..' . '/app/Models/TransactionJobOrder.php',

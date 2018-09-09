@@ -208,7 +208,8 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.owner') }} ({{ trans('main.employer') }}) :
                                         </label>
-                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                        <button type="button" class="btn btn-info btn-sm active pull-right"
+                                                data-toggle="modal" data-target="#m_modal_owner">
                                             <i class="la la-plus" style="font-weight: bold"></i>
                                             {{ trans('main.add') . trans('main.owner') }} ({{ trans('main.employer') }})
                                         </button>
@@ -224,7 +225,8 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.supervisor') }} :
                                         </label>
-                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                        <button type="button" class="btn btn-info btn-sm active pull-right"
+                                                data-toggle="modal" data-target="#m_modal_supervisor">
                                             <i class="la la-plus" style="font-weight: bold"></i>
                                             {{ trans('main.add') . trans('main.supervisor') }}
                                         </button>
@@ -240,7 +242,8 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.contractor') }} ({{ trans('main.employee') }}) :
                                         </label>
-                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                        <button type="button" class="btn btn-info btn-sm active pull-right"
+                                                data-toggle="modal" data-target="#m_modal_contractor">
                                             <i class="la la-plus" style="font-weight: bold"></i>
                                             {{ trans('main.add') . trans('main.contractor') }}
                                         </button>
@@ -256,7 +259,8 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.taskmaster') }} :
                                         </label>
-                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                        <button type="button" class="btn btn-info btn-sm active pull-right"
+                                                data-toggle="modal" data-target="#m_modal_taskmaster">
                                             <i class="la la-plus" style="font-weight: bold"></i>
                                             {{ trans('main.add') . trans('main.taskmaster') }}
                                         </button>
@@ -272,7 +276,8 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.participants') }} :
                                         </label>
-                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                        <button type="button" class="btn btn-info btn-sm active pull-right"
+                                                data-toggle="modal" data-target="#m_modal_participants">
                                             <i class="la la-plus" style="font-weight: bold"></i>
                                             {{ trans('main.add') . trans('main.participants') }}
                                         </button>
@@ -288,7 +293,8 @@
                                         <label for="description_work_type" class="col-form-label">
                                             {{ trans('main.car_registration') }} :
                                         </label>
-                                        <button type="button" class="btn btn-info btn-sm active pull-right">
+                                        <button type="button" class="btn btn-info btn-sm active pull-right"
+                                                data-toggle="modal" data-target="#m_modal_car_registration">
                                             <i class="la la-plus" style="font-weight: bold"></i>
                                             {{ trans('main.add') . trans('main.car_registration') }}
                                         </button>
@@ -310,6 +316,12 @@
                                 </div>
                             </div>
 
+                            @include('job_order.modals.owner')
+                            @include('job_order.modals.supervisor')
+                            @include('job_order.modals.contractor')
+                            @include('job_order.modals.taskmaster')
+                            @include('job_order.modals.participants')
+                            @include('job_order.modals.car_registration')
 
                         </form>
                     </div>
@@ -318,7 +330,6 @@
             <!--end: Search Form -->
         </div>
     </div>
-
 
     @push('scripts')
         <script>

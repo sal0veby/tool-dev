@@ -13,7 +13,7 @@ class CreateCarRegistration extends Migration
      */
     public function up()
     {
-        Schema::create('car_registration', function (Blueprint $table) {
+        Schema::create('car_registrations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
             $table->string('car_registration', 10);
@@ -29,6 +29,6 @@ class CreateCarRegistration extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('car_registration');
+        Schema::dropIfExists('car_registrations');
     }
 }
