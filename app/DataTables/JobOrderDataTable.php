@@ -106,7 +106,7 @@ class JobOrderDataTable extends DataTable
 
     private function editButton($model): string
     {
-        $route = route('class.edit', [$model->id]);
+        $route = route('job_list.edit', [$model->id]);
 
         $attributes = [
             'id' => "button-edit-{$model->id}",

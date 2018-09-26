@@ -209,17 +209,17 @@
 
                 @endif
 
-                @if(session()->get('permission_id') == 1)
-                    <li class="m-menu__item " aria-haspopup="true">
-                        <a href="{{ route('manage_step.index') }}" class="m-menu__link ">
-                            <i class="m-menu__link-icon flaticon-interface-6"></i>
-                            <span class="m-menu__link-text">
-                                {{ trans('main.manage_step_job_list') }}
+                {{--@if(session()->get('permission_id') == 1)--}}
+                    {{--<li class="m-menu__item " aria-haspopup="true">--}}
+                        {{--<a href="{{ route('manage_step.index') }}" class="m-menu__link ">--}}
+                            {{--<i class="m-menu__link-icon flaticon-interface-6"></i>--}}
+                            {{--<span class="m-menu__link-text">--}}
+                                {{--{{ trans('main.manage_step_job_list') }}--}}
                                 {{--Manage Stap Job List--}}
-                            </span>
-                        </a>
-                    </li>
-                @endif
+                            {{--</span>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                {{--@endif--}}
 
 
             @else

@@ -32,7 +32,7 @@ class ManageStepController extends Controller
 
     public function update(ManageStepRequest $request)
     {
-        $input = $request->all();
+        $input = $request->all(); dd($input);
 
         $result_step = ManageStep::get();
 

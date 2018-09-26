@@ -14,25 +14,50 @@
             </div>
             <input type="hidden" id="participants_list" name="participants_list">
             <div class="modal-body" style="height: 400px;overflow-y: auto;">
-                <div class="div-participants">
-                    <div class="form-group row">
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control m-input participants_name"
-                                   placeholder="{{ trans('main.name') }}">
-                        </div>
-                        {{--<div class="col-lg-4">--}}
-                        {{--<input type="text" class="form-control m-input participants_company"--}}
-                        {{--placeholder="{{ trans('main.company_name') }}">--}}
-                        {{--</div>--}}
-                        {{--<div class="col-lg-3">--}}
-                        {{--<input type="text" class="form-control m-input participants_tel"--}}
-                        {{--placeholder="{{ trans('main.tel') }}">--}}
-                        {{--</div>--}}
-                        <div class="col-lg-1">
-                            <button class="btn btn-success btn-add-participants m-btn m-btn--icon
+                <div class="col-12">
+                    <div class="div-participants">
+                        @if(isset($data['participants']) && !empty(array_get($data, 'participants')))
+                            @foreach(array_get($data, 'participants') as $key => $value)
+                                <div class="form-group row">
+                                    <input type="hidden" class="participants_id"
+                                           value="{{ array_get($value , 'id') }}">
+                                    <div class="col-10">
+                                        <input type="text" class="form-control m-input participants_name"
+                                               placeholder="{{ trans('main.name') }}"
+                                               value="{{ array_get($value , 'name') }}">
+                                    </div>
+                                    @if($key == 0)
+                                        <div class="col-lg-1">
+                                            <button class="btn btn-success btn-add-participants m-btn m-btn--icon
                             m-btn--icon-only">
-                                <i class="fa fa-plus"></i></button>
-                        </div>
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    @else
+                                        <div class="col-lg-1">
+                                            <button
+                                                class="btn btn-danger btn-delete-owner m-btn m-btn--icon m-btn--icon-only"
+                                                onclick="remove_participants(this)">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="form-group row">
+                                <input type="hidden" class="participants_id" value="">
+                                <div class="col-10">
+                                    <input type="text" class="form-control m-input participants_name"
+                                           placeholder="{{ trans('main.name') }}">
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-success btn-add-participants m-btn m-btn--icon
+                            m-btn--icon-only">
+                                        <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -54,10 +79,9 @@
             $(".btn-add-participants").click(function (e) {
                 e.preventDefault();
                 var str = '<div class="form-group row">'
-                    + '<div class="col-lg-10"><input type="text" class="form-control m-input participants_name" placeholder="{{ trans('main.name') }}"></div>'
-                    {{--+ '<div class="col-lg-4"><input type="text" class="form-control m-input participants_company" placeholder="{{ trans('main.company_name') }}"></div>'--}}
-                    {{--+ '<div class="col-lg-3"><input type="text" class="form-control m-input participants_tel" placeholder="{{ trans('main.tel') }}"></div>'--}}
-                    + '<div class="col-lg-1"><button class="btn btn-danger btn-delete-participants m-btn m-btn--icon m-btn--icon-only" onclick="remove_participants(this)"><i class="fa fa-close"></i></button></div>'
+                    + '<input type="hidden" class="participants_id" value="">'
+                    + '<div class="col-10"><input type="text" class="form-control m-input participants_name" placeholder="{{ trans('main.name') }}"></div>'
+                    + '<div class="col-1"><button class="btn btn-danger btn-delete-participants m-btn m-btn--icon m-btn--icon-only" onclick="remove_participants(this)"><i class="fa fa-close"></i></button></div>'
                     + '</div>';
                 $(".div-participants").append(str);
             });
@@ -68,11 +92,13 @@
                 var i = 0;
                 $("#participants").html("");
                 $(".div-participants .form-group").each(function () {
+                    var id = $(this).find(".participants_id").val();
                     var name = $(this).find(".participants_name").val();
                     if (name == "") {
                         i++;
                     } else {
                         var objTemp = {};
+                        objTemp.id = id;
                         objTemp.name = name;
                         temp.push(objTemp);
                     }

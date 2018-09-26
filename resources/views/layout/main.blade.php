@@ -9,6 +9,10 @@
 
     <link href="{!! asset("css/vendors.bundle.css") !!}" rel="stylesheet" type="text/css"/>
     <link href="{!! asset("css/style.bundle.css") !!}" rel="stylesheet" type="text/css"/>
+    <link href="{!! asset("css/custom_scrollbar.css") !!}" rel="stylesheet" type="text/css"/>
+
+    <link href="{!! asset("css/wizard_tab_hotwork.css") !!}" rel="stylesheet" type="text/css"/>
+    <link href="{!! asset("css/tagsinput.css") !!}" rel="stylesheet" type="text/css"/>
     <!--end::Base Styles -->
     {{--<link rel="shortcut icon" href="{!! asset("images/favicon.ico") !!}"/>--}}
     {{--<link href="{!! asset("css/style.css") !!}" rel="stylesheet" type="text/css"/>--}}
@@ -38,6 +42,8 @@
             color: #6f727d !important;
             background-color: #f4f5f8 !important;
         }
+
+
     </style>
 </head>
 <body
@@ -78,12 +84,11 @@
 <script src="{!! asset("js/template/app.js") !!}" type="text/javascript"></script>
 <script src="{!! asset("js/template/layout.js") !!}" type="text/javascript"></script>
 <script src="{!! asset("js/sweetalert2.all.min.js") !!}" type="text/javascript"></script>
-{{--<script src="{!! asset("js/bootstrap-datepicker.js") !!}" type="text/javascript"></script>--}}
-{{--<script src="{!! asset("js/bootstrap-timepicker.js") !!}" type="text/javascript"></script>--}}
-
 
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+
+<script src="{!! asset("js/tagsinput.js") !!}"></script>
 
 @stack('scripts')
 {{--@push('scripts')--}}

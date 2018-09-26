@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateManageStepFlow extends Migration
+class CreateTool extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateManageStepFlow extends Migration
      */
     public function up()
     {
-        Schema::create('manage_steps', function (Blueprint $table) {
+        Schema::create('tools', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('permission_id')->default(0);
-            $table->string('process_hot_work_id' , 20);
-            $table->integer('license_hot_work')->default(0);
-            $table->integer('updated_by')->default(0)->nullable(); //license_hot_work
+            $table->integer('order_id');
+            $table->string('tool_name', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +29,6 @@ class CreateManageStepFlow extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('manage_steps');
+        Schema::dropIfExists('tools');
     }
 }

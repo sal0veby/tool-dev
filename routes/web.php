@@ -125,7 +125,8 @@ Route::group([
     Route::get('/', 'JobListController@index')->name('index');
     Route::get('/create', 'JobListController@create')->name('add');
     Route::post('/create', 'JobListController@store')->name('store');
-    Route::post('/update', 'JobListController@update')->name('update');
+    Route::get('/{id}/joborder', 'JobListController@edit')->name('edit');
+    Route::post('/{id}/update', 'JobListController@update')->name('update');
 
 
     Route::get('/getWorkTypeList', 'JobListController@getWorkTypeList')->name('getWorkTypeList');

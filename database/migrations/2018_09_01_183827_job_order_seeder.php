@@ -26,6 +26,7 @@ class JobOrderSeeder extends Migration
             $table->text('description_location')->nullable();
             $table->integer('work_type_id');
             $table->text('description_work_type')->nullable();
+            $table->boolean('hot_work')->default(0);
             $table->integer('process_id');
             $table->integer('state_id');
             $table->integer('created_by')->default(0);

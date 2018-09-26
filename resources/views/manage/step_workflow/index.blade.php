@@ -48,7 +48,7 @@
                                         <tr>
                                             <th>{{ trans('main.step_job_list') }}</th>
                                             <th>{{ trans('main.permission') }}</th>
-                                            <th>{{ trans('main.step_hot_work') }}</th>
+                                            <th style="width: 50%">{{ trans('main.step_hot_work') }}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -56,7 +56,12 @@
                                         @if($result->count() > 0)
                                             @for($i = 1; $i <= config('custom.number_of_steps'); $i++)
                                                 <tr>
-                                                    <td>{{ trans('main.step') . ' ' . $i }}</td>
+                                                    <td>
+                                                        {{ trans('main.step') . ' ' . $i }}
+                                                        <input name="process_hot_work_id"
+                                                               value="{{ trans('main.step') . ' ' . $i }}"
+                                                               type="hidden">
+                                                    </td>
                                                     <td>
                                                         <select class="form-control m-input m-input--square"
                                                                 name="permission_id[{{ array_get($result[$i-1] , 'id') }}]">
@@ -134,10 +139,10 @@
                                                                 value="" {{ old('hot_work_id') == '' ? 'selected' : '' }}>
                                                                 ---- Please select ----
                                                             </option>
-                                                            <option
-                                                                value="step99" {{ old('permission_id') == '99' ? 'selected' : '' }}>
-                                                                {{ trans('main.general_user') }}
-                                                            </option>
+                                                            {{--<option--}}
+                                                                {{--value="step99" {{ old('permission_id') == '99' ? 'selected' : '' }}>--}}
+{{--                                                                {{ trans('main.general_user') }}--}}
+                                                            {{--</option>--}}
                                                             @forelse($hot_work as $key => $val)
                                                                 <option value="{{ $key }}"
                                                                     {{ old('hot_work_id') == $key ? 'selected' : '' }}
@@ -146,6 +151,10 @@
                                                                 </option>
                                                             @empty
                                                             @endforelse
+                                                            <option
+                                                                value="98" {{ old('permission_id') == '98' ? 'selected' : '' }}>
+                                                                {{ trans('main.not_have') }}
+                                                            </option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -170,70 +179,10 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script>
-            {{--function select_hotwork(__this) {--}}
-            {{--var _this = $(__this);--}}
-            {{--var data = [];--}}
-            {{--var myItems = JSON.parse('<?php echo json_encode($hot_work); ?>');--}}
-            {{--var aaa = '';--}}
-            {{--$(".hot_work > option:selected").each(function (index) {--}}
-            {{--if ($(this).val() != '') {--}}
-            {{--$.each(myItems, function ($k, $val) {--}}
-            {{--if ($.inArray($k, data) !== -1) {--}}
-            {{--aaa += '<option value="' + $k + '">' + $val + '</option>';--}}
-            {{--_this.append('<option value="' + $k + '">' + $val + '</option>');--}}
-            {{--}--}}
-            {{--});--}}
-            {{--}--}}
-            {{--});--}}
+    {{--@push('scripts')--}}
+        {{--<script>--}}
 
-            {{--// _this.html('');--}}
-            {{--// _this.html('<option value="">---- Please select ----</option>');--}}
-            {{--// var aaa = '';--}}
-            {{--// $.each(myItems, function ($k, $val) {--}}
-            {{--//     if ($.inArray($k, data) !== -1) {--}}
-            {{--//         aaa += '<option value="' + $k + '">' + $val + '</option>';--}}
-            {{--//         _this.append('<option value="' + $k + '">' + $val + '</option>');--}}
-            {{--//     }--}}
-            {{--// });--}}
-            {{--console.log(aaa);--}}
-
-            {{--}--}}
-
-
-            {{--$(document).ready(function () {--}}
-            {{--$('.hot_work').on('blur', function () {--}}
-            {{--var _this = $(this);--}}
-            {{--var data = [];--}}
-            {{--var myItems = JSON.parse('<?php echo json_encode($hot_work); ?>');--}}
-
-
-            {{--$(".hot_work > option:selected").each(function (index) {--}}
-            {{--if ($(this).val() != '') {--}}
-            {{--data.push($(this).val());--}}
-            {{--}--}}
-            {{--});--}}
-
-            {{--_this.html('');--}}
-            {{--_this.html('<option value="">---- Please select ----</option>');--}}
-            {{--var aaa = '';--}}
-            {{--$.each(myItems, function ($k, $val) {--}}
-            {{--if ($.inArray($k, data) === -1) {--}}
-            {{--aaa += '<option value="' + $k + '">' + $val + '</option>';--}}
-            {{--_this.append('<option value="' + $k + '">' + $val + '</option>');--}}
-            {{--}--}}
-            {{--});--}}
-            {{--console.log(aaa);--}}
-            {{--});--}}
-
-
-            {{--// $('.hot_work').change(function () {--}}
-            {{--//--}}
-            {{--//--}}
-            {{--// })--}}
-            {{--})--}}
-        </script>
-    @endpush
+        {{--</script>--}}
+    {{--@endpush--}}
 
 @endsection

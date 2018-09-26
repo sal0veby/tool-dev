@@ -14,25 +14,50 @@
             </div>
             <input type="hidden" id="car_registration_list" name="car_registration_list">
             <div class="modal-body" style="height: 400px;overflow-y: auto;">
-                <div class="div-car_registration">
-                    <div class="form-group row">
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control m-input car_registration_name"
-                                   placeholder="{{ trans('main.car_registration') }}">
-                        </div>
-                        {{--<div class="col-lg-4">--}}
-                        {{--<input type="text" class="form-control m-input car_registration_company"--}}
-                        {{--placeholder="{{ trans('main.company_name') }}">--}}
-                        {{--</div>--}}
-                        {{--<div class="col-lg-3">--}}
-                        {{--<input type="text" class="form-control m-input car_registration_tel"--}}
-                        {{--placeholder="{{ trans('main.tel') }}">--}}
-                        {{--</div>--}}
-                        <div class="col-lg-1">
-                            <button class="btn btn-success btn-add-car_registration m-btn m-btn--icon
+                <div class="col-12">
+                    <div class="div-car_registration">
+                        @if(isset($data['car_registration']) && !empty(array_get($data, 'car_registration')))
+                            @foreach(array_get($data, 'car_registration') as $key => $value)
+                                <div class="form-group row">
+                                    <input type="hidden" class="car_registration_id"
+                                           value="{{ array_get($value , 'id') }}">
+                                    <div class="col-10">
+                                        <input type="text" class="form-control m-input car_registration_name"
+                                               placeholder="{{ trans('main.name') }}"
+                                               value="{{ array_get($value , 'car_registration') }}">
+                                    </div>
+                                    @if($key == 0)
+                                        <div class="col-lg-1">
+                                            <button class="btn btn-success btn-add-car_registration m-btn m-btn--icon
                             m-btn--icon-only">
-                                <i class="fa fa-plus"></i></button>
-                        </div>
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    @else
+                                        <div class="col-lg-1">
+                                            <button
+                                                class="btn btn-danger btn-delete-owner m-btn m-btn--icon m-btn--icon-only"
+                                                onclick="remove_car_registration(this)">
+                                                <i class="fa fa-close"></i>
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="form-group row">
+                                <input type="hidden" class="car_registration_id" value="">
+                                <div class="col-10">
+                                    <input type="text" class="form-control m-input car_registration_name"
+                                           placeholder="{{ trans('main.car_registration') }}">
+                                </div>
+                                <div class="col-1">
+                                    <button class="btn btn-success btn-add-car_registration m-btn m-btn--icon
+                            m-btn--icon-only">
+                                        <i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -54,10 +79,9 @@
             $(".btn-add-car_registration").click(function (e) {
                 e.preventDefault();
                 var str = '<div class="form-group row">'
-                    + '<div class="col-lg-10"><input type="text" class="form-control m-input car_registration_name" placeholder="{{ trans('main.car_registration') }}"></div>'
-                    {{--+ '<div class="col-lg-4"><input type="text" class="form-control m-input car_registration_company" placeholder="{{ trans('main.company_name') }}"></div>'--}}
-                    {{--+ '<div class="col-lg-3"><input type="text" class="form-control m-input car_registration_tel" placeholder="{{ trans('main.tel') }}"></div>'--}}
-                    + '<div class="col-lg-1"><button class="btn btn-danger btn-delete-car_registration m-btn m-btn--icon m-btn--icon-only" onclick="remove_car_registration(this)"><i class="fa fa-close"></i></button></div>'
+                    + '<input type="hidden" class="car_registration_id" value="">'
+                    + '<div class="col-10"><input type="text" class="form-control m-input car_registration_name" placeholder="{{ trans('main.car_registration') }}"></div>'
+                    + '<div class="col-1"><button class="btn btn-danger btn-delete-car_registration m-btn m-btn--icon m-btn--icon-only" onclick="remove_car_registration(this)"><i class="fa fa-close"></i></button></div>'
                     + '</div>';
                 $(".div-car_registration").append(str);
             });
@@ -68,11 +92,13 @@
                 var i = 0;
                 $("#car_registration").html("");
                 $(".div-car_registration .form-group").each(function () {
+                    var id = $(this).find(".car_registration_id").val();
                     var name = $(this).find(".car_registration_name").val();
                     if (name == "") {
                         i++;
                     } else {
                         var objTemp = {};
+                        objTemp.id = id;
                         objTemp.car_registration = name;
                         temp.push(objTemp);
                     }

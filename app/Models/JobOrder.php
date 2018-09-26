@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Session;
 
 class JobOrder extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'job_orders';
 
     protected $primaryKey = 'id';
@@ -27,12 +31,13 @@ class JobOrder extends Model
         'process_id',
         'state_id',
         'created_by',
-        'updated_by'
+        'updated_by',
     ];
 
     public function setComingWorkDateAttribute($value)
     {
-        $this->attributes['coming_work_date'] = date('Y-m-d H:i:s' , strtotime($value));
+        $date = DateTime::createFromFormat('d/m/Y', $value);
+        $this->attributes['coming_work_date'] = $date->format('Y-m-d');
     }
 
     public function setStart_work_timeAttribute($value)

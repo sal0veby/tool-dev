@@ -15,25 +15,66 @@
             <input type="hidden" id="taskmaster_list" name="taskmaster_list">
             <div class="modal-body" style="height: 400px;overflow-y: auto;">
                 <div class="div-taskmaster">
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <input type="text" class="form-control m-input taskmaster_name"
-                                   placeholder="{{ trans('main.name') }}">
-                        </div>
-                        <div class="col-lg-4">
-                            <input type="text" class="form-control m-input taskmaster_company"
-                                   placeholder="{{ trans('main.company_name') }}">
-                        </div>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control m-input taskmaster_tel"
-                                   placeholder="{{ trans('main.tel') }}">
-                        </div>
-                        <div class="col-lg-1">
-                            <button class="btn btn-success btn-add-taskmaster m-btn m-btn--icon
+                    @if(isset($data['taskmaster']) && !empty(array_get($data, 'taskmaster')))
+                        @foreach(array_get($data, 'taskmaster') as $key => $value)
+                            <div class="form-group row">
+                                <input type="hidden" class="taskmaster_id"
+                                       value="{{ array_get($value , 'id') }}">
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control m-input taskmaster_name"
+                                           placeholder="{{ trans('main.name') }}"
+                                           value="{{ array_get($value , 'name') }}">
+                                </div>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control m-input taskmaster_company"
+                                           placeholder="{{ trans('main.company_name') }}"
+                                           value="{{ array_get($value , 'company_name') }}">
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control m-input taskmaster_tel"
+                                           placeholder="{{ trans('main.tel') }}"
+                                           value="{{ array_get($value , 'tel') }}">
+                                </div>
+                                @if($key == 0)
+                                    <div class="col-lg-1">
+                                        <button class="btn btn-success btn-add-taskmaster m-btn m-btn--icon
                             m-btn--icon-only">
-                                <i class="fa fa-plus"></i></button>
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="col-lg-1">
+                                        <button
+                                            class="btn btn-danger btn-delete-owner m-btn m-btn--icon m-btn--icon-only"
+                                            onclick="remove_taskmaster(this)">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="form-group row">
+                            <input type="hidden" class="taskmaster_id" value="">
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control m-input taskmaster_name"
+                                       placeholder="{{ trans('main.name') }}">
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control m-input taskmaster_company"
+                                       placeholder="{{ trans('main.company_name') }}">
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input taskmaster_tel"
+                                       placeholder="{{ trans('main.tel') }}">
+                            </div>
+                            <div class="col-lg-1">
+                                <button class="btn btn-success btn-add-taskmaster m-btn m-btn--icon
+                            m-btn--icon-only">
+                                    <i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
@@ -54,6 +95,7 @@
             $(".btn-add-taskmaster").click(function (e) {
                 e.preventDefault();
                 var str = '<div class="form-group row">'
+                    + '<input type="hidden" class="taskmaster_id" value="">'
                     + '<div class="col-lg-4"><input type="text" class="form-control m-input taskmaster_name" placeholder="{{ trans('main.name') }}"></div>'
                     + '<div class="col-lg-4"><input type="text" class="form-control m-input taskmaster_company" placeholder="{{ trans('main.company_name') }}"></div>'
                     + '<div class="col-lg-3"><input type="text" class="form-control m-input taskmaster_tel" placeholder="{{ trans('main.tel') }}"></div>'
@@ -68,6 +110,7 @@
                 var i = 0;
                 $("#taskmaster").html("");
                 $(".div-taskmaster .form-group").each(function () {
+                    var id = $(this).find(".taskmaster_id").val();
                     var name = $(this).find(".taskmaster_name").val();
                     var company = $(this).find(".taskmaster_company").val();
                     var tel = $(this).find(".taskmaster_tel").val();
@@ -75,6 +118,7 @@
                         i++;
                     } else {
                         var objTemp = {};
+                        objTemp.id = id;
                         objTemp.name = name;
                         objTemp.company_name = company;
                         objTemp.tel = tel;

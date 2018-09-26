@@ -32,7 +32,7 @@
                     <div class="col-lg-12">
                         <form class="" method="post" action="{{ route('job_list.store') }}" autocomplete="off">
                             @csrf
-
+                            <input type="hidden" name="disabled_1" value="">
                             <input type="hidden" name="process_id" value="1">
                             <input type="hidden" name="state_id" value="1">
                             <input type="hidden" name="created_by" value="">
@@ -205,7 +205,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="description_work_type" class="col-form-label">
+                                        <label for="owner" class="col-form-label">
                                             {{ trans('main.owner') }} ({{ trans('main.employer') }}) :
                                         </label>
                                         <button type="button" class="btn btn-info btn-sm active pull-right"
@@ -222,7 +222,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="description_work_type" class="col-form-label">
+                                        <label for="supervisor" class="col-form-label">
                                             {{ trans('main.supervisor') }} :
                                         </label>
                                         <button type="button" class="btn btn-info btn-sm active pull-right"
@@ -239,7 +239,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="description_work_type" class="col-form-label">
+                                        <label for="contractor" class="col-form-label">
                                             {{ trans('main.contractor') }} ({{ trans('main.employee') }}) :
                                         </label>
                                         <button type="button" class="btn btn-info btn-sm active pull-right"
@@ -256,7 +256,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="description_work_type" class="col-form-label">
+                                        <label for="taskmaster" class="col-form-label">
                                             {{ trans('main.taskmaster') }} :
                                         </label>
                                         <button type="button" class="btn btn-info btn-sm active pull-right"
@@ -273,7 +273,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="description_work_type" class="col-form-label">
+                                        <label for="participants" class="col-form-label">
                                             {{ trans('main.participants') }} :
                                         </label>
                                         <button type="button" class="btn btn-info btn-sm active pull-right"
@@ -290,7 +290,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="description_work_type" class="col-form-label">
+                                        <label for="car_registration" class="col-form-label">
                                             {{ trans('main.car_registration') }} :
                                         </label>
                                         <button type="button" class="btn btn-info btn-sm active pull-right"
@@ -304,6 +304,38 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="work_permit" class="col-form-label">
+                                            {{ trans('main.work_permit') }} :
+                                        </label>
+
+                                        <div class="m-radio-inline">
+                                            <label class="m-radio m-radio--bold">
+                                                <input class="hot_work" type="radio" name="hot_work" value="0"
+                                                    {{ !empty(old('hot_work')) && old('hot_work') == 0 ? 'checked' : 'checked' }}>
+                                                {{ trans('main.not_have') }}
+                                                <span></span>
+                                            </label>
+                                            <label class="m-radio m-radio--bold">
+                                                <input class="hot_work" type="radio" name="hot_work" value="1"
+                                                    {{ !empty(old('hot_work')) && old('hot_work') == 1 ? 'checked' : '' }}>
+                                                {{ trans('main.have') }}
+                                                <span></span>
+                                            </label>
+
+                                            <button type="button" class="btn btn-success btn-sm active pull-right"
+                                                    data-toggle="modal" data-target="#m_modal_hot_work"
+                                                    id="btn_hot_work"
+                                                {{ !empty(old('hot_work')) && old('hot_work') == 1 ?: 'hidden' }}>
+                                                <i class="la la-plus" style="font-weight: bold"></i>
+                                                {{ trans('main.add') . trans('main.license') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12 m--margin-top-30 text-center">
@@ -322,6 +354,7 @@
                             @include('job_order.modals.taskmaster')
                             @include('job_order.modals.participants')
                             @include('job_order.modals.car_registration')
+                            @include('job_order.license_hot_work.create_hot_work')
 
                         </form>
                     </div>
@@ -422,6 +455,14 @@
                     timeFormat: 'HH:mm',
                     showMeridian: false,
                     defaultTime: '00:00',
+                });
+
+                $('.hot_work').change(function () {
+                    if ($(this).val() == 1) {
+                        $('#btn_hot_work').attr("hidden", false);
+                    } else {
+                        $('#btn_hot_work').attr("hidden", true);
+                    }
                 });
 
             })

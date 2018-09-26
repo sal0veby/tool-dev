@@ -2,6 +2,7 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\Models\Permission;
 use App\Models\UserPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -120,10 +121,11 @@ trait AuthenticatesUsers
     protected function authenticated(Request $request, $user)
     {
         if ($user->active == true) {
-            $user_permission = UserPermission::where(['user_id' => $user->id , 'active' => true])->get();
+            $user_permission = UserPermission::where(['user_id' => $user->id, 'active' => true])->get();
+            $permission_name = Permission::where(['id' => $user->permission_id])->first();
 
             $menu_permission = [];
-            foreach ($user_permission as  $val){
+            foreach ($user_permission as $val) {
                 $menu_permission[$val->menu_id] = [
                     'use' => $val->use,
                     'update' => $val->update,
@@ -140,7 +142,9 @@ trait AuthenticatesUsers
                 'last_name' => $user->last_name,
                 'full_name' => $user->first_name . ' ' . $user->last_name,
                 'email' => $user->email,
+                'tel' => $user->tel,
                 'permission_id' => $user->permission_id,
+                'permission_name' => $permission_name->name,
                 'permission' => $menu_permission,
             ]);
         }

@@ -15,25 +15,67 @@
             <input type="hidden" id="owner_list" name="owner_list">
             <div class="modal-body" style="height: 400px;overflow-y: auto;">
                 <div class="div-owner">
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <input type="text" class="form-control m-input owner_name"
-                                   placeholder="{{ trans('main.name') }}">
-                        </div>
-                        <div class="col-lg-4">
-                            <input type="text" class="form-control m-input owner_company"
-                                   placeholder="{{ trans('main.company_name') }}">
-                        </div>
-                        <div class="col-lg-3">
-                            <input type="text" class="form-control m-input owner_tel"
-                                   placeholder="{{ trans('main.tel') }}">
-                        </div>
-                        <div class="col-lg-1">
-                            <button class="btn btn-success btn-add-owner m-btn m-btn--icon
+                    @if(isset($data['owner']) && !empty(array_get($data, 'owner')))
+                        @foreach(array_get($data, 'owner') as $key => $value)
+                            <div class="form-group row">
+                                <input type="hidden" class="owner_id"
+                                       value="{{ array_get($value , 'id') }}">
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control m-input owner_name"
+                                           placeholder="{{ trans('main.name') }}"
+                                           value="{{ array_get($value , 'name') }}">
+                                </div>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control m-input owner_company"
+                                           placeholder="{{ trans('main.company_name') }}"
+                                           value="{{ array_get($value , 'company_name') }}">
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="text" class="form-control m-input owner_tel"
+                                           placeholder="{{ trans('main.tel') }}"
+                                           value="{{ array_get($value , 'tel') }}">
+                                </div>
+                                @if($key == 0)
+                                    <div class="col-lg-1">
+                                        <button class="btn btn-success btn-add-owner m-btn m-btn--icon
                             m-btn--icon-only">
-                                <i class="fa fa-plus"></i></button>
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="col-lg-1">
+                                        <button
+                                            class="btn btn-danger btn-delete-owner m-btn m-btn--icon m-btn--icon-only"
+                                            onclick="remove_owner(this)">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="form-group row">
+                            <input type="hidden" class="owner_id"
+                                   value="">
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control m-input owner_name"
+                                       placeholder="{{ trans('main.name') }}">
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control m-input owner_company"
+                                       placeholder="{{ trans('main.company_name') }}">
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control m-input owner_tel"
+                                       placeholder="{{ trans('main.tel') }}">
+                            </div>
+                            <div class="col-lg-1">
+                                <button class="btn btn-success btn-add-owner m-btn m-btn--icon
+                            m-btn--icon-only">
+                                    <i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
@@ -54,6 +96,7 @@
             $(".btn-add-owner").click(function (e) {
                 e.preventDefault();
                 var str = '<div class="form-group row">'
+                    + '<input type="hidden" class="owner_id" value="">'
                     + '<div class="col-lg-4"><input type="text" class="form-control m-input owner_name" placeholder="{{ trans('main.name') }}"></div>'
                     + '<div class="col-lg-4"><input type="text" class="form-control m-input owner_company" placeholder="{{ trans('main.company_name') }}"></div>'
                     + '<div class="col-lg-3"><input type="text" class="form-control m-input owner_tel" placeholder="{{ trans('main.tel') }}"></div>'
@@ -68,6 +111,7 @@
                 var i = 0;
                 $("#owner").html("");
                 $(".div-owner .form-group").each(function () {
+                    var id = $(this).find(".owner_id").val();
                     var name = $(this).find(".owner_name").val();
                     var company = $(this).find(".owner_company").val();
                     var tel = $(this).find(".owner_tel").val();
@@ -75,6 +119,7 @@
                         i++;
                     } else {
                         var objTemp = {};
+                        objTemp.id = id;
                         objTemp.name = name;
                         objTemp.company_name = company;
                         objTemp.tel = tel;
@@ -91,7 +136,6 @@
                 }
                 $("#m_modal_owner").modal("hide");
             });
-
         });
 
         function remove_owner(_this) {
