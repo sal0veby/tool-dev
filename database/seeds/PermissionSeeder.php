@@ -11,18 +11,27 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('permissions')->updateOrInsert([
-            'name' => 'Admin',
-        ], [
-            'name' => 'Admin',
-            'description' => 'Administrator',
-            'active' => 1,
-            'created_by' => 1,
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now()
-        ]);
+        $permission_name = [
+            'Admin' => 'Administrator',
+            'NOC' => 'NOC',
+            'Engineers' => 'Engineers',
+            'PM' => 'Project Manager',
+            'SG' => 'Security Guard',
+        ];
 
-        if (DB::table('permissions')->get()->count() == 1) {
+        foreach ($permission_name as $index => $name) {
+            $id = DB::table('permissions')->insertGetId(
+                [
+                    'name' => $index,
+                    'description' => $name,
+                    'active' => true,
+                    'default' => true,
+                    'created_by' => 1,
+                    'updated_by' => 1,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+
             $key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
             foreach ($key as $menu_id) {
@@ -31,32 +40,36 @@ class PermissionSeeder extends Seeder
                         'menu_id' => $menu_id,
                     ], [
                         'menu_id' => $menu_id,
-                        'use' => 0,
-                        'add' => 0,
-                        'update' => 0,
-                        'delete' => 0,
-                        'excel' => 0,
-                        'pdf' => 0,
-                        'active' => 1,
+                        'use' => false,
+                        'add' => false,
+                        'update' => false,
+                        'delete' => false,
+                        'excel' => false,
+                        'pdf' => false,
+                        'active' => true,
+                        'created_by' => true,
+                        'parent_id' => $id,
                         'created_by' => 1,
-                        'parent_id' => 1,
+                        'updated_by' => 1,
                         'created_at' => \Carbon\Carbon::now(),
                         'updated_at' => \Carbon\Carbon::now()
                     ]);
                 } else {
                     DB::table('permissions')->updateOrInsert([
                         'menu_id' => $menu_id,
+                        'parent_id' => $id,
                     ], [
                         'menu_id' => $menu_id,
-                        'use' => 1,
-                        'add' => 1,
-                        'update' => 1,
-                        'delete' => 1,
-                        'excel' => 1,
-                        'pdf' => 1,
-                        'active' => 1,
+                        'use' => true,
+                        'add' => true,
+                        'update' => true,
+                        'delete' => true,
+                        'excel' => true,
+                        'pdf' => true,
+                        'active' => true,
+                        'parent_id' => $id,
                         'created_by' => 1,
-                        'parent_id' => 1,
+                        'updated_by' => 1,
                         'created_at' => \Carbon\Carbon::now(),
                         'updated_at' => \Carbon\Carbon::now()
                     ]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\JobOrderDataTable;
 use App\Http\Controllers\Traits\ActionJobOrder;
+use App\Http\Controllers\Traits\SaveHotWork;
 use App\Http\Controllers\Traits\SaveJobOrder;
 use App\Http\Controllers\Traits\StepJobOrder;
 use App\Http\Requests\JobOrderRequest;
@@ -13,12 +14,14 @@ use App\Models\Location;
 use App\Models\TransactionJobOrder;
 use App\Models\WorkType;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class JobListController extends Controller
 {
     use StepJobOrder;
     use ActionJobOrder;
     use SaveJobOrder;
+    use SaveHotWork;
 
     public function __construct()
     {
@@ -45,43 +48,35 @@ class JobListController extends Controller
 
     public function store(JobOrderRequest $request)
     {
-        $input = $request->all();
-dd($input);
+        $request->merge([
+            'created_by' => Session::has('id') ? base64_decode(Session::get('id')) : 0,
+            'updated_by' => Session::has('id') ? base64_decode(Session::get('id')) : 0,
+        ]);
+
         DB::beginTransaction();
 
         try {
-            $new_data = unset_array($input, [
-                'owner_list',
-                'supervisor_list',
-                'contractor_list',
-                'taskmaster_list',
-                'participants_list',
-                'car_registration_list',
-                'hot_work_list'
-            ]);
+            $order_id = JobOrder::create($request->all())->id;
 
-            $order_id = JobOrder::create($new_data)->id;
+            $transaction = new TransactionJobOrder();
+            $transaction->createTransactionJobOrder($order_id, 1, 1);
 
             if ($order_id > 0) {
-                $transaction = new TransactionJobOrder();
-                $transaction->createTransactionJobOrder($order_id, 1, 1);
-
-                $this->createJobAction($order_id , $input);
+                if ($request->get('hot_work') == 1) {
+                    $request->merge(['order_id' => $order_id]);
+                    $this->createHotWork($request->all());
+                }
             }
 
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollback();
+            dd($exception);
             return redirect()->back()->with('error', $exception->getMessage());
 //            return redirect()->back()->with('error', trans('error_message.save_false'));
         }
 
         return redirect('job-list')->with('success', trans('error_message.save_success'));
-    }
-
-    public function show($id)
-    {
-        //
     }
 
     public function edit($id)

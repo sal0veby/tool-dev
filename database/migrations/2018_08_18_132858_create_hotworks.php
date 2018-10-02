@@ -17,12 +17,19 @@ class CreateHotworks extends Migration
             $table->increments('id');
             $table->integer('order_id');
             $table->text('work_description')->nullable();
-            $table->text('audit_description')->nullable();
-            $table->text('safety_tool_description')->nullable();
+            $table->json('tool')->nullable();
+            $table->json('audit')->nullable();
+            $table->json('safety')->nullable();
+            $table->string('owner_name_end', 255)->nullable();
+            $table->string('contractor_name', 255)->nullable();
+            $table->integer('engineer_id')->nullable();
+            $table->string('engineer_name_end', 255)->nullable();
+            $table->string('noc_name_start', 255)->nullable();
+            $table->string('noc_name_end', 255)->nullable();
+            $table->string('contractor_name_end', 255)->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0)->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

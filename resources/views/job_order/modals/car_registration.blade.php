@@ -12,17 +12,15 @@
                     </span>
                 </button>
             </div>
-            <input type="hidden" id="car_registration_list" name="car_registration_list">
             <div class="modal-body" style="height: 400px;overflow-y: auto;">
                 <div class="col-12">
                     <div class="div-car_registration">
-                        @if(isset($data['car_registration']) && !empty(array_get($data, 'car_registration')))
-                            @foreach(array_get($data, 'car_registration') as $key => $value)
+                        @if(isset($data['car_registrations']) && !empty(array_get($data, 'car_registrations')))
+                            @foreach(array_get($data, 'car_registrations') as $key => $value)
                                 <div class="form-group row">
-                                    <input type="hidden" class="car_registration_id"
-                                           value="{{ array_get($value , 'id') }}">
                                     <div class="col-10">
-                                        <input type="text" class="form-control m-input car_registration_name"
+                                        <input type="text" class="form-control m-input"
+                                               name="car_registrations[{{ $key }}][name]"
                                                placeholder="{{ trans('main.name') }}"
                                                value="{{ array_get($value , 'car_registration') }}">
                                     </div>
@@ -46,9 +44,8 @@
                             @endforeach
                         @else
                             <div class="form-group row">
-                                <input type="hidden" class="car_registration_id" value="">
                                 <div class="col-10">
-                                    <input type="text" class="form-control m-input car_registration_name"
+                                    <input type="text" class="form-control m-input" name="car_registrations[0][name]"
                                            placeholder="{{ trans('main.car_registration') }}">
                                 </div>
                                 <div class="col-1">
@@ -62,9 +59,6 @@
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <!--                <button type="button" class="btn btn-metal clear" data-action="clear" style="margin-right: 30px">
-                                    Clear
-                                </button>-->
                 <button type="button" class="btn btn-primary" id="save-car_registration">
                     {{ trans('main.save') }}
                 </button>
@@ -78,9 +72,10 @@
         $('document').ready(function () {
             $(".btn-add-car_registration").click(function (e) {
                 e.preventDefault();
+                var count = $('.div-car_registration .form-group').length;
                 var str = '<div class="form-group row">'
                     + '<input type="hidden" class="car_registration_id" value="">'
-                    + '<div class="col-10"><input type="text" class="form-control m-input car_registration_name" placeholder="{{ trans('main.car_registration') }}"></div>'
+                    + '<div class="col-10"><input type="text" class="form-control m-input" name="car_registrations[' + count + '][name]" placeholder="{{ trans('main.car_registration') }}"></div>'
                     + '<div class="col-1"><button class="btn btn-danger btn-delete-car_registration m-btn m-btn--icon m-btn--icon-only" onclick="remove_car_registration(this)"><i class="fa fa-close"></i></button></div>'
                     + '</div>';
                 $(".div-car_registration").append(str);

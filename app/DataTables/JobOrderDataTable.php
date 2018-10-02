@@ -70,7 +70,7 @@ class JobOrderDataTable extends DataTable
     protected function getActionButtons($model)
     {
         return implode('&nbsp;', [
-            $this->viewToFrontend($model),
+//            $this->viewToFrontend($model),
             $this->editButton($model),
             $this->deleteButton($model)
         ]);

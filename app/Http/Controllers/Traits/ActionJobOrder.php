@@ -9,17 +9,9 @@
 namespace App\Http\Controllers\Traits;
 
 
-use App\Models\CarRegistration;
-use App\Models\Contractor;
 use App\Models\JobOrder;
 use App\Models\Location;
-use App\Models\Owner;
-use App\Models\Participants;
-use App\Models\Supervisor;
-use App\Models\Taskmaster;
-use App\Models\Tool;
 use App\Models\WorkType;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 trait ActionJobOrder

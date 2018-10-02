@@ -3,16 +3,9 @@
 namespace App\Http\Controllers\Traits;
 
 
-use App\Models\CarRegistration;
-use App\Models\Contractor;
 use App\Models\JobOrder;
 use App\Models\JobOrderDetail;
-use App\Models\Owner;
-use App\Models\Participants;
 use App\Models\StepFlow;
-use App\Models\Supervisor;
-use App\Models\Taskmaster;
-use App\Models\Tool;
 use Carbon\Carbon;
 
 trait StepJobOrder
@@ -31,14 +24,6 @@ trait StepJobOrder
         ])->first();
 
         $result = $data->toArray();
-
-        $result['tool'] = Tool::where('order_id', array_get($result, 'id'))->get()->toArray();
-        $result['owner'] = Owner::where('order_id', array_get($result, 'id'))->get()->toArray();
-        $result['supervisor'] = Supervisor::where('order_id', array_get($result, 'id'))->get()->toArray();
-        $result['contractor'] = Contractor::where('order_id', array_get($result, 'id'))->get()->toArray();
-        $result['taskmaster'] = Taskmaster::where('order_id', array_get($result, 'id'))->get()->toArray();
-        $result['participants'] = Participants::where('order_id', array_get($result, 'id'))->get()->toArray();
-        $result['car_registration'] = CarRegistration::where('order_id', array_get($result, 'id'))->get()->toArray();
 
         $result['created_at'] = Carbon::parse(array_get($result, 'created_at'))->format(config('date.default_date_format'));
         $result['coming_work_date'] = Carbon::parse(array_get($result, 'coming_work_date'))->format(config('date.default_date_format'));

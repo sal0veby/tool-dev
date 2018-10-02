@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class JobOrderSeeder extends Migration
+class CreateJobOrder extends Migration
 {
     /**
      * Run the migrations.
@@ -27,6 +27,12 @@ class JobOrderSeeder extends Migration
             $table->integer('work_type_id');
             $table->text('description_work_type')->nullable();
             $table->boolean('hot_work')->default(0);
+            $table->json('owners')->nullable();
+            $table->json('supervisors')->nullable();
+            $table->json('contractors')->nullable();
+            $table->json('taskmasters')->nullable();
+            $table->json('participants')->nullable();
+            $table->json('car_registrations')->nullable();
             $table->integer('process_id');
             $table->integer('state_id');
             $table->integer('created_by')->default(0);

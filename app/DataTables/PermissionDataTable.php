@@ -75,7 +75,7 @@ class PermissionDataTable extends DataTable
         return implode('&nbsp;', [
             $this->viewToFrontend($model),
             $this->editButton($model),
-            $this->deleteButton($model)
+//            $this->deleteButton($model)
         ]);
     }
 

@@ -25,7 +25,7 @@ class PermissionRequest extends FormRequest
     {
         if(request('action') == 'edit'){
             return [
-                'name' => 'required|string',
+//                'name' => 'required|string',
                 'permission' => 'required'
             ];
         }

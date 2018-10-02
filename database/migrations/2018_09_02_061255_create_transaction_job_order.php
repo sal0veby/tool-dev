@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOwner extends Migration
+class CreateTransactionJobOrder extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateOwner extends Migration
      */
     public function up()
     {
-        Schema::create('owners', function (Blueprint $table) {
+        Schema::create('transaction_job_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
-            $table->string('name', 255);
-            $table->string('company_name', 255);
-            $table->string('tel', 15);
+            $table->integer('process_id');
+            $table->integer('state_id');
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0)->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -31,6 +31,6 @@ class CreateOwner extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('owners');
+        Schema::dropIfExists('transaction_job_orders');
     }
 }

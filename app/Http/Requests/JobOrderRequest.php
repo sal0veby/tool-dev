@@ -33,14 +33,6 @@ class JobOrderRequest extends FormRequest
                 'requirement' => 'required',
                 'location_id' => 'required',
                 'work_type_id' => 'required',
-                'owner_name' => 'required',
-                'department' => 'required',
-                'description' => 'required',
-                'tools' => 'required',
-                'audit' => 'required',
-                'safety' => 'required',
-                'owner_name_end' => 'required',
-                'contractor_name' => 'required',
             ];
 
             if (request()->has('location_id') && request()->get('location_id') == 99) {
@@ -52,7 +44,13 @@ class JobOrderRequest extends FormRequest
             }
 
             if (request()->has('hot_work') && request()->get('hot_work') == 1) {
-                $rule['hot_work_list'] = 'required';
+                $rule['owner_name'] = 'required';
+                $rule['department'] = 'required';
+                $rule['description'] = 'required';
+                $rule['tools'] = 'required';
+                $rule['audit'] = 'required';
+                $rule['owner_name_end'] = 'required';
+                $rule['contractor_name'] = 'required';
             }
         }
 

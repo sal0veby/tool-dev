@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Kalnoy\Nestedset\NestedSet;
 
-class Menu extends Migration
+class CreatePermission extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,17 @@ class Menu extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
+            $table->integer('menu_id')->nullable();
             $table->text('description')->nullable();
-            $table->integer('sequence');
+            $table->boolean('use')->nullable();
+            $table->boolean('add')->nullable();
+            $table->boolean('update')->nullable();
+            $table->boolean('delete')->nullable();
+            $table->boolean('excel')->nullable();
+            $table->boolean('pdf')->nullable();
             $table->boolean('active')->default(0);
             $table->boolean('default')->default(0);
             $table->integer('created_by')->default(0);
@@ -35,6 +41,6 @@ class Menu extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('permissions');
     }
 }

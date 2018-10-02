@@ -250,9 +250,9 @@
                                             </button>
                                             <textarea class="form-control" rows="5" id="owner"
                                                       cols="0" disabled><?php
-                                                if (!empty(array_get($data, 'owner'))) {
-                                                    foreach (array_get($data, 'owner') as $key => $value) {
-                                                        echo $value['name'] . ' ' . $value['company_name'] . ' ' . $value['tel'] . "\n";
+                                                if (!empty(array_get($data, 'owners'))) {
+                                                    foreach (array_get($data, 'owners') as $value) {
+                                                        echo $value['name'] . ' ' . $value['company'] . ' ' . $value['tel'] . "\n";
                                                     }
                                                 }
                                                 ?></textarea>
@@ -274,9 +274,9 @@
                                             </button>
                                             <textarea class="form-control" rows="5" id="supervisor"
                                                       cols="0" disabled><?php
-                                                if (!empty(array_get($data, 'supervisor'))) {
-                                                    foreach (array_get($data, 'supervisor') as $key => $value) {
-                                                        echo $value['name'] . ' ' . $value['company_name'] . ' ' . $value['tel'] . "\n";
+                                                if (!empty(array_get($data, 'supervisors'))) {
+                                                    foreach (array_get($data, 'supervisors') as $key => $value) {
+                                                        echo $value['name'] . ' ' . $value['company'] . ' ' . $value['tel'] . "\n";
                                                     }
                                                 }
                                                 ?></textarea>
@@ -298,9 +298,9 @@
                                             </button>
                                             <textarea class="form-control" rows="5" id="contractor"
                                                       cols="0" disabled><?php
-                                                if (!empty(array_get($data, 'contractor'))) {
-                                                    foreach (array_get($data, 'contractor') as $key => $value) {
-                                                        echo $value['name'] . ' ' . $value['company_name'] . ' ' . $value['tel'] . "\n";
+                                                if (!empty(array_get($data, 'contractors'))) {
+                                                    foreach (array_get($data, 'contractors') as $key => $value) {
+                                                        echo $value['name'] . ' ' . $value['company'] . ' ' . $value['tel'] . "\n";
                                                     }
                                                 }
                                                 ?></textarea>
@@ -322,9 +322,9 @@
                                             </button>
                                             <textarea class="form-control" rows="5" id="taskmaster"
                                                       cols="0" disabled><?php
-                                                if (!empty(array_get($data, 'taskmaster'))) {
-                                                    foreach (array_get($data, 'taskmaster') as $key => $value) {
-                                                        echo $value['name'] . ' ' . $value['company_name'] . ' ' . $value['tel'] . "\n";
+                                                if (!empty(array_get($data, 'taskmasters'))) {
+                                                    foreach (array_get($data, 'taskmasters') as $key => $value) {
+                                                        echo $value['name'] . ' ' . $value['company'] . ' ' . $value['tel'] . "\n";
                                                     }
                                                 }
                                                 ?></textarea>
@@ -370,8 +370,8 @@
                                             </button>
                                             <textarea class="form-control" rows="5" id="car_registration"
                                                       cols="0" disabled><?php
-                                                if (!empty(array_get($data, 'car_registration'))) {
-                                                    foreach (array_get($data, 'car_registration') as $key => $value) {
+                                                if (!empty(array_get($data, 'car_registrations'))) {
+                                                    foreach (array_get($data, 'car_registrations') as $key => $value) {
                                                         echo $value['car_registration'] . "\n";
                                                     }
                                                 }

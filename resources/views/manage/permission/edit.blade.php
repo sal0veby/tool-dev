@@ -68,7 +68,7 @@
                                         <label for="inputPassword" class="col-sm-5 col-form-label">{{ trans('main.permission_name') }}
                                             :</label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="name"
+                                            <input type="text" class="form-control" name="name" disabled
                                                    placeholder="Name" value="{{ array_get($result , 'name') }}">
                                         </div>
                                     </div>
@@ -120,37 +120,37 @@
                                                         <td>{{ array_get($val ,'name') }}</td>
                                                         <td></td>
                                                         <td class="checkbox">
-                                                            <input type="checkbox" class="use" 
+                                                            <input type="checkbox" class="use"
                                                                    name="permission[{{ array_get($val ,'id') }}][use]"
                                                                     {{$result['children']['children'][$key_header]['use'] == 1 ? 'checked' : '' }}
                                                             >
                                                         </td>
                                                         <td class="checkbox">
-                                                            <input type="checkbox" class="add" 
+                                                            <input type="checkbox" class="add"
                                                                    name="permission[{{ array_get($val ,'id') }}][add]"
                                                                     {{$result['children']['children'][$key_header]['add'] == 1 ? 'checked' : '' }}
                                                             >
                                                         </td>
                                                         <td class="checkbox">
-                                                            <input type="checkbox" class="update" 
+                                                            <input type="checkbox" class="update"
                                                                    name="permission[{{ array_get($val ,'id') }}][update]"
                                                                     {{$result['children']['children'][$key_header]['update'] == 1 ? 'checked' : '' }}
                                                             >
                                                         </td>
                                                         <td class="checkbox">
-                                                            <input type="checkbox" class="delete" 
+                                                            <input type="checkbox" class="delete"
                                                                    name="permission[{{ array_get($val ,'id') }}][delete]"
                                                                     {{$result['children']['children'][$key_header]['delete'] == 1 ? 'checked' : '' }}
                                                             >
                                                         </td>
                                                         <td class="checkbox">
-                                                            <input type="checkbox" class="excel" 
+                                                            <input type="checkbox" class="excel"
                                                                    name="permission[{{ array_get($val ,'id') }}][excel]"
                                                                     {{$result['children']['children'][$key_header]['excel'] == 1 ? 'checked' : '' }}
                                                             >
                                                         </td>
                                                         <td class="checkbox">
-                                                            <input type="checkbox" class="pdf" 
+                                                            <input type="checkbox" class="pdf"
                                                                    name="permission[{{ array_get($val ,'id') }}][pdf]"
                                                                     {{$result['children']['children'][$key_header]['pdf'] == 1 ? 'checked' : '' }}
                                                             >
@@ -162,7 +162,7 @@
                                                         <td></td>
                                                         @if($val->name == 'Home')
                                                             <td class="checkbox">
-                                                                <input type="checkbox" class="use" 
+                                                                <input type="checkbox" class="use"
                                                                        name="permission[{{ array_get($val ,'id') }}][use]"
                                                                         {{$result['children']['children'][$key_header]['use'] == 1 ? 'checked' : '' }}
                                                                 >
@@ -183,7 +183,7 @@
                                                         <td></td>
                                                         <td>{{ array_get($sub ,'name') }}</td>
                                                         <td class="checkbox">
-                                                            <input type="checkbox" class="use" 
+                                                            <input type="checkbox" class="use"
                                                                    name="permission[{{ array_get($sub ,'id') }}][use]"
                                                                     {{$result['children']['children'][$key_detail]['use'] == 1 ? 'checked' : '' }}
                                                             >
@@ -194,19 +194,19 @@
                                                             <td></td>
                                                         @else
                                                             <td class="checkbox">
-                                                                <input type="checkbox" class="add" 
+                                                                <input type="checkbox" class="add"
                                                                        name="permission[{{ array_get($sub ,'id') }}][add]"
                                                                         {{$result['children']['children'][$key_detail]['add'] == 1 ? 'checked' : '' }}
                                                                 >
                                                             </td>
                                                             <td class="checkbox">
-                                                                <input type="checkbox" class="update" 
+                                                                <input type="checkbox" class="update"
                                                                        name="permission[{{ array_get($sub ,'id') }}][update]"
                                                                         {{$result['children']['children'][$key_detail]['update'] == 1 ? 'checked' : '' }}
                                                                 >
                                                             </td>
                                                             <td class="checkbox">
-                                                                <input type="checkbox" class="delete" 
+                                                                <input type="checkbox" class="delete"
                                                                        name="permission[{{ array_get($sub ,'id') }}][delete]"
                                                                         {{$result['children']['children'][$key_detail]['delete'] == 1 ? 'checked' : '' }}
                                                                 >
@@ -217,13 +217,13 @@
                                                             <td></td>
                                                         @else
                                                             <td class="checkbox">
-                                                                <input type="checkbox" class="excel" 
+                                                                <input type="checkbox" class="excel"
                                                                        name="permission[{{ array_get($sub ,'id') }}][excel]"
                                                                         {{$result['children']['children'][$key_detail]['excel'] == 1 ? 'checked' : '' }}
                                                                 >
                                                             </td>
                                                             <td class="checkbox">
-                                                                <input type="checkbox" class="pdf" 
+                                                                <input type="checkbox" class="pdf"
                                                                        name="permission[{{ array_get($sub ,'id') }}][pdf]"
                                                                         {{$result['children']['children'][$key_detail]['pdf'] == 1 ? 'checked' : '' }}
                                                                 >

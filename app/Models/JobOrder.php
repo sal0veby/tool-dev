@@ -32,6 +32,21 @@ class JobOrder extends Model
         'state_id',
         'created_by',
         'updated_by',
+        'owners',
+        'supervisors',
+        'contractors',
+        'taskmasters',
+        'participants',
+        'car_registrations',
+    ];
+
+    protected $casts = [
+        'owners' => 'json',
+        'supervisors' => 'json',
+        'contractors' => 'json',
+        'taskmasters' => 'json',
+        'participants' => 'json',
+        'car_registrations' => 'json',
     ];
 
     public function setComingWorkDateAttribute($value)
