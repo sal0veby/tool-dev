@@ -14,6 +14,7 @@ class PermissionSeeder extends Seeder
         $permission_name = [
             'Admin' => 'Administrator',
             'NOC' => 'NOC',
+            'SupNOC' => 'Sup NOC',
             'Engineers' => 'Engineers',
             'PM' => 'Project Manager',
             'SG' => 'Security Guard',
