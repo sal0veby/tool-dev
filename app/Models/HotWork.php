@@ -12,6 +12,8 @@ class HotWork extends Model
         'tool',
         'audit',
         'safety',
+        'owner_name',
+        'department',
         'owner_name_end',
         'contractor_name',
         'engineer_id',
@@ -29,6 +31,7 @@ class HotWork extends Model
     protected $casts = [
         'audit' => 'json',
         'safety' => 'json',
+        'tool' => 'json',
     ];
 }
 

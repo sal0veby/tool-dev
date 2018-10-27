@@ -47,7 +47,7 @@ class JobOrderRequest extends FormRequest
                 $rule['owner_name'] = 'required';
                 $rule['department'] = 'required';
                 $rule['description'] = 'required';
-                $rule['tools'] = 'required';
+                $rule['tool'] = 'required';
                 $rule['audit'] = 'required';
                 $rule['owner_name_end'] = 'required';
                 $rule['contractor_name'] = 'required';

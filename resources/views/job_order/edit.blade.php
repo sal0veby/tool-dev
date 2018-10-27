@@ -348,7 +348,7 @@
                                                       cols="0" disabled><?php
                                                 if (!empty(array_get($data, 'participants'))) {
                                                     foreach (array_get($data, 'participants') as $key => $value) {
-                                                        echo $value['name'] . "\n";
+                                                        echo array_get($value , 'name') . "\n";
                                                     }
                                                 }
                                                 ?></textarea>
@@ -372,7 +372,7 @@
                                                       cols="0" disabled><?php
                                                 if (!empty(array_get($data, 'car_registrations'))) {
                                                     foreach (array_get($data, 'car_registrations') as $key => $value) {
-                                                        echo $value['car_registration'] . "\n";
+                                                        echo array_get($value , 'name') . "\n";
                                                     }
                                                 }
                                                 ?></textarea>

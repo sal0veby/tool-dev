@@ -38,6 +38,7 @@ class JobOrder extends Model
         'taskmasters',
         'participants',
         'car_registrations',
+        'hot_work'
     ];
 
     protected $casts = [

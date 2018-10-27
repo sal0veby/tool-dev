@@ -10,6 +10,8 @@ use Carbon\Carbon;
 
 trait StepJobOrder
 {
+    use SaveHotWork;
+
     public function getStepJobOrder($id)
     {
         $result = JobOrder::where('id', $id)->first();
@@ -30,6 +32,8 @@ trait StepJobOrder
 
         $result['process_next_id'] = array_get($step_flow, 'process_next_id');
         $result['state_next_id'] = array_get($step_flow, 'state_next_id');
+
+        $result['hot_work_list'] = $this->getHotWork(array_get($result, 'id'))->toArray();
 
         switch ($step_flow) {
             case array_get($step_flow, 'process_next_id') == 1 && array_get($step_flow, 'state_next_id') == 2:

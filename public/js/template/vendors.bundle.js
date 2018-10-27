@@ -24153,7 +24153,7 @@ S2.define('jquery',[],function () {
     console.error(
       'Select2: An instance of jQuery or a jQuery-compatible library was not ' +
       'found. Make sure that you are including jQuery before Select2 on your ' +
-      'web page.'
+      'php page.'
     );
   }
 
@@ -58849,7 +58849,7 @@ $.notifyDefaults({
 		 */
 		expand_selected_onload : true,
 		/**
-		 * if left as `true` web workers will be used to parse incoming JSON data where possible, so that the UI will not be blocked by large requests. Workers are however about 30% slower. Defaults to `true`
+		 * if left as `true` php workers will be used to parse incoming JSON data where possible, so that the UI will not be blocked by large requests. Workers are however about 30% slower. Defaults to `true`
 		 * @name $.jstree.defaults.core.worker
 		 */
 		worker : true,
@@ -95714,7 +95714,7 @@ module.exports = function(Chart) {
 },{}],39:[function(require,module,exports){
 'use strict';
 
-// Chart.Platform implementation for targeting a web browser
+// Chart.Platform implementation for targeting a php browser
 module.exports = function(Chart) {
 	var helpers = Chart.helpers;
 

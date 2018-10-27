@@ -41,45 +41,6 @@ trait SaveJobOrder
 
             switch ($new_data) {
                 case array_get($new_data, 'process_id') == 1 && array_get($new_data, 'state_id') == 2:
-                    $owner = isset($input['owner_list']) ? array_get($input, 'owner_list') : '';
-                    $supervisor = isset($input['supervisor_list']) ? array_get($input, 'supervisor_list') : '';
-                    $contractor = isset($input['contractor_list']) ? array_get($input, 'contractor_list') : '';
-                    $taskmaster = isset($input['taskmaster_list']) ? array_get($input, 'taskmaster_list') : '';
-                    $participants = isset($input['participants_list']) ? array_get($input, 'participants_list') : '';
-                    $car_registration = isset($input['car_registration_list']) ? array_get($input, 'car_registration_list') : '';
-                    $tools = isset($input['hot_work_list']) ? array_get($input, 'hot_work_list') : '';
-
-                    if (!empty($owner)) {
-                        $this->owner($owner);
-                    }
-
-                    if (!empty($supervisor)) {
-                        $this->supervisor($supervisor);
-                    }
-
-                    if (!empty($contractor)) {
-                        $this->contractor($contractor);
-                    }
-
-                    if (!empty($taskmaster)) {
-                        $this->taskmaster($taskmaster);
-                    }
-
-                    if (!empty($participants)) {
-                        $this->participants($participants);
-                    }
-
-                    if (!empty($car_registration)) {
-                        $this->car_registration($car_registration);
-                    }
-
-                    if (!empty($tools)) {
-                        $this->tools($tools);
-                    }
-
-                    $date = DateTime::createFromFormat('d/m/Y', $new_data['coming_work_date']);
-                    $new_data['coming_work_date'] = $date->format('Y-m-d');
-
                     $this->updateJobOrder($input);
 
                     break;
@@ -136,7 +97,7 @@ trait SaveJobOrder
     protected function updateJobOrder($data): void
     {
         $data['updated_by'] = base64_decode(Session::get('id'));
-
+        dd($data);
         JobOrder::where('id', $this->order_id)->update($data);
 
         $this->createTransactionJobOrder($data);

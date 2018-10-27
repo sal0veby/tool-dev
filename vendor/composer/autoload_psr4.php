@@ -43,6 +43,7 @@ return array(
     'Laravel\\Tinker\\' => array($vendorDir . '/laravel/tinker/src'),
     'Kurt\\Repoist\\' => array($vendorDir . '/ozankurt/repoist/src'),
     'Kalnoy\\Nestedset\\' => array($vendorDir . '/kalnoy/nestedset/src'),
+    'JakubOnderka\\PhpConsoleColor\\' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'Fideloper\\Proxy\\' => array($vendorDir . '/fideloper/proxy/src'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),

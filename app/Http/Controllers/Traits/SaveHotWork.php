@@ -13,6 +13,11 @@ use App\Models\HotWork;
 
 trait SaveHotWork
 {
+    public function getHotWork($order_id)
+    {
+        return HotWork::where('order_id' , $order_id)->first();
+    }    
+    
     /**
      * @param $data
      * @param null $order_id
@@ -24,6 +29,6 @@ trait SaveHotWork
             $data['order_id'] = $order_id;
         }
 
-        HotWork::query()->create($data)->id;
+        HotWork::create($data)->id;
     }
 }

@@ -21,7 +21,7 @@ class JobListController extends Controller
     use StepJobOrder;
     use ActionJobOrder;
     use SaveJobOrder;
-    use SaveHotWork;
+//    use SaveHotWork;
 
     public function __construct()
     {
@@ -71,7 +71,6 @@ class JobListController extends Controller
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollback();
-            dd($exception);
             return redirect()->back()->with('error', $exception->getMessage());
 //            return redirect()->back()->with('error', trans('error_message.save_false'));
         }

@@ -23,5 +23,4 @@ class DataTables extends Facade
     {
         return 'datatables';
     }
-
 }

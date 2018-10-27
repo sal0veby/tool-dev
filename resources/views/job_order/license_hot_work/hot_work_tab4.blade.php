@@ -18,7 +18,10 @@
             </label>
             <div class="col-lg-4 col-md-4">
                 <input type="text" class="form-control m-input" name="owner_name_end"
-                       value="">
+                       value="{{ isset($data['hot_work_list']['owner_name_end'])
+                       ? array_get($data['hot_work_list'] , 'owner_name_end')
+                       : '' }}"
+                    {{ isset($data['disabled_1']) ? array_get($data , 'disabled_1') : '' }}>
             </div>
             <label class="col-lg-4 col-md-4 col-form-label">
                 ผู้ขออนุญาต / เจ้าของงาน
@@ -30,7 +33,8 @@
             </label>
             <div class="col-lg-4 col-md-4">
                 <input type="text" class="form-control m-input" name="contractor_name"
-                       value="">
+                       value="{{ isset($data['hot_work_list']['contractor_name']) ? array_get($data['hot_work_list'] , 'contractor_name') : '' }}"
+                    {{ isset($data['disabled_1']) ? array_get($data , 'disabled_1') : '' }}>
             </div>
             <label class="col-lg-4 col-md-4 col-form-label">
                 ผู้รับเหมา ( รับทราบ )

@@ -2,8 +2,6 @@
 
 namespace Illuminate\Foundation\Auth;
 
-use App\Models\Permission;
-use App\Models\UserPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -25,7 +23,7 @@ trait AuthenticatesUsers
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -33,8 +31,6 @@ trait AuthenticatesUsers
     public function login(Request $request)
     {
         $this->validateLogin($request);
-
-        $request->password = bcrypt($request->password);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -60,7 +56,7 @@ trait AuthenticatesUsers
     /**
      * Validate the user login request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     protected function validateLogin(Request $request)
@@ -74,7 +70,7 @@ trait AuthenticatesUsers
     /**
      * Attempt to log the user into the application.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
     protected function attemptLogin(Request $request)
@@ -87,7 +83,7 @@ trait AuthenticatesUsers
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     protected function credentials(Request $request)
@@ -98,7 +94,7 @@ trait AuthenticatesUsers
     /**
      * Send the response after the user was authenticated.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     protected function sendLoginResponse(Request $request)
@@ -108,52 +104,25 @@ trait AuthenticatesUsers
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-            ?: redirect()->intended($this->redirectPath());
+                ?: redirect()->intended($this->redirectPath());
     }
 
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  mixed $user
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
      * @return mixed
      */
     protected function authenticated(Request $request, $user)
     {
-        if ($user->active == true) {
-            $user_permission = UserPermission::where(['user_id' => $user->id, 'active' => true])->get();
-            $permission_name = Permission::where(['id' => $user->permission_id])->first();
-
-            $menu_permission = [];
-            foreach ($user_permission as $val) {
-                $menu_permission[$val->menu_id] = [
-                    'use' => $val->use,
-                    'update' => $val->update,
-                    'delete' => $val->delete,
-                    'excel' => $val->use,
-                    'pdf' => $val->use
-                ];
-            }
-
-            session([
-                'id' => base64_encode($user->id),
-                'username' => $user->username,
-                'first_name' => $user->first_name,
-                'last_name' => $user->last_name,
-                'full_name' => $user->first_name . ' ' . $user->last_name,
-                'email' => $user->email,
-                'tel' => $user->tel,
-                'permission_id' => $user->permission_id,
-                'permission_name' => $permission_name->name,
-                'permission' => $menu_permission,
-            ]);
-        }
+        //
     }
 
     /**
      * Get the failed login response instance.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -172,13 +141,13 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'username';
+        return 'email';
     }
 
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function logout(Request $request)
@@ -193,7 +162,7 @@ trait AuthenticatesUsers
     /**
      * The user has logged out of the application.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
     protected function loggedOut(Request $request)

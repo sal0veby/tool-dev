@@ -19,7 +19,8 @@
                             @foreach(array_get($data, 'participants') as $key => $value)
                                 <div class="form-group row">
                                     <div class="col-10">
-                                        <input type="text" class="form-control m-input" name="participants[{{ $key }}][name]"
+                                        <input type="text" class="form-control m-input participant_name"
+                                               name="participants[{{ $key }}][name]"
                                                placeholder="{{ trans('main.name') }}"
                                                value="{{ array_get($value , 'name') }}">
                                     </div>
@@ -44,7 +45,8 @@
                         @else
                             <div class="form-group row">
                                 <div class="col-10">
-                                    <input type="text" class="form-control m-input" name="participants[0][name]"
+                                    <input type="text" class="form-control m-input participant_name"
+                                           name="participants[0][name]"
                                            placeholder="{{ trans('main.name') }}">
                                 </div>
                                 <div class="col-1">
@@ -74,7 +76,7 @@
                 var count = $('.div-participants .form-group').length;
                 var str = '<div class="form-group row">'
                     + '<input type="hidden" class="participants_id" value="">'
-                    + '<div class="col-10"><input type="text" class="form-control m-input" name="participants[' + count + '][name]" placeholder="{{ trans('main.name') }}"></div>'
+                    + '<div class="col-10"><input type="text" class="form-control m-input participant_name" name="participants[' + count + '][name]" placeholder="{{ trans('main.name') }}"></div>'
                     + '<div class="col-1"><button class="btn btn-danger btn-delete-participants m-btn m-btn--icon m-btn--icon-only" onclick="remove_participants(this)"><i class="fa fa-close"></i></button></div>'
                     + '</div>';
                 $(".div-participants").append(str);
@@ -82,6 +84,19 @@
 
             $("#save-participants").click(function (e) {
                 e.preventDefault();
+                var i = 0;
+                $("#participants").html("");
+                $(".div-participants .form-group").each(function () {
+                    var name = $(this).find(".participant_name").val();
+                    if (name == '') {
+                        i++;
+                    }
+                    $("#participants").append(name + "\n");
+                });
+                if (i > 0) {
+                    alert('{{ trans('error_message.not_fill') }}');
+                    return false;
+                }
                 $("#m_modal_participants").modal("hide");
             });
 
